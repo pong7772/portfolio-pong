@@ -16,7 +16,13 @@ const ProjectCard = ({
   stacks,
   is_featured,
 }: ProjectItemProps) => {
-  const stacksArray = JSON.parse(stacks);
+  let stacksArray: string[] = [];
+  try {
+    stacksArray = JSON.parse(stacks);
+  } catch (error) {
+    // If stacks is not valid JSON, try to split by comma
+    stacksArray = stacks ? stacks.split(',').map((s) => s.trim()) : [];
+  }
 
   return (
     <Link href={`/projects/${slug}`}>

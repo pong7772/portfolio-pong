@@ -14,7 +14,13 @@ const ProjectDetail = ({
   link_github,
   content,
 }: ProjectItemProps) => {
-  const stacksArray = JSON.parse(stacks);
+  let stacksArray: string[] = [];
+  try {
+    stacksArray = JSON.parse(stacks);
+  } catch (error) {
+    // If stacks is not valid JSON, try to split by comma
+    stacksArray = stacks ? stacks.split(',').map((s) => s.trim()) : [];
+  }
 
   return (
     <div className='space-y-8'>
