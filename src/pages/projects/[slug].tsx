@@ -16,12 +16,12 @@ const ProjectsDetailPage: NextPage<ProjectsDetailPageProps> = ({ project }) => {
   const PAGE_TITLE = project?.title;
   const PAGE_DESCRIPTION = project?.description;
 
-  const canonicalUrl = `https://aulianza.id/project/${project?.slug}`;
+  const canonicalUrl = `https://visothipongroth.vercel.app/project/${project?.slug}`;
 
   return (
     <>
       <NextSeo
-        title={`${project?.title} - Project Visothipong`}
+        title={`${project?.title} - Visothipong`}
         description={project?.description}
         canonical={canonicalUrl}
         openGraph={{
@@ -37,7 +37,7 @@ const ProjectsDetailPage: NextPage<ProjectsDetailPageProps> = ({ project }) => {
               url: project?.image,
             },
           ],
-          siteName: 'Blog Visothipong',
+          siteName: 'Portfolio Visothipong',
         }}
       />
       <Container data-aos='fade-up'>
