@@ -1,42 +1,42 @@
-const canonicalUrl = 'https://aulianza.id';
+const canonicalUrl = 'https://pong7772.github.io';
 const metaImage = 'https://cloud.aulianza.com/public/images/aulianza-id.png';
 const metaDescription =
-  'Seasoned Software Engineer especially in Frontend side, with a passion for creating pixel-perfect web experiences';
+  'A highly motivated and results-oriented Full-Stack Developer with over 3 years of experience designing, developing, and deploying scalable web and mobile applications.';
 
 const defaultSEOConfig = {
-  defaultTitle: 'Ryan Aulia - Personal Website',
+  defaultTitle: 'Roth Samnang Visothipong - Personal Website',
   description: metaDescription,
   canonical: canonicalUrl,
   openGraph: {
     canonical: canonicalUrl,
-    title: 'Ryan Aulia - Personal Website',
+    title: 'Roth Samnang Visothipong - Personal Website',
     description: metaDescription,
     type: 'website',
     images: [
       {
         url: metaImage,
-        alt: 'aulianza.id og-image',
+        alt: 'pong7772.github.io og-image',
         width: 800,
         height: 600,
       },
       {
         url: metaImage,
-        alt: 'aulianza.id og-image',
+        alt: 'pong7772.github.io og-image',
         width: 1200,
         height: 630,
       },
       {
         url: metaImage,
-        alt: 'aulianza.id og-image',
+        alt: 'pong7772.github.io og-image',
         width: 1600,
         height: 900,
       },
     ],
-    site_name: 'aulianza.id',
+    site_name: 'pong7772.github.io',
   },
   twitter: {
-    handle: '@handle',
-    site: '@site',
+    handle: '@visothipong',
+    site: '@visothipong',
     cardType: 'summary_large_image',
   },
 };

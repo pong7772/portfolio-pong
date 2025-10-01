@@ -16,7 +16,11 @@ export default async function handler(
 
     return res.status(200).json(response?.data);
   } catch (error) {
-    console.log('Spotify API not configured:', error.message);
+    if (error instanceof Error) {
+      console.log('Spotify API not configured:', error.message);
+    } else {
+      console.log('Spotify API not configured: An unknown error occurred');
+    }
     return res.status(200).json(null);
   }
 }
