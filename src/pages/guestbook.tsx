@@ -1,9 +1,11 @@
 import { NextPage } from 'next';
+import dynamic from 'next/dynamic';
 import { NextSeo } from 'next-seo';
 
 import Container from '@/common/components/elements/Container';
 import PageHeading from '@/common/components/elements/PageHeading';
-import Chat from '@/modules/chat';
+
+const Chat = dynamic(() => import('@/modules/chat'), { ssr: false });
 
 const PAGE_TITLE = 'Guestbook';
 const PAGE_DESCRIPTION =
