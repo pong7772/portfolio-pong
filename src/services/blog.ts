@@ -98,7 +98,7 @@ export const getBlogList = async ({
     }
 
     // Fetch articles
-    let url = `${DEVTO_API_URL}/articles`;
+    const url = `${DEVTO_API_URL}/articles`;
     const params: any = {
       page,
       per_page,
