@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import axios, { AxiosError, AxiosResponse } from 'axios';
+import axios, { AxiosError } from 'axios';
 
 import { BlogItemProps } from '@/common/types/blog';
 
@@ -15,7 +15,10 @@ interface BlogDetailResponseProps {
   data: any;
 }
 
-const BLOG_URL = process.env.BLOG_API_URL as string;
+// Dev.to API configuration
+const DEVTO_API_URL = 'https://dev.to/api';
+const DEVTO_USERNAME = process.env.DEVTO_USERNAME as string;
+const DEVTO_API_KEY = process.env.DEVTO_API_KEY as string;
 
 const handleAxiosError = (
   error: AxiosError<any>,
@@ -27,24 +30,54 @@ const handleAxiosError = (
   }
 };
 
-const extractData = (
-  response: AxiosResponse,
-): {
-  posts: BlogItemProps[];
-  page: number;
-  per_page: number;
-  total_pages: number;
-  total_posts: number;
-  categories: number;
-} => {
-  const { headers, data } = response;
+// Transform Dev.to article to WordPress-like format
+const transformDevToArticle = (article: any): BlogItemProps => {
   return {
-    posts: data,
-    page: response?.config?.params?.page || 1,
-    per_page: response?.config?.params?.per_page || 6,
-    total_pages: Number(headers['x-wp-totalpages']) || 0,
-    total_posts: Number(headers['x-wp-total']) || 0,
-    categories: response?.config?.params?.categories,
+    id: article.id,
+    date: article.published_at || article.created_at,
+    modified: article.edited_at || article.published_at || article.created_at,
+    slug: article.slug,
+    status: article.published ? 'publish' : 'draft',
+    link: article.url,
+    title: {
+      rendered: article.title,
+    },
+    content: {
+      rendered: article.body_html || '',
+      markdown: article.body_markdown || '',
+      protected: false,
+    },
+    excerpt: {
+      rendered: article.description || '',
+      protected: false,
+    },
+    author: article.user?.user_id || 0,
+    featured_media: 0,
+    comment_status: article.comments_count > 0 ? 'open' : 'closed',
+    ping_status: 'open',
+    sticky: false,
+    template: '',
+    format: 'standard',
+    meta: {
+      footnotes: '',
+    },
+    categories: article.type_of === 'article' ? [1] : [],
+    tags: article.tag_list || [],
+    tags_list: (article.tag_list || []).map((tag: string, index: number) => ({
+      term_id: index + 1,
+      name: tag,
+      slug: tag.toLowerCase().replace(/\s+/g, '-'),
+      term_group: 0,
+      term_taxonomy_id: index + 1,
+      taxonomy: 'post_tag',
+      description: '',
+      parent: 0,
+      count: 1,
+      filter: 'raw',
+    })),
+    amp_enabled: false,
+    featured_image_url: article.cover_image || article.social_image || '',
+    total_views_count: article.public_reactions_count || 0,
   };
 };
 
@@ -55,9 +88,52 @@ export const getBlogList = async ({
   search,
 }: BlogParamsProps): Promise<{ status: number; data: any }> => {
   try {
-    const params = { page, per_page, categories, search };
-    const response = await axios.get(`${BLOG_URL}posts`, { params });
-    return { status: response?.status, data: extractData(response) };
+    const headers: any = {
+      'Content-Type': 'application/json',
+    };
+
+    // Add API key if available (for fetching your own articles)
+    if (DEVTO_API_KEY) {
+      headers['api-key'] = DEVTO_API_KEY;
+    }
+
+    // Fetch articles
+    let url = `${DEVTO_API_URL}/articles`;
+    const params: any = {
+      page,
+      per_page,
+    };
+
+    // If username is provided, fetch articles by username
+    if (DEVTO_USERNAME) {
+      params.username = DEVTO_USERNAME;
+    }
+
+    // Add search/tag filter if provided
+    if (search) {
+      params.tag = search;
+    }
+
+    const response = await axios.get(url, { params, headers });
+
+    // Transform Dev.to articles to WordPress format
+    const transformedPosts = response.data.map(transformDevToArticle);
+
+    // Dev.to doesn't provide total pages in headers, so we estimate
+    const totalPosts = transformedPosts.length;
+    const totalPages = Math.ceil(totalPosts / per_page);
+
+    return {
+      status: response.status,
+      data: {
+        posts: transformedPosts,
+        page,
+        per_page,
+        total_pages: totalPages,
+        total_posts: totalPosts,
+        categories,
+      },
+    };
   } catch (error) {
     return handleAxiosError(error as AxiosError<any>);
   }
@@ -67,8 +143,22 @@ export const getBlogDetail = async (
   id: number,
 ): Promise<BlogDetailResponseProps> => {
   try {
-    const response = await axios.get(`${BLOG_URL}posts/${id}`);
-    return { status: response?.status, data: response?.data };
+    const headers: any = {
+      'Content-Type': 'application/json',
+    };
+
+    if (DEVTO_API_KEY) {
+      headers['api-key'] = DEVTO_API_KEY;
+    }
+
+    const response = await axios.get(`${DEVTO_API_URL}/articles/${id}`, {
+      headers,
+    });
+
+    // Transform the article to WordPress format
+    const transformedArticle = transformDevToArticle(response.data);
+
+    return { status: response.status, data: transformedArticle };
   } catch (error) {
     return handleAxiosError(error as AxiosError<any>);
   }
