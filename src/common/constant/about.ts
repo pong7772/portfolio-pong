@@ -1,23 +1,23 @@
 export const ABOUT = `
 <p>
-    Hello! Thanks for stopping by my personal website.
+    Hello! I'm <strong>Roth Samnang Visothipong</strong>, a Full-Stack Developer and EdTech Innovator currently based in Hasselt, Belgium.
 </p>
 <p>
-    I'm Ryan. I've been working in web development for over 10 years, doing both the coding you see on the screen (frontend) and the stuff that happens behind the scenes (backend). I know how to manage projects using methods like Waterfall and Agile. But what really gets me excited is making websites and apps that are easy for everyone to use and look good too!
+    I'm a highly motivated and results-oriented Full-Stack Developer with over 3 years of experience designing, developing, and deploying scalable web and mobile applications. I have proven expertise in PHP Laravel, Flutter, Dart, and the JavaScript ecosystem, with a strong understanding of microservices architecture.
 </p>
 <p>
-    I'm really into JavaScript and PHP, which are languages used to build websites. I also know a bunch of frameworks that make building websites even easier, like React, Vue, Angular, Node.js, and PHP frameworks like Codeigniter and Laravel. I love learning about new web tools and features.
+    What drives me is leveraging technology to create impactful, user-friendly educational solutions. My proudest achievement is leading the development of the <strong>GEIP EdTech App</strong>, a government-backed platform supported by Cambodia's Ministry of Education (MoEYS) that has empowered over 400,000 students in Cambodia, serving 20,000 daily active users across 1,861 schools.
 </p>
 <p>
-    In my career, I've led teams to build software for a wide range of companies, from large corporations to innovative startups.
+    I'm passionate about modern technologies including React Native, Next.js, Flutter, Firebase, and cloud services. I also enjoy training and mentoring junior developers, having served as a Mobile App Teacher for React Native.
 </p>
 <p>
-    I believe that good communication is super important in any job.
+    Currently pursuing my Master of Education at Hogeschool PXL in Belgium while continuing to contribute to innovative EdTech projects. I believe in the power of technology to transform education and improve lives.
 </p>
 <p>
-    I'm good at adapting to different situations, working efficiently, and always trying to do my best. My experience has taught me how to solve problems and lead teams, but I'm also happy to work with others to get things done. I'm excited about the chance to work together and make cool stuff!
+    I'm fluent in Khmer (native), English, and have intermediate proficiency in Japanese. I'm always excited to collaborate on meaningful projects and connect with fellow developers and innovators.
 </p>
 <p>
-    I'm looking forward to the possibility of working with you!
+    Let's build something amazing together!
 </p>
 `;

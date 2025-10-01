@@ -7,7 +7,7 @@ import About from '@/modules/about';
 
 const PAGE_TITLE = 'About';
 const PAGE_DESCRIPTION =
-  'An insightful glimpse into who I am – because every detail adds depth to the canvas of life.';
+  'Full-Stack Developer & EdTech Innovator with 3+ years of experience. Led development of GEIP EdTech App serving 400,000+ students. Expert in PHP Laravel, Flutter, React Native, Next.js, and Firebase.';
 
 const AboutPage: NextPage = () => {
   return (
