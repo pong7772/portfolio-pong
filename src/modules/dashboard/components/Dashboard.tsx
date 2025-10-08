@@ -3,10 +3,13 @@ import { GITHUB_ACCOUNTS } from '@/common/constant/github';
 
 import CodingActive from './CodingActive';
 import Contributions from './Contributions';
+import StoriesManager from './Stories';
 
 const Dashboard = () => {
   return (
     <>
+      <StoriesManager />
+      <Breakline className='mb-8 mt-10' />
       <CodingActive />
       <Breakline className='mb-8 mt-10' />
       <div className='space-y-10'>

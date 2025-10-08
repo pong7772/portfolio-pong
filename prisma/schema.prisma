@@ -30,3 +30,15 @@ model contentmeta {
   views      Int      @default(0)
   updated_at DateTime @default(now())
 }
+
+model stories {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String?
+  image       String
+  link        String?
+  order       Int      @default(0)
+  is_show     Boolean  @default(true)
+  created_at  DateTime @default(now())
+  updated_at  DateTime @default(now())
+}

@@ -5,6 +5,7 @@ import { SessionProvider } from 'next-auth/react';
 import { DefaultSeo } from 'next-seo';
 import { ThemeProvider } from 'next-themes';
 import { useEffect } from 'react';
+import { Toaster } from 'sonner';
 
 import 'tailwindcss/tailwind.css';
 import 'aos/dist/aos.css';
@@ -51,6 +52,7 @@ const App = ({ Component, pageProps: { session, ...pageProps } }: AppProps) => {
       <SessionProvider session={session}>
         <ThemeProvider attribute='class' defaultTheme='light'>
           <CommandPaletteProvider>
+            <Toaster richColors position='top-right' />
             <Layout>
               <CommandPalette />
               <ProgressBar />
