@@ -163,7 +163,7 @@ export const SOCIAL_MEDIA: MenuItemProps[] = [
   },
   {
     title: 'Github',
-    href: 'https://github.com/aulianza',
+    href: 'https://github.com/pong7772',
     icon: <GithubIcon size={iconSize} />,
     isShow: true,
     isExternal: true,
