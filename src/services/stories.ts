@@ -49,4 +49,3 @@ export const updateStory = async (
   }
   return response.json();
 };
-

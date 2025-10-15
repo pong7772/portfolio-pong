@@ -119,7 +119,7 @@ const StoryUploadForm = ({ onSuccess, onCancel }: StoryUploadFormProps) => {
             disabled={isUploading}
           />
           {imagePreview && (
-            <div className='mt-2 relative aspect-video w-full overflow-hidden rounded-lg'>
+            <div className='relative mt-2 aspect-video w-full overflow-hidden rounded-lg'>
               <img
                 src={imagePreview}
                 alt='Preview'
@@ -170,9 +170,7 @@ const StoryUploadForm = ({ onSuccess, onCancel }: StoryUploadFormProps) => {
           <input
             type='url'
             value={formData.link}
-            onChange={(e) =>
-              setFormData({ ...formData, link: e.target.value })
-            }
+            onChange={(e) => setFormData({ ...formData, link: e.target.value })}
             className='w-full rounded-lg border border-neutral-300 p-2 dark:border-neutral-700 dark:bg-neutral-900'
             placeholder='https://example.com'
             disabled={isUploading}
@@ -241,4 +239,3 @@ const StoryUploadForm = ({ onSuccess, onCancel }: StoryUploadFormProps) => {
 };
 
 export default StoryUploadForm;
-

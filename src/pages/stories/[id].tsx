@@ -1,6 +1,6 @@
 import { GetServerSideProps, NextPage } from 'next';
-import { NextSeo } from 'next-seo';
 import { useRouter } from 'next/router';
+import { NextSeo } from 'next-seo';
 import { BiArrowBack } from 'react-icons/bi';
 
 import Button from '@/common/components/elements/Button';
@@ -75,7 +75,7 @@ const StoryDetailPage: NextPage<StoryDetailPageProps> = ({ story }) => {
 
             {/* Story description */}
             {story.description && (
-              <div className='prose prose-neutral max-w-none dark:prose-invert'>
+              <div className='prose prose-neutral dark:prose-invert max-w-none'>
                 <p className='text-lg leading-relaxed text-neutral-700 dark:text-neutral-300'>
                   {story.description}
                 </p>
@@ -142,4 +142,3 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 };
 
 export default StoryDetailPage;
-

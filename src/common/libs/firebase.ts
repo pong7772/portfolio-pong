@@ -1,4 +1,4 @@
-import { initializeApp, getApps } from 'firebase/app';
+import { getApps, initializeApp } from 'firebase/app';
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY as string,
@@ -13,6 +13,7 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase only if it hasn't been initialized already
-const firebase = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0];
+const firebase =
+  getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0];
 
 export { firebase };

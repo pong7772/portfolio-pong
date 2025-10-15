@@ -18,4 +18,3 @@ export interface StoryFormData {
   order?: number;
   is_show?: boolean;
 }
-

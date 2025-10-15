@@ -84,10 +84,7 @@ const StoriesManager = () => {
       ) : (
         <div className='grid gap-4 md:grid-cols-2 lg:grid-cols-3'>
           {stories.map((story) => (
-            <Card
-              key={story.id}
-              className='group relative overflow-hidden p-0'
-            >
+            <Card key={story.id} className='group relative overflow-hidden p-0'>
               <div className='relative aspect-video w-full'>
                 <Image
                   src={story.image}
@@ -126,4 +123,3 @@ const StoriesManager = () => {
 };
 
 export default StoriesManager;
-
