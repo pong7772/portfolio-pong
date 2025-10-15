@@ -14,6 +14,7 @@ import {
   FiPocket as HomeIcon,
   FiRss as BlogIcon,
   FiUser as ProfileIcon,
+  FiGraduationCap as PxlIcon,
 } from 'react-icons/fi';
 import { PiChatCircleDotsBold as ChatIcon } from 'react-icons/pi';
 import { SiJavascript } from 'react-icons/si';
@@ -75,6 +76,15 @@ export const MENU_ITEMS: MenuItemProps[] = [
     isShow: true,
     isExternal: false,
     eventName: 'Pages: About',
+    type: 'Pages',
+  },
+  {
+    title: 'Hogeschool PXL',
+    href: '/pxl',
+    icon: <PxlIcon size={iconSize} />,
+    isShow: true,
+    isExternal: false,
+    eventName: 'Pages: PXL',
     type: 'Pages',
   },
   {
