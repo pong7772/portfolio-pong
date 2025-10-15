@@ -25,7 +25,10 @@ const PxlPage: NextPage<PxlPageProps> = () => {
 
         <div className='mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3'>
           {/* Personal and Professional Development */}
-          <div className='group relative overflow-hidden rounded-xl border border-neutral-200/60 bg-white shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md dark:border-neutral-800/60 dark:bg-neutral-900'>
+          <a
+            href='/pxl/personal-professional-development'
+            className='group relative overflow-hidden rounded-xl border border-neutral-200/60 bg-white shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md dark:border-neutral-800/60 dark:bg-neutral-900'
+          >
             <div className='p-6'>
               <div className='mb-4'>
                 <div className='flex h-12 w-12 items-center justify-center rounded-lg bg-blue-100 dark:bg-blue-900/30'>
@@ -51,13 +54,22 @@ const PxlPage: NextPage<PxlPageProps> = () => {
                 My journey of growth, learning, and skill development during my
                 time at PXL.
               </p>
-              <div className='mt-4'>
+              <div className='mt-4 flex items-center justify-between'>
                 <span className='inline-flex items-center rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-800 dark:bg-green-900/30 dark:text-green-400'>
-                  Coming Soon
+                  Available
                 </span>
+                <svg
+                  xmlns='http://www.w3.org/2000/svg'
+                  viewBox='0 0 24 24'
+                  fill='currentColor'
+                  className='h-4 w-4 text-neutral-400 transition-transform group-hover:translate-x-0.5'
+                  aria-hidden='true'
+                >
+                  <path d='M13.5 4.5a.75.75 0 0 0 0 1.5h4.69l-9.72 9.72a.75.75 0 1 0 1.06 1.06l9.72-9.72v4.69a.75.75 0 0 0 1.5 0v-7.5a.75.75 0 0 0-.75-.75h-7.5Z' />
+                </svg>
               </div>
             </div>
-          </div>
+          </a>
 
           {/* The Internationalist */}
           <div className='group relative overflow-hidden rounded-xl border border-neutral-200/60 bg-white shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md dark:border-neutral-800/60 dark:bg-neutral-900'>

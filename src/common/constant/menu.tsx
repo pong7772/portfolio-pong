@@ -4,7 +4,7 @@ import {
   BsGithub as GithubIcon,
   BsInstagram as InstagramIcon,
   BsLinkedin as LinkedinIcon,
-  BsTwitter as TwitterIcon,
+  BsFacebook as FacebookIcon,
 } from 'react-icons/bs';
 import {
   FiBookOpen as LearnIcon,
@@ -14,7 +14,7 @@ import {
   FiPocket as HomeIcon,
   FiRss as BlogIcon,
   FiUser as ProfileIcon,
-  FiGraduationCap as PxlIcon,
+  FiMap as PxlIcon,
 } from 'react-icons/fi';
 import { PiChatCircleDotsBold as ChatIcon } from 'react-icons/pi';
 import { SiJavascript } from 'react-icons/si';
@@ -122,7 +122,7 @@ export const MENU_APPS: MenuItemProps[] = [
 export const SOCIAL_MEDIA: MenuItemProps[] = [
   {
     title: 'Email',
-    href: 'mailto:aulianza.dev@gmail.com',
+    href: 'mailto:visothipong7772@gmail.com',
     icon: <EmailIcon size={iconSize} />,
     isShow: true,
     isExternal: true,
@@ -133,7 +133,7 @@ export const SOCIAL_MEDIA: MenuItemProps[] = [
 
   {
     title: 'Linkedin',
-    href: 'https://www.linkedin.com/in/aulianza/',
+    href: 'https://www.linkedin.com/in/roth-samnangvisothipong-3333ab1aa/?originalSubdomain=kh',
     icon: <LinkedinIcon size={iconSize} />,
     isShow: true,
     isExternal: true,
@@ -142,9 +142,9 @@ export const SOCIAL_MEDIA: MenuItemProps[] = [
     type: 'Link',
   },
   {
-    title: 'Twitter',
-    href: 'https://twitter.com/aulianzaa',
-    icon: <TwitterIcon size={iconSize} />,
+    title: 'Facebook',
+    href: 'https://www.facebook.com/visothipongroth/',
+    icon: <FacebookIcon size={iconSize} />,
     isShow: true,
     isExternal: true,
     eventName: 'Social: Twitter',
@@ -153,7 +153,7 @@ export const SOCIAL_MEDIA: MenuItemProps[] = [
   },
   {
     title: 'Instagram',
-    href: 'https://instagram.com/aulianza',
+    href: 'https://www.facebook.com/visothipongroth/',
     icon: <InstagramIcon size={iconSize} />,
     isShow: true,
     isExternal: true,
