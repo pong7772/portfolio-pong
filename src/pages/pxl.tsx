@@ -1,5 +1,6 @@
 import { GetStaticProps, NextPage } from 'next';
 import { NextSeo } from 'next-seo';
+import Link from 'next/link';
 
 import Container from '@/common/components/elements/Container';
 import PageHeading from '@/common/components/elements/PageHeading';
@@ -25,7 +26,7 @@ const PxlPage: NextPage<PxlPageProps> = () => {
 
         <div className='mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3'>
           {/* Personal and Professional Development */}
-          <a
+          <Link
             href='/pxl/personal-professional-development'
             className='group relative overflow-hidden rounded-xl border border-neutral-200/60 bg-white shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md dark:border-neutral-800/60 dark:bg-neutral-900'
           >
@@ -69,7 +70,7 @@ const PxlPage: NextPage<PxlPageProps> = () => {
                 </svg>
               </div>
             </div>
-          </a>
+          </Link>
 
           {/* The Internationalist */}
           <div className='group relative overflow-hidden rounded-xl border border-neutral-200/60 bg-white shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md dark:border-neutral-800/60 dark:bg-neutral-900'>
