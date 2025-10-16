@@ -34,8 +34,8 @@ const HeaderTop = () => {
           <Image
             src='/images/pongpf.png'
             alt='Visothipong'
-            width={40}
-            height={40}
+            width={80}
+            height={80}
             rounded='rounded-full'
             className='rotate-3 border-2 border-neutral-400 dark:border-neutral-600 lg:hover:scale-105'
           />
@@ -68,7 +68,7 @@ const HeaderTop = () => {
                   className={clsx(
                     'text-neutral-700 hover:text-neutral-800 dark:text-neutral-400 hover:dark:text-neutral-100',
                     router.pathname === menu?.href &&
-                    '!text-neutral-800 dark:!text-neutral-100',
+                      '!text-neutral-800 dark:!text-neutral-100',
                   )}
                 >
                   <div>{menu.title}</div>

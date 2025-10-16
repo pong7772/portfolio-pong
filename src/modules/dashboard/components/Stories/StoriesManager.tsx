@@ -3,11 +3,11 @@ import { BiPlus, BiTrash } from 'react-icons/bi';
 import { toast } from 'sonner';
 
 import Card from '@/common/components/elements/Card';
-import Image from '@/common/components/elements/Image';
 import { Story } from '@/common/types/stories';
 import { deleteStory, getStories } from '@/services/stories';
 
-import StoryUploadForm from './StoryUploadForm';
+import CircularStoryCard from './CircularStoryCard';
+import EnhancedStoryUploadForm from './EnhancedStoryUploadForm';
 
 const StoriesManager = () => {
   const [stories, setStories] = useState<Story[]>([]);
@@ -65,7 +65,7 @@ const StoriesManager = () => {
       </div>
 
       {showUploadForm && (
-        <StoryUploadForm
+        <EnhancedStoryUploadForm
           onSuccess={handleUploadSuccess}
           onCancel={() => setShowUploadForm(false)}
         />
@@ -82,40 +82,87 @@ const StoriesManager = () => {
           </p>
         </Card>
       ) : (
-        <div className='grid gap-4 md:grid-cols-2 lg:grid-cols-3'>
-          {stories.map((story) => (
-            <Card key={story.id} className='group relative overflow-hidden p-0'>
-              <div className='relative aspect-video w-full'>
-                <Image
-                  src={story.image}
-                  alt={story.title}
-                  fill
-                  className='object-cover'
+        <div className='space-y-6'>
+          {/* Stories Grid with Circular Cards */}
+          <div className='grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5'>
+            {stories.map((story) => (
+              <div
+                key={story.id}
+                className='flex flex-col items-center space-y-2'
+              >
+                <CircularStoryCard
+                  story={story}
+                  onDelete={handleDelete}
+                  size='md'
+                  showActions={true}
                 />
-              </div>
-              <div className='p-4'>
-                <h3 className='font-semibold'>{story.title}</h3>
-                {story.description && (
-                  <p className='mt-1 line-clamp-2 text-sm text-neutral-600 dark:text-neutral-400'>
-                    {story.description}
-                  </p>
-                )}
-                <div className='mt-2 flex items-center justify-between text-xs text-neutral-500'>
-                  <span>Order: {story.order}</span>
-                  <span className='text-xs text-neutral-400'>
+                <div className='text-center'>
+                  <h4 className='max-w-32 truncate text-sm font-medium text-neutral-800 dark:text-neutral-200'>
+                    {story.title}
+                  </h4>
+                  <p className='text-xs text-neutral-500'>
                     {new Date(story.created_at).toLocaleDateString()}
-                  </span>
+                  </p>
                 </div>
               </div>
-              <button
-                onClick={() => handleDelete(story.id)}
-                className='absolute right-2 top-2 rounded-lg bg-red-500 p-2 text-white opacity-0 transition-opacity hover:bg-red-600 group-hover:opacity-100'
-                title='Delete story'
-              >
-                <BiTrash size={16} />
-              </button>
-            </Card>
-          ))}
+            ))}
+          </div>
+
+          {/* Alternative: Compact List View */}
+          <div className='mt-8'>
+            <h4 className='mb-4 text-lg font-semibold text-neutral-800 dark:text-neutral-200'>
+              Story Details
+            </h4>
+            <div className='space-y-3'>
+              {stories.map((story) => (
+                <Card key={`detail-${story.id}`} className='p-4'>
+                  <div className='flex items-center gap-4'>
+                    <CircularStoryCard
+                      story={story}
+                      size='sm'
+                      showActions={false}
+                    />
+                    <div className='flex-1'>
+                      <div className='flex items-center gap-2'>
+                        <h5 className='font-semibold text-neutral-800 dark:text-neutral-200'>
+                          {story.title}
+                        </h5>
+                        {!story.is_show && (
+                          <span className='rounded-full bg-gray-100 px-2 py-1 text-xs text-gray-600 dark:bg-gray-700 dark:text-gray-400'>
+                            Hidden
+                          </span>
+                        )}
+                      </div>
+                      {story.description && (
+                        <p className='mt-1 line-clamp-2 text-sm text-neutral-600 dark:text-neutral-400'>
+                          {story.description}
+                        </p>
+                      )}
+                      <div className='mt-2 flex items-center gap-4 text-xs text-neutral-500'>
+                        <span>Order: {story.order}</span>
+                        <span>
+                          Created:{' '}
+                          {new Date(story.created_at).toLocaleDateString()}
+                        </span>
+                        {story.link && (
+                          <span className='text-blue-600 dark:text-blue-400'>
+                            Has custom link
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => handleDelete(story.id)}
+                      className='rounded-lg bg-red-500 p-2 text-white transition-colors hover:bg-red-600'
+                      title='Delete story'
+                    >
+                      <BiTrash size={16} />
+                    </button>
+                  </div>
+                </Card>
+              ))}
+            </div>
+          </div>
         </div>
       )}
     </div>

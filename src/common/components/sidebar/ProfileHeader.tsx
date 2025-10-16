@@ -21,9 +21,9 @@ const ProfileHeader = ({ expandMenu, imageSize }: ProfileHeaderProps) => {
       <Image
         src='/images/pongpf.png'
         alt='Visothipong'
-        width={expandMenu ? 120 : imageSize}
-        height={expandMenu ? 120 : imageSize}
-        rounded='rounded-full'
+        width={expandMenu ? 160 : imageSize}
+        height={expandMenu ? 160 : imageSize}
+        rounded='rounded-[20px]'
         className='rotate-3 dark:border-neutral-600 lg:hover:scale-105'
       />
       <>
