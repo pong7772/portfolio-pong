@@ -5,8 +5,8 @@ import {
   BiImage,
   BiLink,
   BiSort,
-  BiEye,
-  BiEyeOff,
+  BiLockOpen,
+  BiKey,
 } from 'react-icons/bi';
 import { toast } from 'sonner';
 
@@ -279,9 +279,9 @@ const EnhancedStoryUploadForm = ({
         <div className='flex items-center gap-3 rounded-lg border border-neutral-200 bg-neutral-50 p-4 dark:border-neutral-700 dark:bg-neutral-800'>
           <div className='flex h-10 w-10 items-center justify-center rounded-full bg-green-100 dark:bg-green-900'>
             {formData.is_show ? (
-              <BiEye className='text-green-600 dark:text-green-400' size={20} />
+              <BiKey className='text-green-600 dark:text-green-400' size={20} />
             ) : (
-              <BiEyeOff className='text-neutral-500' size={20} />
+              <BiKey className='text-neutral-500' size={20} />
             )}
           </div>
           <div className='flex-1'>

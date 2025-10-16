@@ -99,22 +99,24 @@ export const getBlogList = async ({
 
     // Fetch articles
     const url = `${DEVTO_API_URL}/articles`;
-    const params: any = {
-      page,
-      per_page,
-    };
+    const queryParams = new URLSearchParams({
+      page: page.toString(),
+      per_page: per_page.toString(),
+    });
 
     // If username is provided, fetch articles by username
     if (DEVTO_USERNAME) {
-      params.username = DEVTO_USERNAME;
+      queryParams.append('username', DEVTO_USERNAME);
     }
 
     // Add search/tag filter if provided
     if (search) {
-      params.tag = search;
+      queryParams.append('tag', search);
     }
 
-    const response = await axios.get(url, { params, headers });
+    const response = await axios.get(`${url}?${queryParams.toString()}`, {
+      headers,
+    });
 
     // Transform Dev.to articles to WordPress format
     const transformedPosts = response.data.map(transformDevToArticle);

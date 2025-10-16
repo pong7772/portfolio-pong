@@ -23,23 +23,12 @@ export default async function handler(
       search: search ? String(search) : undefined,
     });
 
-    const blogItemsWithViews = await Promise.all(
-      responseData?.data?.posts?.map(async (blogItem: BlogItemProps) => {
-        const { slug } = blogItem;
-
-        const contentMeta = await prisma.contentmeta.findUnique({
-          where: { slug: slug as string },
-          select: { views: true },
-        });
-
-        const viewsCount = contentMeta?.views ?? 0;
-
-        return {
-          ...blogItem,
-          total_views_count: viewsCount,
-        };
-      }),
-    );
+    // For now, skip database queries to test Dev.to integration
+    const blogItemsWithViews =
+      responseData?.data?.posts?.map((blogItem: BlogItemProps) => ({
+        ...blogItem,
+        total_views_count: blogItem.total_views_count || 0,
+      })) || [];
 
     const responses = {
       status: true,
