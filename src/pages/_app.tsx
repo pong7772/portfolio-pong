@@ -22,6 +22,7 @@ import {
 } from '@/common/styles/fonts';
 
 import defaultSEOConfig from '../../next-seo.config';
+import { initFirebase } from '@/common/libs/firebaseClient';
 
 const ProgressBar = dynamic(
   () => import('src/common/components/elements/ProgressBar'),
@@ -34,6 +35,8 @@ const App = ({ Component, pageProps: { session, ...pageProps } }: AppProps) => {
       duration: 800,
       delay: 50,
     });
+    // Initialize Firebase on client only
+    initFirebase();
   }, []);
 
   return (
