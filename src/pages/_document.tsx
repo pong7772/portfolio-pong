@@ -1,3 +1,23 @@
+import { Html, Head, Main, NextScript } from 'next/document';
+
+export default function Document() {
+  return (
+    <Html lang='en'>
+      <Head>
+        <script
+          defer
+          src='https://cloud.umami.is/script.js'
+          data-website-id='2a660cbf-2041-4705-af1f-f1ddc9873308'
+        />
+      </Head>
+      <body>
+        <Main />
+        <NextScript />
+      </body>
+    </Html>
+  );
+}
+
 import { Head, Html, Main, NextScript } from 'next/document';
 
 export default function Document() {
