@@ -33,13 +33,12 @@ const ProjectCard = ({
             <span>Featured</span>
           </div>
         )}
-        <div className='relative'>
+        <div className='relative aspect-[16/9] w-full overflow-hidden rounded-t-xl'>
           <Image
             src={image}
-            width={400}
-            height={200}
+            fill
             alt={title}
-            className='h-48 rounded-t-xl object-cover object-left'
+            className='object-cover object-left'
           />
           <div className='absolute left-0 top-0 flex flex h-full w-full items-center justify-center gap-1 rounded-t-xl bg-black text-sm font-medium text-white opacity-0 transition-opacity duration-300 group-hover:opacity-80'>
             <span>View Project</span>

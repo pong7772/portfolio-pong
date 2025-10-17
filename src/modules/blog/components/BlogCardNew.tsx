@@ -49,17 +49,11 @@ const BlogCardNew = ({
   return (
     <Link href={`/blog/${slug}?id=${id}`}>
       <Card
-        className='group relative flex h-[200px] w-full flex-col rounded-lg border shadow-sm dark:border-neutral-800'
+        className='group relative flex w-full flex-col rounded-lg border shadow-sm dark:border-neutral-800'
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
-        <div
-          className='relative rounded-xl duration-500'
-          style={{
-            height: '200px',
-            overflow: 'hidden',
-          }}
-        >
+        <div className='relative aspect-[16/9] w-full overflow-hidden rounded-t-xl duration-500'>
           <Image
             src={featured_image_url || defaultImage}
             alt={title?.rendered}
@@ -70,7 +64,7 @@ const BlogCardNew = ({
           <div className='absolute inset-0 bg-gradient-to-b from-black/20 to-black opacity-80 transition-opacity duration-300'></div>
         </div>
 
-        <div className='absolute flex h-full flex-col justify-between space-y-4 p-5'>
+        <div className='absolute inset-0 flex flex-col justify-between space-y-4 p-5'>
           <div className='flex flex-wrap gap-2'>
             {tagList?.map((tag) => (
               <div
