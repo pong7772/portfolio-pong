@@ -8,8 +8,10 @@ import ThemeSwitcher from '../../elements/ThemeSwitcher';
 import Navigation from '../../sidebar/Navigation';
 import Profile from '../../sidebar/Profile';
 import BackgroundAudioButton from '../../elements/BackgroundAudioButton';
+import { useVisitorCount } from '@/common/hooks/useVisitorCount';
 
 const Sidebar = () => {
+  const visitors = useVisitorCount();
   const isMobile = useIsMobile();
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -47,7 +49,13 @@ const Sidebar = () => {
             </div>
             <ThemeSwitcher />
             <div className='px-3 pt-2'>
-              <BackgroundAudioButton />
+              <div className='mb-2 text-xs text-neutral-600'>Visitors</div>
+              <div className='flex items-center justify-between'>
+                <div className='rounded-md border px-2 py-1 text-xs text-neutral-700 dark:border-neutral-700 dark:text-neutral-300'>
+                  {visitors.toLocaleString()}
+                </div>
+                <BackgroundAudioButton />
+              </div>
             </div>
           </div>
         </div>

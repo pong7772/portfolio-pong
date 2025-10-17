@@ -5,8 +5,11 @@ export const useVisitorCount = () => {
 
   useEffect(() => {
     let cancelled = false;
+    let handledInteraction = false;
 
-    const markVisitedOncePerSession = async () => {
+    const handleFirstInteraction = async () => {
+      if (handledInteraction) return;
+      handledInteraction = true;
       try {
         const hasVisited = sessionStorage.getItem('site_visited');
         if (!hasVisited) {
@@ -15,6 +18,10 @@ export const useVisitorCount = () => {
         }
       } catch {
         void 0;
+      } finally {
+        void fetchCount();
+        window.removeEventListener('click', handleFirstInteraction);
+        window.removeEventListener('keydown', handleFirstInteraction);
       }
     };
 
@@ -28,11 +35,17 @@ export const useVisitorCount = () => {
       }
     };
 
-    markVisitedOncePerSession().then(fetchCount);
+    // Count only after first user interaction (click/keydown)
+    window.addEventListener('click', handleFirstInteraction, { once: true });
+    window.addEventListener('keydown', handleFirstInteraction, { once: true });
+    // Still fetch current count for display immediately
+    void fetchCount();
     const id = setInterval(fetchCount, 60_000);
     return () => {
       cancelled = true;
       clearInterval(id);
+      window.removeEventListener('click', handleFirstInteraction);
+      window.removeEventListener('keydown', handleFirstInteraction);
     };
   }, []);
 
