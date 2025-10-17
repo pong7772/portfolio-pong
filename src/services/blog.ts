@@ -97,14 +97,15 @@ export const getBlogList = async ({
       headers['api-key'] = DEVTO_API_KEY;
     }
 
-    // Fetch articles
-    const url = `${DEVTO_API_URL}/articles`;
+    // Prefer private author endpoint when API key is available; fallback to public username endpoint
+    const privateUrl = `${DEVTO_API_URL}/articles/me`;
+    const publicUrl = `${DEVTO_API_URL}/articles`;
     const queryParams = new URLSearchParams({
       page: page.toString(),
       per_page: per_page.toString(),
     });
 
-    // If username is provided, fetch articles by username
+    // For the public endpoint we need the username
     if (DEVTO_USERNAME) {
       queryParams.append('username', DEVTO_USERNAME);
     }
@@ -114,12 +115,37 @@ export const getBlogList = async ({
       queryParams.append('tag', search);
     }
 
-    const response = await axios.get(`${url}?${queryParams.toString()}`, {
-      headers,
+    // Try private endpoint first if API key is provided (does not need username)
+    const usePrivate = Boolean(DEVTO_API_KEY);
+    const privateParams = new URLSearchParams({
+      page: page.toString(),
+      per_page: per_page.toString(),
     });
 
+    let response = await axios.get(
+      usePrivate
+        ? `${privateUrl}?${privateParams.toString()}`
+        : `${publicUrl}?${queryParams.toString()}`,
+      { headers },
+    );
+
     // Transform Dev.to articles to WordPress format
-    const transformedPosts = response.data.map(transformDevToArticle);
+    let transformedPosts = response.data.map(transformDevToArticle);
+
+    // Fallback: if we received fewer posts than requested, retry without API key
+    if ((transformedPosts?.length || 0) < per_page) {
+      const fallbackHeaders: any = { 'Content-Type': 'application/json' };
+      const fallbackResponse = await axios.get(
+        `${publicUrl}?${queryParams.toString()}`,
+        { headers: fallbackHeaders },
+      );
+      const fallbackPosts = fallbackResponse.data.map(transformDevToArticle);
+      // Use whichever returns more posts
+      if (fallbackPosts.length > transformedPosts.length) {
+        response = fallbackResponse;
+        transformedPosts = fallbackPosts;
+      }
+    }
 
     // Dev.to doesn't provide total pages in headers, so we estimate
     const totalPosts = transformedPosts.length;

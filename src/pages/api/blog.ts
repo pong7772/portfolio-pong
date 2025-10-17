@@ -9,10 +9,8 @@ export default async function handler(
   res: NextApiResponse,
 ): Promise<void> {
   try {
-    res.setHeader(
-      'Cache-Control',
-      'public, s-maxage=60, stale-while-revalidate=30',
-    );
+    // Disable caching to always fetch the latest articles from Dev.to
+    res.setHeader('Cache-Control', 'no-store');
 
     const { page, per_page, categories, search } = req.query;
 
