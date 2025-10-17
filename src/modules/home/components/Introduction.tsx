@@ -11,10 +11,6 @@ const Introduction = ({ stories = [] }: IntroductionProps) => {
   const router = useRouter();
 
   const handleStoryClick = (story: Story) => {
-    if (story.link) {
-      router.push(story.link);
-      return;
-    }
     router.push(`/stories/${story.id}`);
   };
 
