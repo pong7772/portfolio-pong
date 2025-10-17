@@ -1,6 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-import prisma from '@/common/libs/prisma';
 import { BlogItemProps } from '@/common/types/blog';
 import { getBlogList } from '@/services/blog';
 

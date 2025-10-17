@@ -13,7 +13,9 @@ export const useVisitorCount = () => {
           await fetch('/api/visitors', { method: 'POST' });
           sessionStorage.setItem('site_visited', '1');
         }
-      } catch {}
+      } catch {
+        void 0;
+      }
     };
 
     const fetchCount = async () => {
@@ -21,7 +23,9 @@ export const useVisitorCount = () => {
         const res = await fetch('/api/visitors');
         const data = await res.json();
         if (!cancelled && typeof data?.count === 'number') setCount(data.count);
-      } catch {}
+      } catch {
+        void 0;
+      }
     };
 
     markVisitedOncePerSession().then(fetchCount);

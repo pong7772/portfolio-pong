@@ -49,14 +49,14 @@ const BlogCardNew = ({
   return (
     <Link href={`/blog/${slug}?id=${id}`}>
       <Card
-        className='group relative flex h-[400px] w-full flex-col rounded-lg border shadow-sm dark:border-neutral-800'
+        className='group relative flex h-[200px] w-full flex-col rounded-lg border shadow-sm dark:border-neutral-800'
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
         <div
           className='relative rounded-xl duration-500'
           style={{
-            height: '400px',
+            height: '200px',
             overflow: 'hidden',
           }}
         >
@@ -100,10 +100,10 @@ const BlogCardNew = ({
             </div>
             <Breakline className='!border-neutral-700' />
             <div className='flex justify-between gap-4 px-0.5 text-neutral-400'>
-              <Tooltip title='by aulianza'>
+              <Tooltip title='by visothipong'>
                 <Image
-                  src='/images/aulianza-new.png'
-                  alt='Ryan Aulia'
+                  src='/images/pongpf.png'
+                  alt='Visothipong'
                   width={25}
                   height={25}
                   rounded='rounded-full'

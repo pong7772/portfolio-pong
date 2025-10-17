@@ -3,7 +3,7 @@ User-agent: *
 Allow: /
 
 # Host
-Host: https://aulianza.id
+Host: https://visothipongroth.vercel.app/
 
 # Sitemaps
-Sitemap: https://aulianza.id/sitemap.xml
+Sitemap: https://visothipongroth.vercel.app/sitemap.xml
