@@ -22,7 +22,7 @@ const BlogListNew = () => {
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
 
   const { data, error, mutate, isValidating } = useSWR(
-    `/api/blog?page=${page}&per_page=6&search=${debouncedSearchTerm}`,
+    `/api/blog?page=${page}&per_page=12&search=${debouncedSearchTerm}`,
     fetcher,
     {
       revalidateOnFocus: false,

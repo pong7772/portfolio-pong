@@ -16,7 +16,7 @@ export default async function handler(
 
     const responseData = await getBlogList({
       page: Number(page) || 1,
-      per_page: Number(per_page) || 9,
+      per_page: Number(per_page) || 12,
       categories: categories ? Number(categories) : undefined,
       search: search ? String(search) : undefined,
     });
