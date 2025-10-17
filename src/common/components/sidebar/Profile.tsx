@@ -10,6 +10,7 @@ import MobileMenuButton from './MobileMenuButton';
 import ProfileHeader from './ProfileHeader';
 import SearchBox from '../elements/SearchBox';
 import ThemeToggleButton from '../elements/ThemeToggleButton';
+import BackgroundAudioButton from '../elements/BackgroundAudioButton';
 
 interface ProfileProps {
   isScrolled?: boolean;
@@ -64,6 +65,7 @@ const Profile = ({ isScrolled = false }: ProfileProps) => {
                   'h-[120px] flex-col-reverse !items-end justify-between pb-1',
               )}
             >
+              <BackgroundAudioButton />
               <ThemeToggleButton />
               <MobileMenuButton
                 expandMenu={expandMenu}
