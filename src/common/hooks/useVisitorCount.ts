@@ -5,23 +5,19 @@ export const useVisitorCount = () => {
 
   useEffect(() => {
     let cancelled = false;
-    let handledInteraction = false;
+    let lastSentAt = 0;
 
-    const handleFirstInteraction = async () => {
-      if (handledInteraction) return;
-      handledInteraction = true;
+    const handleAnyInteraction = async () => {
+      const now = Date.now();
+      // Throttle to avoid excessive requests when user performs many actions quickly
+      if (now - lastSentAt < 1000) return;
+      lastSentAt = now;
       try {
-        const hasVisited = sessionStorage.getItem('site_visited');
-        if (!hasVisited) {
-          await fetch('/api/visitors', { method: 'POST' });
-          sessionStorage.setItem('site_visited', '1');
-        }
+        await fetch('/api/visitors', { method: 'POST' });
       } catch {
         void 0;
       } finally {
         void fetchCount();
-        window.removeEventListener('click', handleFirstInteraction);
-        window.removeEventListener('keydown', handleFirstInteraction);
       }
     };
 
@@ -35,17 +31,17 @@ export const useVisitorCount = () => {
       }
     };
 
-    // Count only after first user interaction (click/keydown)
-    window.addEventListener('click', handleFirstInteraction, { once: true });
-    window.addEventListener('keydown', handleFirstInteraction, { once: true });
-    // Still fetch current count for display immediately
+    // Count every user interaction (click/keydown) with throttling
+    window.addEventListener('click', handleAnyInteraction);
+    window.addEventListener('keydown', handleAnyInteraction);
+    // Fetch current count for display immediately
     void fetchCount();
     const id = setInterval(fetchCount, 60_000);
     return () => {
       cancelled = true;
       clearInterval(id);
-      window.removeEventListener('click', handleFirstInteraction);
-      window.removeEventListener('keydown', handleFirstInteraction);
+      window.removeEventListener('click', handleAnyInteraction);
+      window.removeEventListener('keydown', handleAnyInteraction);
     };
   }, []);
 

@@ -32,7 +32,7 @@ const Sidebar = () => {
   return (
     <aside
       id='sidebar'
-      className='sticky top-0 z-10 flex flex-col gap-4 rounded-2xl border border-neutral-200/70 bg-white/70 p-4 shadow-sm backdrop-blur-md transition-all duration-300 dark:border-neutral-800/70 dark:bg-neutral-900/40 lg:gap-6 lg:p-5'
+      className='sticky top-0 z-10 flex flex-col gap-4 rounded-2xl border border-emerald-200/70 bg-gradient-to-br from-emerald-50/70 via-white/70 to-teal-50/70 p-4 shadow-sm backdrop-blur-md transition-all duration-300 dark:border-teal-800/60 dark:from-neutral-900/60 dark:via-neutral-900/40 dark:to-neutral-900/60 lg:gap-6 lg:p-5'
     >
       <Profile isScrolled={isScrolled} />
 
@@ -54,11 +54,11 @@ const Sidebar = () => {
               <ThemeSwitcher />
             </div>
             <div className='px-1'>
-              <div className='mb-2 text-xs text-neutral-600 dark:text-neutral-400'>
+              <div className='mb-2 text-xs uppercase tracking-widest text-emerald-700 dark:text-emerald-300'>
                 Visitors
               </div>
               <div className='flex items-center justify-between gap-2'>
-                <div className='rounded-md border px-2 py-1 text-xs text-neutral-700 dark:border-neutral-700 dark:text-neutral-300'>
+                <div className='rounded-md border border-emerald-200 bg-white/70 px-2 py-1 text-xs text-emerald-800 shadow-sm dark:border-teal-700 dark:bg-neutral-800/70 dark:text-emerald-200'>
                   {visitors.toLocaleString()}
                 </div>
                 <BackgroundAudioButton />
