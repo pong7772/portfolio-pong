@@ -7,6 +7,7 @@ import SearchBox from '../../elements/SearchBox';
 import ThemeSwitcher from '../../elements/ThemeSwitcher';
 import Navigation from '../../sidebar/Navigation';
 import Profile from '../../sidebar/Profile';
+import BackgroundAudioButton from '../../elements/BackgroundAudioButton';
 
 const Sidebar = () => {
   const isMobile = useIsMobile();
@@ -45,6 +46,9 @@ const Sidebar = () => {
               <span className='text-sm text-neutral-600'>Theme</span>
             </div>
             <ThemeSwitcher />
+            <div className='px-3 pt-2'>
+              <BackgroundAudioButton />
+            </div>
           </div>
         </div>
       )}
