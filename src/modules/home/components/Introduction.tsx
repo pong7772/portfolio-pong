@@ -69,48 +69,29 @@ const Introduction = ({ stories = [] }: IntroductionProps) => {
             </h3>
           </div>
 
-          {/* Redesigned stories grid */}
-          <div className='grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3'>
+          {/* Circular stories with green border */}
+          <div className='flex gap-5 overflow-x-auto py-2'>
             {stories.map((story) => (
               <button
                 key={story.id}
                 onClick={() => handleStoryClick(story)}
-                className='group relative overflow-hidden rounded-xl border border-neutral-200/60 bg-white shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md dark:border-neutral-800/60 dark:bg-neutral-900'
+                className='group flex min-w-[84px] flex-col items-center'
                 aria-label={story.title}
               >
-                <div className='relative h-48 w-full sm:h-56'>
-                  <Image
-                    src={story.image}
-                    alt={story.title}
-                    fill
-                    className='object-cover transition-transform duration-300 group-hover:scale-105'
-                    priority
-                  />
-                  <div className='absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-90' />
-                  <div className='absolute inset-x-0 bottom-0 p-4 text-left text-white'>
-                    <h4 className='line-clamp-1 text-lg font-semibold'>
-                      {story.title}
-                    </h4>
-                    {story.description && (
-                      <p className='mt-1 line-clamp-2 text-sm text-neutral-200'>
-                        {story.description}
-                      </p>
-                    )}
+                <div className='relative h-20 w-20 rounded-full border-2 border-green-500 p-0.5 sm:h-24 sm:w-24'>
+                  <div className='relative h-full w-full overflow-hidden rounded-full'>
+                    <Image
+                      src={story.image}
+                      alt={story.title}
+                      fill
+                      className='object-cover transition-transform duration-300 group-hover:scale-105'
+                      priority
+                    />
                   </div>
                 </div>
-
-                <div className='flex items-center justify-between px-4 py-3 text-sm text-neutral-600 dark:text-neutral-300'>
-                  <span className='truncate'>Tap to read</span>
-                  <svg
-                    xmlns='http://www.w3.org/2000/svg'
-                    viewBox='0 0 24 24'
-                    fill='currentColor'
-                    className='h-4 w-4 transition-transform group-hover:translate-x-0.5'
-                    aria-hidden='true'
-                  >
-                    <path d='M13.5 4.5a.75.75 0 0 0 0 1.5h4.69l-9.72 9.72a.75.75 0 1 0 1.06 1.06l9.72-9.72v4.69a.75.75 0 0 0 1.5 0v-7.5a.75.75 0 0 0-.75-.75h-7.5Z' />
-                  </svg>
-                </div>
+                <span className='mt-2 line-clamp-1 max-w-[92px] text-center text-xs text-neutral-700 dark:text-neutral-300 sm:max-w-[112px]'>
+                  {story.title}
+                </span>
               </button>
             ))}
           </div>
