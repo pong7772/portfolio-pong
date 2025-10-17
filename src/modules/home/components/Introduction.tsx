@@ -1,4 +1,5 @@
 import { useRouter } from 'next/router';
+import { useState } from 'react';
 
 import Image from '@/common/components/elements/Image';
 import { Story } from '@/common/types/stories';
@@ -13,6 +14,8 @@ const Introduction = ({ stories = [] }: IntroductionProps) => {
   const handleStoryClick = (story: Story) => {
     router.push(`/stories/${story.id}`);
   };
+
+  const [isPoemExpanded, setIsPoemExpanded] = useState(false);
 
   return (
     <section className='bg-cover bg-no-repeat '>
@@ -49,7 +52,7 @@ const Introduction = ({ stories = [] }: IntroductionProps) => {
                 className='group flex min-w-[84px] flex-col items-center'
                 aria-label={story.title}
               >
-                <div className='relative h-20 w-20 rounded-full border-2 border-green-500 p-0.5 sm:h-24 sm:w-24'>
+                <div className='h-30 w-30 relative rounded-full border-2 border-green-500 p-0.5 sm:h-24 sm:w-24'>
                   <div className='relative h-full w-full overflow-hidden rounded-full'>
                     <Image
                       src={story.image}
@@ -74,23 +77,42 @@ const Introduction = ({ stories = [] }: IntroductionProps) => {
           Bio‑Poem
         </figcaption>
         <blockquote className='mt-3 border-l-2 border-neutral-200 pl-4 italic text-neutral-800 dark:text-neutral-300'>
-          <p className='whitespace-pre-line font-serif text-lg leading-relaxed md:leading-loose'>
-            Roth
-            {'\n'}Tech-head, teammate, foodie, and dreamer,
-            {'\n'}Lover of a good football match, food that bites back, and
-            clean, clever code.
-            {'\n'}Who gets a buzz from new tech and loves cracking a tough
-            problem.
-            {'\n'}Who runs on strong coffee, a solid Wi-Fi signal, and a great
-            playlist.
-            {'\n'}Who's always down to help a friend or squash a tricky bug.
-            {'\n'}Who dreads slow internet, boring meals, and code that just
-            won't compile.
-            {'\n'}Who wants to build cool stuff that helps people learn and
-            grow.
-            {'\n'}Living in Hasselt, with a heart still in Cambodia.
-            {'\n'}Visothipong
-          </p>
+          <div
+            className={
+              isPoemExpanded
+                ? ''
+                : 'relative max-h-56 overflow-hidden md:max-h-64'
+            }
+          >
+            <p className='text-md whitespace-pre-line font-serif leading-relaxed md:leading-loose'>
+              Roth
+              {'\n'}Tech-head, teammate, foodie, and dreamer,
+              {'\n'}Lover of a good football match, food that bites back, and
+              clean, clever code.
+              {'\n'}Who gets a buzz from new tech and loves cracking a tough
+              problem.
+              {'\n'}Who runs on strong coffee, a solid Wi-Fi signal, and a great
+              playlist.
+              {'\n'}Who dreads slow internet, boring meals, and code that just
+              won't compile.
+              {'\n'}Who wants to build cool stuff that helps people learn and
+              grow.
+              {'\n'}Living in Hasselt, with a heart still in Cambodia.
+              {'\n'}Visothipong
+            </p>
+            {!isPoemExpanded && (
+              <div className='pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-white dark:from-neutral-900'></div>
+            )}
+          </div>
+          <button
+            type='button'
+            onClick={() => setIsPoemExpanded((v) => !v)}
+            className='mt-3 select-none text-sm font-medium text-green-600 hover:underline dark:text-green-400'
+            aria-expanded={isPoemExpanded}
+            aria-controls='bio-poem'
+          >
+            {isPoemExpanded ? 'Read less' : 'Read more'}
+          </button>
         </blockquote>
       </figure>
     </section>

@@ -1,13 +1,5 @@
 import { useState } from 'react';
-import {
-  BiX,
-  BiUpload,
-  BiImage,
-  BiLink,
-  BiSort,
-  BiLockOpen,
-  BiKey,
-} from 'react-icons/bi';
+import { BiImage, BiKey, BiLink, BiSort, BiUpload, BiX } from 'react-icons/bi';
 import { toast } from 'sonner';
 
 import Card from '@/common/components/elements/Card';
@@ -70,7 +62,6 @@ const EnhancedStoryUploadForm = ({
       toast.success('Image loaded successfully');
     } catch (error) {
       toast.error('Failed to upload image');
-      console.error(error);
     } finally {
       setIsUploading(false);
     }
@@ -111,7 +102,6 @@ const EnhancedStoryUploadForm = ({
       onSuccess();
     } catch (error) {
       toast.error('Failed to create story');
-      console.error(error);
     } finally {
       setIsUploading(false);
     }
