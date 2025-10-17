@@ -13,11 +13,13 @@ import { MENU_ITEMS } from '@/common/constant/menu';
 import { CommandPaletteContext } from '@/common/context/CommandPaletteContext';
 
 import Image from '../../elements/Image';
+import { useVisitorCount } from '@/common/hooks/useVisitorCount';
 import ThemeToggleButton from '../../elements/ThemeToggleButton';
 import Tooltip from '../../elements/Tooltip';
 import Profile from '../../sidebar/Profile';
 
 const HeaderTop = () => {
+  const visitors = useVisitorCount();
   const { setIsOpen } = useContext(CommandPaletteContext);
   const [showMenu, setShowMenu] = useState(false);
 
@@ -85,6 +87,9 @@ const HeaderTop = () => {
                 className='cursor-pointer'
                 size={20}
               />
+              <div className='rounded-md border px-2 py-1 text-xs text-neutral-600 dark:border-neutral-700 dark:text-neutral-300'>
+                Visitors: {visitors.toLocaleString()}
+              </div>
             </>
           )}
 
