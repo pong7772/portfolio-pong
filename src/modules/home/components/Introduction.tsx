@@ -32,33 +32,8 @@ const Introduction = ({ stories = [] }: IntroductionProps) => {
         </div>
       </div>
 
-      <figure className='mt-8'>
-        <figcaption className='text-sm uppercase tracking-widest text-neutral-500 dark:text-neutral-400'>
-          Bio‑Poem
-        </figcaption>
-        <blockquote className='mt-3 border-l-2 border-neutral-200 pl-4 italic text-neutral-800 dark:text-neutral-300'>
-          <p className='whitespace-pre-line font-serif text-lg leading-relaxed md:leading-loose'>
-            Roth
-            {'\n'}Tech-head, teammate, foodie, and dreamer,
-            {'\n'}Lover of a good football match, food that bites back, and
-            clean, clever code.
-            {'\n'}Who gets a buzz from new tech and loves cracking a tough
-            problem.
-            {'\n'}Who runs on strong coffee, a solid Wi-Fi signal, and a great
-            playlist.
-            {'\n'}Who's always down to help a friend or squash a tricky bug.
-            {'\n'}Who dreads slow internet, boring meals, and code that just
-            won't compile.
-            {'\n'}Who wants to build cool stuff that helps people learn and
-            grow.
-            {'\n'}Living in Hasselt, with a heart still in Cambodia.
-            {'\n'}Visothipong
-          </p>
-        </blockquote>
-      </figure>
-
       {stories.length > 0 && (
-        <div className='mt-10'>
+        <div className='mt-8'>
           <div className='mb-4'>
             <h3 className='text-sm uppercase tracking-widest text-neutral-500 dark:text-neutral-400'>
               Stories about Roth Visothipong
@@ -93,6 +68,31 @@ const Introduction = ({ stories = [] }: IntroductionProps) => {
           </div>
         </div>
       )}
+
+      <figure className='mt-8'>
+        <figcaption className='text-sm uppercase tracking-widest text-neutral-500 dark:text-neutral-400'>
+          Bio‑Poem
+        </figcaption>
+        <blockquote className='mt-3 border-l-2 border-neutral-200 pl-4 italic text-neutral-800 dark:text-neutral-300'>
+          <p className='whitespace-pre-line font-serif text-lg leading-relaxed md:leading-loose'>
+            Roth
+            {'\n'}Tech-head, teammate, foodie, and dreamer,
+            {'\n'}Lover of a good football match, food that bites back, and
+            clean, clever code.
+            {'\n'}Who gets a buzz from new tech and loves cracking a tough
+            problem.
+            {'\n'}Who runs on strong coffee, a solid Wi-Fi signal, and a great
+            playlist.
+            {'\n'}Who's always down to help a friend or squash a tricky bug.
+            {'\n'}Who dreads slow internet, boring meals, and code that just
+            won't compile.
+            {'\n'}Who wants to build cool stuff that helps people learn and
+            grow.
+            {'\n'}Living in Hasselt, with a heart still in Cambodia.
+            {'\n'}Visothipong
+          </p>
+        </blockquote>
+      </figure>
     </section>
   );
 };
