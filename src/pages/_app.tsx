@@ -23,6 +23,7 @@ import {
 
 import defaultSEOConfig from '../../next-seo.config';
 import { initFirebase } from '@/common/libs/firebaseClient';
+import Script from 'next/script';
 
 const ProgressBar = dynamic(
   () => import('src/common/components/elements/ProgressBar'),
@@ -41,6 +42,11 @@ const App = ({ Component, pageProps: { session, ...pageProps } }: AppProps) => {
 
   return (
     <>
+      <Script
+        src='https://cloud.umami.is/script.js'
+        data-website-id='2a660cbf-2041-4705-af1f-f1ddc9873308'
+        strategy='afterInteractive'
+      />
       <style jsx global>
         {`
           html {
