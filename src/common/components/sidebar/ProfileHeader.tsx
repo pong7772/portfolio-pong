@@ -18,14 +18,16 @@ const ProfileHeader = ({ expandMenu, imageSize }: ProfileHeaderProps) => {
         expandMenu && 'flex-col !items-start',
       )}
     >
-      <Image
-        src='/images/pongpf.png'
-        alt='Visothipong'
-        width={expandMenu ? 160 : imageSize}
-        height={expandMenu ? 160 : imageSize}
-        rounded='rounded-[20px]'
-        className='rotate-3 dark:border-neutral-600 lg:hover:scale-105'
-      />
+      <div className='w-full'>
+        <Image
+          src='/images/pongpf.png'
+          alt='Visothipong'
+          width={expandMenu ? 160 : imageSize}
+          height={expandMenu ? 160 : imageSize}
+          rounded='rounded-[20px]'
+          className='h-auto w-full rotate-3 dark:border-neutral-600 lg:hover:scale-105'
+        />
+      </div>
       <>
         <div className='mt-1 flex items-center gap-2 lg:mt-4'>
           <Link href='/' passHref>

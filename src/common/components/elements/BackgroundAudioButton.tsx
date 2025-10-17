@@ -27,10 +27,27 @@ const BackgroundAudioButton = () => {
       }
     };
 
+    // Try immediate autoplay, and also retry after user gesture to satisfy policies
     void tryAutoplay();
+    const onFirstUserGesture = async () => {
+      try {
+        await audio.play();
+        setIsPlaying(true);
+        setIsBlocked(false);
+      } catch {
+        // ignore
+      } finally {
+        window.removeEventListener('click', onFirstUserGesture);
+        window.removeEventListener('keydown', onFirstUserGesture);
+      }
+    };
+    window.addEventListener('click', onFirstUserGesture, { once: true });
+    window.addEventListener('keydown', onFirstUserGesture, { once: true });
     return () => {
       audio.pause();
       audioRef.current = null;
+      window.removeEventListener('click', onFirstUserGesture);
+      window.removeEventListener('keydown', onFirstUserGesture);
     };
   }, []);
 
