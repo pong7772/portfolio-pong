@@ -37,6 +37,13 @@ const ProfileHeader = ({ expandMenu, imageSize }: ProfileHeaderProps) => {
             expandMenu ? 'w-6 sm:w-8 md:w-10' : 'w-full',
             !expandMenu && 'hover:scale-105',
           )}
+          priority={!expandMenu}
+          quality={100}
+          sizes={
+            expandMenu
+              ? '32px'
+              : '(max-width: 640px) 80px, (max-width: 768px) 100px, (max-width: 1024px) 120px, (max-width: 1280px) 140px, 160px'
+          }
         />
       </div>
       <div className={expandMenu ? 'flex-1' : ''}>

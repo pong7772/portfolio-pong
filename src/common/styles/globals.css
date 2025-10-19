@@ -52,3 +52,22 @@ a {
 ::-webkit-scrollbar-thumb {
   @apply rounded-[3px] border-2 border-neutral-300 bg-neutral-600 dark:bg-neutral-400;
 }
+
+/* Image quality optimizations */
+img {
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+  image-rendering: optimize-contrast;
+  -ms-interpolation-mode: nearest-neighbor;
+}
+
+/* Next.js Image component optimizations */
+.next-image-wrapper {
+  position: relative;
+  overflow: hidden;
+}
+
+.next-image-wrapper img {
+  transition: transform 0.3s ease-in-out;
+  will-change: transform;
+}
