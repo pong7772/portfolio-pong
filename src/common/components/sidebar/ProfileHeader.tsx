@@ -18,7 +18,14 @@ const ProfileHeader = ({ expandMenu, imageSize }: ProfileHeaderProps) => {
         expandMenu && 'flex-row !items-center',
       )}
     >
-      <div className={expandMenu ? 'w-12' : 'w-full'}>
+      <div
+        className={clsx(
+          'flex-shrink-0',
+          expandMenu
+            ? 'w-10 sm:w-12'
+            : 'w-full max-w-[200px] sm:max-w-[250px] lg:max-w-none',
+        )}
+      >
         <Image
           src='/images/pongpf.png'
           alt='Visothipong'
@@ -26,8 +33,9 @@ const ProfileHeader = ({ expandMenu, imageSize }: ProfileHeaderProps) => {
           height={expandMenu ? 48 : imageSize}
           rounded={expandMenu ? 'rounded-full' : 'rounded-[20px]'}
           className={clsx(
-            'h-auto rotate-3 dark:border-neutral-600 lg:hover:scale-105',
-            expandMenu ? 'w-12' : 'w-full',
+            'h-auto rotate-3 transition-transform duration-300 dark:border-neutral-600',
+            expandMenu ? 'w-10 sm:w-12' : 'w-full',
+            !expandMenu && 'hover:scale-105',
           )}
         />
       </div>
@@ -42,7 +50,9 @@ const ProfileHeader = ({ expandMenu, imageSize }: ProfileHeaderProps) => {
             <h2
               className={clsx(
                 'font-medium',
-                expandMenu ? 'text-base' : 'text-lg lg:text-xl',
+                expandMenu
+                  ? 'text-sm sm:text-base'
+                  : 'text-base sm:text-lg lg:text-xl',
               )}
             >
               Roth Visothipong
@@ -53,7 +63,9 @@ const ProfileHeader = ({ expandMenu, imageSize }: ProfileHeaderProps) => {
         <div
           className={clsx(
             'text-neutral-600 transition-all duration-300 hover:text-neutral-700 dark:text-neutral-500 dark:hover:text-neutral-400',
-            expandMenu ? 'text-sm' : 'hidden text-[15px] lg:flex',
+            expandMenu
+              ? 'text-xs sm:text-sm'
+              : 'hidden text-sm sm:text-[15px] lg:flex',
           )}
         >
           @pong7772
