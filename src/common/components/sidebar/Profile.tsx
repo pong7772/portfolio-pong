@@ -22,7 +22,7 @@ const Profile = ({ isScrolled = false }: ProfileProps) => {
   const getImageSize = () => {
     let size = isMobile ? 28 : 56;
     if (!isMobile && isScrolled) {
-      size = 0;
+      size = 40; // Maintain minimum size when scrolled
     }
     return size;
   };
@@ -54,7 +54,11 @@ const Profile = ({ isScrolled = false }: ProfileProps) => {
         )}
       >
         <div className='flex items-start justify-between lg:flex-col lg:space-y-3'>
-          <ProfileHeader expandMenu={expandMenu} imageSize={getImageSize()} />
+          <ProfileHeader
+            expandMenu={expandMenu}
+            imageSize={getImageSize()}
+            isScrolled={isScrolled}
+          />
           {/* <ProfileHeader expandMenu={expandMenu} imageSize={55} /> */}
 
           {isMobile && (

@@ -10,7 +10,11 @@ interface ProfileHeaderProps {
   isScrolled?: boolean;
 }
 
-const ProfileHeader = ({ expandMenu, imageSize }: ProfileHeaderProps) => {
+const ProfileHeader = ({
+  expandMenu,
+  imageSize,
+  isScrolled,
+}: ProfileHeaderProps) => {
   return (
     <div
       className={clsx(
@@ -23,7 +27,9 @@ const ProfileHeader = ({ expandMenu, imageSize }: ProfileHeaderProps) => {
           'flex-shrink-0',
           expandMenu
             ? 'w-6 sm:w-8 md:w-10'
-            : 'xs:max-w-[100px] w-full max-w-[80px] sm:max-w-[120px] md:max-w-[140px] lg:max-w-[160px] xl:max-w-[180px] 2xl:max-w-none',
+            : isScrolled
+              ? 'w-10 sm:w-12 md:w-14'
+              : 'xs:max-w-[100px] w-full max-w-[80px] sm:max-w-[120px] md:max-w-[140px] lg:max-w-[160px] xl:max-w-[180px] 2xl:max-w-none',
         )}
       >
         <Image
@@ -34,7 +40,11 @@ const ProfileHeader = ({ expandMenu, imageSize }: ProfileHeaderProps) => {
           rounded={expandMenu ? 'rounded-full' : 'rounded-[12px]'}
           className={clsx(
             'h-auto rotate-3 transition-transform duration-300 dark:border-neutral-600',
-            expandMenu ? 'w-6 sm:w-8 md:w-10' : 'w-full',
+            expandMenu
+              ? 'w-6 sm:w-8 md:w-10'
+              : isScrolled
+                ? 'w-10 sm:w-12 md:w-14'
+                : 'w-full',
             !expandMenu && 'hover:scale-105',
           )}
           priority={!expandMenu}
@@ -42,7 +52,9 @@ const ProfileHeader = ({ expandMenu, imageSize }: ProfileHeaderProps) => {
           sizes={
             expandMenu
               ? '32px'
-              : '(max-width: 640px) 80px, (max-width: 768px) 100px, (max-width: 1024px) 120px, (max-width: 1280px) 140px, 160px'
+              : isScrolled
+                ? '(max-width: 640px) 40px, (max-width: 768px) 48px, (max-width: 1024px) 56px'
+                : '(max-width: 640px) 80px, (max-width: 768px) 100px, (max-width: 1024px) 120px, (max-width: 1280px) 140px, 160px'
           }
         />
       </div>
