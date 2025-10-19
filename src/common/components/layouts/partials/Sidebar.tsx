@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
 
+import { useVisitorCount } from '@/common/hooks/useVisitorCount';
 import useIsMobile from '@/common/hooks/useIsMobile';
 
+import BackgroundAudioButton from '../../elements/BackgroundAudioButton';
 import Breakline from '../../elements/Breakline';
 import SearchBox from '../../elements/SearchBox';
 import ThemeSwitcher from '../../elements/ThemeSwitcher';
 import Navigation from '../../sidebar/Navigation';
 import Profile from '../../sidebar/Profile';
-import BackgroundAudioButton from '../../elements/BackgroundAudioButton';
-import { useVisitorCount } from '@/common/hooks/useVisitorCount';
 
 const Sidebar = () => {
   const visitors = useVisitorCount();
@@ -32,7 +32,7 @@ const Sidebar = () => {
   return (
     <div
       id='sidebar'
-      className='sticky top-0 z-10 flex flex-col space-y-6 transition-all duration-300 lg:py-6'
+      className='sticky top-0 z-10 flex flex-col space-y-4 transition-all duration-300 sm:space-y-6 lg:py-6'
     >
       <Profile isScrolled={isScrolled} />
       {!isMobile && (
@@ -44,13 +44,17 @@ const Sidebar = () => {
           <Breakline className='mx-1' />
           <div className='space-y-2.5 px-1'>
             <div className='px-3'>
-              <span className='text-sm text-neutral-600'>Theme</span>
+              <span className='text-xs text-neutral-600 dark:text-neutral-400 sm:text-sm'>
+                Theme
+              </span>
             </div>
             <ThemeSwitcher />
             <div className='px-3 pt-2'>
-              <div className='mb-2 text-xs text-neutral-600'>Visitors</div>
-              <div className='flex items-center justify-between'>
-                <div className='rounded-md border px-2 py-1 text-xs text-neutral-700 dark:border-neutral-700 dark:text-neutral-300'>
+              <div className='mb-2 text-xs text-neutral-600 dark:text-neutral-400'>
+                Visitors
+              </div>
+              <div className='flex items-center justify-between gap-2'>
+                <div className='rounded-md border border-neutral-200 bg-neutral-50 px-2 py-1 text-xs font-medium text-neutral-700 shadow-sm transition-colors dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-300'>
                   {visitors.toLocaleString()}
                 </div>
                 <BackgroundAudioButton />

@@ -22,10 +22,10 @@ const MenuItem = ({
   const isHashLink = href === '#';
   const router = useRouter();
 
-  const activeClasses = `flex items-center gap-2 py-2 pl-4 pr-2.5 text-neutral-700 dark:text-neutral-400 hover:text-neutral-900 hover:dark:text-neutral-300 rounded-lg group ${
+  const activeClasses = `flex items-center gap-2 py-2 pl-3 pr-2 text-sm sm:pl-4 sm:pr-2.5 text-neutral-700 dark:text-neutral-400 hover:text-neutral-900 hover:dark:text-neutral-300 rounded-lg group transition-all duration-200 ${
     router.pathname === href
       ? 'bg-neutral-200 dark:bg-neutral-800 text-neutral-900 dark:!text-neutral-200'
-      : 'hover:dark:lg:bg-neutral-800 hover:dark:!text-neutral-300 hover:lg:bg-neutral-200 hover:lg:rounded-lg lg:transition-all lg:duration-300'
+      : 'hover:bg-neutral-100 hover:dark:bg-neutral-800/50 hover:dark:!text-neutral-300'
   }`;
 
   const handleClick = () => {
@@ -63,7 +63,7 @@ const MenuItem = ({
             {icon}
           </div>
         )}
-        <div className='ml-0.5 flex-grow'>{title}</div>
+        <div className='ml-0.5 flex-grow truncate'>{title}</div>
         {children && <>{children}</>}
         {isActiveRoute && (
           <ExternalLinkIcon size={22} className='animate-pulse text-gray-500' />
