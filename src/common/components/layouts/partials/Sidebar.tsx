@@ -32,29 +32,29 @@ const Sidebar = () => {
   return (
     <div
       id='sidebar'
-      className='sticky top-0 z-10 flex flex-col space-y-4 transition-all duration-300 sm:space-y-6 lg:py-6'
+      className='sticky top-0 z-10 flex flex-col space-y-3 transition-all duration-300 sm:space-y-4 md:space-y-5 lg:space-y-6 lg:py-6'
     >
       <Profile isScrolled={isScrolled} />
       {!isMobile && (
-        <div className='space-y-3'>
+        <div className='space-y-2 sm:space-y-3'>
           <div className='pb-1'>
             <SearchBox />
           </div>
           <Navigation />
           <Breakline className='mx-1' />
-          <div className='space-y-2.5 px-1'>
-            <div className='px-3'>
-              <span className='text-xs text-neutral-600 dark:text-neutral-400 sm:text-sm'>
+          <div className='space-y-2 px-1 sm:space-y-2.5'>
+            <div className='px-2 sm:px-3'>
+              <span className='text-[10px] text-neutral-600 dark:text-neutral-400 sm:text-xs md:text-sm'>
                 Theme
               </span>
             </div>
             <ThemeSwitcher />
-            <div className='px-3 pt-2'>
-              <div className='mb-2 text-xs text-neutral-600 dark:text-neutral-400'>
+            <div className='px-2 pt-1 sm:px-3 sm:pt-2'>
+              <div className='mb-1 text-[10px] text-neutral-600 dark:text-neutral-400 sm:mb-2 sm:text-xs'>
                 Visitors
               </div>
-              <div className='flex items-center justify-between gap-2'>
-                <div className='rounded-md border border-neutral-200 bg-neutral-50 px-2 py-1 text-xs font-medium text-neutral-700 shadow-sm transition-colors dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-300'>
+              <div className='flex items-center justify-between gap-1 sm:gap-2'>
+                <div className='rounded-md border border-neutral-200 bg-neutral-50 px-1.5 py-0.5 text-[10px] font-medium text-neutral-700 shadow-sm transition-colors dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-300 sm:px-2 sm:py-1 sm:text-xs'>
                   {visitors.toLocaleString()}
                 </div>
                 <BackgroundAudioButton />

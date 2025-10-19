@@ -11,7 +11,7 @@ const Menu = ({ title, list }: MenuProps) => {
   return (
     <div className='flex flex-col space-y-1'>
       {title && (
-        <div className='mb-2 ml-2 mt-1 hidden text-xs text-neutral-600 dark:text-neutral-500 sm:text-sm lg:block'>
+        <div className='mb-1 ml-1 mt-1 hidden text-[10px] text-neutral-600 dark:text-neutral-500 sm:mb-2 sm:ml-2 sm:text-xs md:text-sm lg:block'>
           {title}
         </div>
       )}

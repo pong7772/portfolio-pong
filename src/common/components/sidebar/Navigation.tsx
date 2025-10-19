@@ -12,8 +12,8 @@ const Navigation = () => {
       <Menu list={filteredMenu} />
       <Breakline className='mx-1' />
       <div className='space-y-1'>
-        <div className='px-3 sm:px-4'>
-          <span className='text-xs text-neutral-600 dark:text-neutral-400 sm:text-sm'>
+        <div className='px-2 sm:px-3 md:px-4'>
+          <span className='text-[10px] text-neutral-600 dark:text-neutral-400 sm:text-xs md:text-sm'>
             Apps
           </span>
         </div>

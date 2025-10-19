@@ -14,27 +14,27 @@ const ProfileHeader = ({ expandMenu, imageSize }: ProfileHeaderProps) => {
   return (
     <div
       className={clsx(
-        'flex w-full flex-grow items-center gap-2 sm:gap-3 lg:flex-col lg:items-start lg:gap-0.5 lg:px-2',
-        expandMenu && 'flex-row !items-center gap-2',
+        'flex w-full flex-grow items-center gap-1.5 sm:gap-2 md:gap-3 lg:flex-col lg:items-start lg:gap-0.5 lg:px-2',
+        expandMenu && 'flex-row !items-center gap-1.5 sm:gap-2',
       )}
     >
       <div
         className={clsx(
           'flex-shrink-0',
           expandMenu
-            ? 'w-8 sm:w-10'
-            : 'w-full max-w-[120px] sm:max-w-[140px] md:max-w-[160px] lg:max-w-[180px] xl:max-w-none',
+            ? 'w-6 sm:w-8 md:w-10'
+            : 'xs:max-w-[100px] w-full max-w-[80px] sm:max-w-[120px] md:max-w-[140px] lg:max-w-[160px] xl:max-w-[180px] 2xl:max-w-none',
         )}
       >
         <Image
           src='/images/pongpf.png'
           alt='Visothipong'
-          width={expandMenu ? 32 : imageSize}
-          height={expandMenu ? 32 : imageSize}
-          rounded={expandMenu ? 'rounded-full' : 'rounded-[16px]'}
+          width={expandMenu ? 24 : imageSize}
+          height={expandMenu ? 24 : imageSize}
+          rounded={expandMenu ? 'rounded-full' : 'rounded-[12px]'}
           className={clsx(
             'h-auto rotate-3 transition-transform duration-300 dark:border-neutral-600',
-            expandMenu ? 'w-8 sm:w-10' : 'w-full',
+            expandMenu ? 'w-6 sm:w-8 md:w-10' : 'w-full',
             !expandMenu && 'hover:scale-105',
           )}
         />
@@ -51,21 +51,21 @@ const ProfileHeader = ({ expandMenu, imageSize }: ProfileHeaderProps) => {
               className={clsx(
                 'font-medium',
                 expandMenu
-                  ? 'text-xs sm:text-sm'
-                  : 'text-sm sm:text-base md:text-lg lg:text-xl',
+                  ? 'text-[10px] sm:text-xs md:text-sm'
+                  : 'xs:text-sm text-xs sm:text-base md:text-lg lg:text-xl',
               )}
             >
               Roth Visothipong
             </h2>
           </Link>
-          <VerifiedIcon size={expandMenu ? 14 : 16} className='text-blue-400' />
+          <VerifiedIcon size={expandMenu ? 10 : 14} className='text-blue-400' />
         </div>
         <div
           className={clsx(
             'text-neutral-600 transition-all duration-300 hover:text-neutral-700 dark:text-neutral-500 dark:hover:text-neutral-400',
             expandMenu
-              ? 'text-[10px] sm:text-xs'
-              : 'hidden text-xs sm:text-sm md:text-[15px] lg:flex',
+              ? 'text-[8px] sm:text-[10px] md:text-xs'
+              : 'xs:text-xs hidden text-[10px] sm:text-sm md:text-[15px] lg:flex',
           )}
         >
           @pong7772

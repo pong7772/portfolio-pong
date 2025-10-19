@@ -22,7 +22,7 @@ const MenuItem = ({
   const isHashLink = href === '#';
   const router = useRouter();
 
-  const activeClasses = `flex items-center gap-2 py-2 pl-3 pr-2 text-sm sm:pl-4 sm:pr-2.5 text-neutral-700 dark:text-neutral-400 hover:text-neutral-900 hover:dark:text-neutral-300 rounded-lg group transition-all duration-200 ${
+  const activeClasses = `flex items-center gap-1.5 py-1.5 pl-2 pr-1.5 text-xs sm:gap-2 sm:py-2 sm:pl-3 sm:pr-2 sm:text-sm md:pl-4 md:pr-2.5 text-neutral-700 dark:text-neutral-400 hover:text-neutral-900 hover:dark:text-neutral-300 rounded-lg group transition-all duration-200 ${
     router.pathname === href
       ? 'bg-neutral-200 dark:bg-neutral-800 text-neutral-900 dark:!text-neutral-200'
       : 'hover:bg-neutral-100 hover:dark:bg-neutral-800/50 hover:dark:!text-neutral-300'
