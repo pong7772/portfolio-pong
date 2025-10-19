@@ -1,7 +1,7 @@
-import { useRouter } from 'next/router';
 import { useState } from 'react';
 
 import Image from '@/common/components/elements/Image';
+import StoryModal from '@/common/components/elements/StoryModal';
 import { Story } from '@/common/types/stories';
 
 interface IntroductionProps {
@@ -9,13 +9,19 @@ interface IntroductionProps {
 }
 
 const Introduction = ({ stories = [] }: IntroductionProps) => {
-  const router = useRouter();
+  const [selectedStory, setSelectedStory] = useState<Story | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isPoemExpanded, setIsPoemExpanded] = useState(false);
 
   const handleStoryClick = (story: Story) => {
-    router.push(`/stories/${story.id}`);
+    setSelectedStory(story);
+    setIsModalOpen(true);
   };
 
-  const [isPoemExpanded, setIsPoemExpanded] = useState(false);
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setSelectedStory(null);
+  };
 
   return (
     <section className='bg-cover bg-no-repeat '>
@@ -115,6 +121,13 @@ const Introduction = ({ stories = [] }: IntroductionProps) => {
           </button>
         </blockquote>
       </figure>
+
+      {/* Story Modal */}
+      <StoryModal
+        story={selectedStory}
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+      />
     </section>
   );
 };

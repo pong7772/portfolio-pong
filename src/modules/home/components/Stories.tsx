@@ -1,9 +1,9 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { BiChevronLeft, BiChevronRight } from 'react-icons/bi';
 
 import Image from '@/common/components/elements/Image';
+import StoryModal from '@/common/components/elements/StoryModal';
 import { Story } from '@/common/types/stories';
 
 interface StoriesProps {
@@ -11,9 +11,10 @@ interface StoriesProps {
 }
 
 const Stories = ({ stories }: StoriesProps) => {
-  const router = useRouter();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+  const [selectedStory, setSelectedStory] = useState<Story | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   // Auto slideshow - change every 5 seconds
   useEffect(() => {
@@ -37,12 +38,13 @@ const Stories = ({ stories }: StoriesProps) => {
   };
 
   const handleStoryClick = (story: Story) => {
-    // Use custom link if provided, otherwise go to story detail page
-    if (story.link) {
-      router.push(story.link);
-    } else {
-      router.push(`/stories/${story.id}`);
-    }
+    setSelectedStory(story);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setSelectedStory(null);
   };
 
   if (stories.length === 0) return null;
@@ -162,6 +164,13 @@ const Stories = ({ stories }: StoriesProps) => {
             ))}
           </div>
         )}
+
+        {/* Story Modal */}
+        <StoryModal
+          story={selectedStory}
+          isOpen={isModalOpen}
+          onClose={handleCloseModal}
+        />
       </div>
     </div>
   );
