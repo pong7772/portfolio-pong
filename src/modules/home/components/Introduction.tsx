@@ -66,6 +66,7 @@ const Introduction = ({ stories = [] }: IntroductionProps) => {
                       fill
                       className='object-cover transition-transform duration-300 group-hover:scale-105'
                       priority
+                      unoptimized={story.image?.startsWith('data:')}
                     />
                   </div>
                 </div>

@@ -92,6 +92,7 @@ const StoryModal = ({ story, isOpen, onClose }: StoryModalProps) => {
                 className='object-cover'
                 priority
                 quality={100}
+                unoptimized={story.image?.startsWith('data:')}
               />
               <div className='absolute inset-0 bg-gradient-to-t from-black/60 to-transparent' />
 

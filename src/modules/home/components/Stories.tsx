@@ -80,6 +80,7 @@ const Stories = ({ stories }: StoriesProps) => {
                 fill
                 className='object-cover'
                 priority
+                unoptimized={stories[currentIndex].image?.startsWith('data:')}
               />
               {/* Gradient overlay */}
               <div className='absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent' />
@@ -159,6 +160,7 @@ const Stories = ({ stories }: StoriesProps) => {
                   alt={story.title}
                   fill
                   className='object-cover'
+                  unoptimized={story.image?.startsWith('data:')}
                 />
               </button>
             ))}

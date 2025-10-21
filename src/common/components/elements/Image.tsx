@@ -5,6 +5,11 @@ import NextImage, { ImageProps as NextImageProps } from 'next/image';
 import { useState } from 'react';
 
 import cn from '@/common/libs/cn';
+import {
+  debugImageSource,
+  getImageOptimizationSettings,
+  validateBase64Image,
+} from '@/common/utils/imageUtils';
 
 type ImageProps = {
   rounded?: string;
@@ -18,12 +23,14 @@ const Image = (props: ImageProps) => {
   const [hasError, setHasError] = useState(false);
 
   // Debug logging for image issues
-  if (typeof window !== 'undefined' && !src) {
-    console.warn('Image component received empty src:', { alt, className });
-  }
+  debugImageSource(src, 'Image');
+
+  // Validate and clean the image source
+  const validatedSrc = validateBase64Image(src as string) || src;
+  const optimizationSettings = getImageOptimizationSettings(validatedSrc);
 
   // Convert src to string for display purposes
-  const srcString = typeof src === 'string' ? src : '';
+  const srcString = typeof validatedSrc === 'string' ? validatedSrc : '';
 
   const handleLoad = () => {
     setLoading(false);
@@ -67,17 +74,18 @@ const Image = (props: ImageProps) => {
             rounded,
             className,
           )}
-          src={src}
+          src={validatedSrc}
           alt={alt}
           loading='lazy'
-          quality={100}
+          quality={optimizationSettings.quality}
           placeholder='blur'
           blurDataURL='data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k='
           onLoad={handleLoad}
           onError={handleError}
           width={width || undefined}
           height={height || undefined}
-          unoptimized={false}
+          unoptimized={optimizationSettings.unoptimized}
+          priority={optimizationSettings.priority}
           {...rest}
         />
       )}
