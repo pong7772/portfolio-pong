@@ -9,9 +9,9 @@ interface IntroductionProps {
 }
 
 const Introduction = ({ stories = [] }: IntroductionProps) => {
+  const [isPoemExpanded, setIsPoemExpanded] = useState(false);
   const [selectedStory, setSelectedStory] = useState<Story | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isPoemExpanded, setIsPoemExpanded] = useState(false);
 
   const handleStoryClick = (story: Story) => {
     setSelectedStory(story);
@@ -61,12 +61,11 @@ const Introduction = ({ stories = [] }: IntroductionProps) => {
                 <div className='relative h-20 w-20 rounded-full border-2 border-green-500 p-0.5 sm:h-24 sm:w-24 md:h-28 md:w-28 lg:h-24 lg:w-24'>
                   <div className='relative h-full w-full overflow-hidden rounded-full'>
                     <Image
-                      src={story.image || '/images/placeholder.png'}
+                      src={story.image}
                       alt={story.title}
                       fill
                       className='object-cover transition-transform duration-300 group-hover:scale-105'
                       priority
-                      unoptimized={story.image?.startsWith('data:')}
                     />
                   </div>
                 </div>
