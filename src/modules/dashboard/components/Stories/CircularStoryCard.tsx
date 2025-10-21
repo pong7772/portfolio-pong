@@ -48,11 +48,10 @@ const CircularStoryCard = ({
         {/* Image */}
         <div className='relative h-full w-full'>
           <Image
-            src={story.image || '/images/placeholder.png'}
+            src={story.image}
             alt={story.title}
             fill
             className='object-cover'
-            unoptimized={story.image?.startsWith('data:')}
           />
 
           {/* Gradient overlay for better text visibility */}

@@ -1,5 +1,5 @@
-import { type Analytics, getAnalytics, isSupported } from 'firebase/analytics';
-import { type FirebaseApp, getApps, initializeApp } from 'firebase/app';
+import { initializeApp, getApps, type FirebaseApp } from 'firebase/app';
+import { getAnalytics, isSupported, type Analytics } from 'firebase/analytics';
 
 let app: FirebaseApp | undefined;
 let analytics: Analytics | undefined;
@@ -36,4 +36,4 @@ export const initFirebase = async (): Promise<{
   return { app, analytics };
 };
 
-export { analytics, app };
+export { app, analytics };

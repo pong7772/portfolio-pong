@@ -1,7 +1,6 @@
 import AOS from 'aos';
 import type { AppProps } from 'next/app';
 import dynamic from 'next/dynamic';
-import Script from 'next/script';
 import { SessionProvider } from 'next-auth/react';
 import { DefaultSeo } from 'next-seo';
 import { ThemeProvider } from 'next-themes';
@@ -15,7 +14,6 @@ import '@/common/styles/globals.css';
 import CommandPalette from '@/common/components/elements/CommandPalette';
 import Layout from '@/common/components/layouts';
 import { CommandPaletteProvider } from '@/common/context/CommandPaletteContext';
-import { initFirebase } from '@/common/libs/firebaseClient';
 import {
   firaCode,
   jakartaSans,
@@ -24,6 +22,8 @@ import {
 } from '@/common/styles/fonts';
 
 import defaultSEOConfig from '../../next-seo.config';
+import { initFirebase } from '@/common/libs/firebaseClient';
+import Script from 'next/script';
 
 const ProgressBar = dynamic(
   () => import('src/common/components/elements/ProgressBar'),

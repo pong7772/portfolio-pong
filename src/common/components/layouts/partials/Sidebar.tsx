@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
-import useIsMobile from '@/common/hooks/useIsMobile';
 import { useVisitorCount } from '@/common/hooks/useVisitorCount';
+import useIsMobile from '@/common/hooks/useIsMobile';
 
 import BackgroundAudioButton from '../../elements/BackgroundAudioButton';
 import Breakline from '../../elements/Breakline';

@@ -32,21 +32,6 @@ const handleAxiosError = (
 
 // Transform Dev.to article to WordPress-like format
 const transformDevToArticle = (article: any): BlogItemProps => {
-  const featuredImageUrl = article.cover_image || article.social_image || '';
-
-  // Debug logging for image URLs (only in development)
-  if (
-    process.env.NODE_ENV === 'development' &&
-    typeof window !== 'undefined' &&
-    !featuredImageUrl
-  ) {
-    console.warn('No featured image found for article:', {
-      title: article.title,
-      cover_image: article.cover_image,
-      social_image: article.social_image,
-    });
-  }
-
   return {
     id: article.id,
     date: article.published_at || article.created_at,
@@ -91,7 +76,7 @@ const transformDevToArticle = (article: any): BlogItemProps => {
       filter: 'raw',
     })),
     amp_enabled: false,
-    featured_image_url: featuredImageUrl,
+    featured_image_url: article.cover_image || article.social_image || '',
     total_views_count: article.public_reactions_count || 0,
   };
 };
