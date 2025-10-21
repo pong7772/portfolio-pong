@@ -35,12 +35,15 @@ const Image = (props: ImageProps) => {
   const handleLoad = () => {
     setLoading(false);
     setHasError(false);
+    console.log('Image loaded successfully:', srcString);
   };
 
   const handleError = () => {
     setLoading(false);
     setHasError(true);
     console.error('Image failed to load:', srcString);
+    console.error('Image src type:', typeof src);
+    console.error('Image src value:', src);
   };
 
   return (

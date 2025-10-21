@@ -5,6 +5,7 @@ import Container from '@/common/components/elements/Container';
 import prisma from '@/common/libs/prisma';
 import { Story } from '@/common/types/stories';
 import Home from '@/modules/home';
+import DebugImageTest from '@/components/DebugImageTest';
 
 interface HomePageProps {
   stories: Story[];
@@ -15,6 +16,7 @@ const HomePage: NextPage<HomePageProps> = ({ stories }) => {
     <>
       <NextSeo title='Visothipong - Personal Website' />
       <Container data-aos='fade-up'>
+        <DebugImageTest />
         <Home stories={stories} />
       </Container>
     </>
