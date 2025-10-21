@@ -49,7 +49,6 @@ const Introduction = ({ stories = [] }: IntroductionProps) => {
             </h3>
           </div>
 
-          {/* Circular stories with green border */}
           <div className='flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth py-2 sm:gap-5'>
             {stories.map((story) => (
               <button
@@ -122,7 +121,6 @@ const Introduction = ({ stories = [] }: IntroductionProps) => {
         </blockquote>
       </figure>
 
-      {/* Story Modal */}
       <StoryModal
         story={selectedStory}
         isOpen={isModalOpen}
