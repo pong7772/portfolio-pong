@@ -22,15 +22,15 @@ const Image = (props: ImageProps) => {
   const [isLoading, setLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
 
+  // Convert src to string for processing
+  const srcString = typeof src === 'string' ? src : '';
+
   // Debug logging for image issues
-  debugImageSource(src, 'Image');
+  debugImageSource(srcString, 'Image');
 
   // Validate and clean the image source
-  const validatedSrc = validateBase64Image(src as string) || src;
+  const validatedSrc = validateBase64Image(srcString) || srcString;
   const optimizationSettings = getImageOptimizationSettings(validatedSrc);
-
-  // Convert src to string for display purposes
-  const srcString = typeof validatedSrc === 'string' ? validatedSrc : '';
 
   const handleLoad = () => {
     setLoading(false);
@@ -74,7 +74,7 @@ const Image = (props: ImageProps) => {
             rounded,
             className,
           )}
-          src={validatedSrc}
+          src={src}
           alt={alt}
           loading='lazy'
           quality={optimizationSettings.quality}
