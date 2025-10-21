@@ -2,8 +2,9 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect } from 'react';
 import { IoClose as CloseIcon } from 'react-icons/io5';
 
-import Image from './Image';
 import { Story } from '@/common/types/stories';
+
+import Image from './Image';
 
 interface StoryModalProps {
   story: Story | null;

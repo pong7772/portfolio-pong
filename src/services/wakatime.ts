@@ -95,7 +95,8 @@ export const getALLTimeSinceToday = async (): Promise<{
 
     const status = response.status;
 
-    if (status >= 400) return { status, data: { text: undefined, total_seconds: 0 } };
+    if (status >= 400)
+      return { status, data: { text: undefined, total_seconds: 0 } };
 
     const getData = response.data;
 

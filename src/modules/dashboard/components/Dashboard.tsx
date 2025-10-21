@@ -3,8 +3,8 @@ import { GITHUB_ACCOUNTS } from '@/common/constant/github';
 
 import CodingActive from './CodingActive';
 import Contributions from './Contributions';
-import StoriesManager from './Stories';
 import ProjectsManager from './Projects';
+import StoriesManager from './Stories';
 
 const Dashboard = () => {
   return (

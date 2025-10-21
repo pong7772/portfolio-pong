@@ -11,13 +11,13 @@ import {
 
 import { MENU_ITEMS } from '@/common/constant/menu';
 import { CommandPaletteContext } from '@/common/context/CommandPaletteContext';
-
-import Image from '../../elements/Image';
 import { useVisitorCount } from '@/common/hooks/useVisitorCount';
+
+import BackgroundAudioButton from '../../elements/BackgroundAudioButton';
+import Image from '../../elements/Image';
 import ThemeToggleButton from '../../elements/ThemeToggleButton';
 import Tooltip from '../../elements/Tooltip';
 import Profile from '../../sidebar/Profile';
-import BackgroundAudioButton from '../../elements/BackgroundAudioButton';
 
 const HeaderTop = () => {
   const visitors = useVisitorCount();

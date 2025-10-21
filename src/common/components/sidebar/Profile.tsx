@@ -8,9 +8,9 @@ import useIsMobile from '@/common/hooks/useIsMobile';
 import MobileMenu from './MobileMenu';
 import MobileMenuButton from './MobileMenuButton';
 import ProfileHeader from './ProfileHeader';
+import BackgroundAudioButton from '../elements/BackgroundAudioButton';
 import SearchBox from '../elements/SearchBox';
 import ThemeToggleButton from '../elements/ThemeToggleButton';
-import BackgroundAudioButton from '../elements/BackgroundAudioButton';
 
 interface ProfileProps {
   isScrolled?: boolean;

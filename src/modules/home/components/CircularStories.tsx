@@ -3,8 +3,8 @@ import { useEffect, useState } from 'react';
 import { BiChevronLeft, BiChevronRight } from 'react-icons/bi';
 
 import StoryModal from '@/common/components/elements/StoryModal';
-import CircularStoryCard from '@/modules/dashboard/components/Stories/CircularStoryCard';
 import { Story } from '@/common/types/stories';
+import CircularStoryCard from '@/modules/dashboard/components/Stories/CircularStoryCard';
 
 interface CircularStoriesProps {
   stories: Story[];

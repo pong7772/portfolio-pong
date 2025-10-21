@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { BiTrash, BiEdit } from 'react-icons/bi';
+import { BiEdit, BiTrash } from 'react-icons/bi';
 
 import Image from '@/common/components/elements/Image';
 import { Story } from '@/common/types/stories';

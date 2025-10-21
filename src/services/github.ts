@@ -87,7 +87,14 @@ export const getGithubUser = async (type: string) => {
     return {
       status: 400,
       data: {
-        contributionsCollection: { contributionCalendar: { colors: [], totalContributions: 0, months: [], weeks: [] } },
+        contributionsCollection: {
+          contributionCalendar: {
+            colors: [],
+            totalContributions: 0,
+            months: [],
+            weeks: [],
+          },
+        },
       },
     };
   }

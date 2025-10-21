@@ -19,7 +19,9 @@ const REFRESH_TOKEN = process.env.SPOTIFY_REFRESH_TOKEN;
 
 // Check if Spotify credentials are configured
 const isSpotifyConfigured = CLIENT_ID && CLIENT_SECRET && REFRESH_TOKEN;
-const TOKEN = isSpotifyConfigured ? Buffer.from(`${CLIENT_ID}:${CLIENT_SECRET}`).toString('base64') : '';
+const TOKEN = isSpotifyConfigured
+  ? Buffer.from(`${CLIENT_ID}:${CLIENT_SECRET}`).toString('base64')
+  : '';
 
 const BASE_URL = 'https://api.spotify.com/v1';
 const AVAILABLE_DEVICES_ENDPOINT = `${BASE_URL}/me/player/devices`;
@@ -29,7 +31,9 @@ const TOKEN_ENDPOINT = `https://accounts.spotify.com/api/token`;
 
 const getAccessToken = async (): Promise<AccessTokenResponseProps> => {
   if (!isSpotifyConfigured) {
-    throw new Error('Spotify credentials not configured. Please set SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET, and SPOTIFY_REFRESH_TOKEN environment variables.');
+    throw new Error(
+      'Spotify credentials not configured. Please set SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET, and SPOTIFY_REFRESH_TOKEN environment variables.',
+    );
   }
 
   const response = await axios.post(
