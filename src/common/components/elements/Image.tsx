@@ -22,6 +22,9 @@ const Image = (props: ImageProps) => {
     console.warn('Image component received empty src:', { alt, className });
   }
 
+  // Convert src to string for display purposes
+  const srcString = typeof src === 'string' ? src : '';
+
   const handleLoad = () => {
     setLoading(false);
     setHasError(false);
@@ -30,7 +33,7 @@ const Image = (props: ImageProps) => {
   const handleError = () => {
     setLoading(false);
     setHasError(true);
-    console.error('Image failed to load:', src);
+    console.error('Image failed to load:', srcString);
   };
 
   return (
@@ -45,9 +48,11 @@ const Image = (props: ImageProps) => {
         <div className='flex h-full w-full items-center justify-center bg-neutral-200 dark:bg-neutral-800'>
           <div className='text-center text-neutral-500 dark:text-neutral-400'>
             <div className='text-sm'>Image not available</div>
-            {src && (
+            {srcString && (
               <div className='mt-1 break-all text-xs opacity-75'>
-                {src.length > 50 ? `${src.substring(0, 50)}...` : src}
+                {srcString.length > 50
+                  ? `${srcString.substring(0, 50)}...`
+                  : srcString}
               </div>
             )}
           </div>
