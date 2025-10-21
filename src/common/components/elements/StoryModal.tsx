@@ -85,7 +85,7 @@ const StoryModal = ({ story, isOpen, onClose }: StoryModalProps) => {
             {/* Story Image */}
             <div className='relative h-64 w-full sm:h-80'>
               <Image
-                src={story.image}
+                src={story.image || '/images/placeholder.png'}
                 alt={story.title}
                 fill
                 className='object-cover'

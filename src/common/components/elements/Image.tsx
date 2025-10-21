@@ -15,6 +15,23 @@ type ImageProps = {
 const Image = (props: ImageProps) => {
   const { alt, src, className, rounded, width, height, ...rest } = props;
   const [isLoading, setLoading] = useState(true);
+  const [hasError, setHasError] = useState(false);
+
+  // Debug logging for image issues
+  if (typeof window !== 'undefined' && !src) {
+    console.warn('Image component received empty src:', { alt, className });
+  }
+
+  const handleLoad = () => {
+    setLoading(false);
+    setHasError(false);
+  };
+
+  const handleError = () => {
+    setLoading(false);
+    setHasError(true);
+    console.error('Image failed to load:', src);
+  };
 
   return (
     <div
@@ -24,27 +41,41 @@ const Image = (props: ImageProps) => {
         rounded,
       )}
     >
-      <NextImage
-        className={cn(
-          'duration-700 ease-in-out',
-          isLoading
-            ? 'scale-[1.02] blur-xl grayscale'
-            : 'scale-100 blur-0 grayscale-0',
-          rounded,
-          className,
-        )}
-        src={src}
-        alt={alt}
-        loading='lazy'
-        quality={100}
-        placeholder='blur'
-        blurDataURL='data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k='
-        onLoad={() => setLoading(false)}
-        width={width || undefined}
-        height={height || undefined}
-        unoptimized={false}
-        {...rest}
-      />
+      {hasError ? (
+        <div className='flex h-full w-full items-center justify-center bg-neutral-200 dark:bg-neutral-800'>
+          <div className='text-center text-neutral-500 dark:text-neutral-400'>
+            <div className='text-sm'>Image not available</div>
+            {src && (
+              <div className='mt-1 break-all text-xs opacity-75'>
+                {src.length > 50 ? `${src.substring(0, 50)}...` : src}
+              </div>
+            )}
+          </div>
+        </div>
+      ) : (
+        <NextImage
+          className={cn(
+            'duration-700 ease-in-out',
+            isLoading
+              ? 'scale-[1.02] blur-xl grayscale'
+              : 'scale-100 blur-0 grayscale-0',
+            rounded,
+            className,
+          )}
+          src={src}
+          alt={alt}
+          loading='lazy'
+          quality={100}
+          placeholder='blur'
+          blurDataURL='data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k='
+          onLoad={handleLoad}
+          onError={handleError}
+          width={width || undefined}
+          height={height || undefined}
+          unoptimized={false}
+          {...rest}
+        />
+      )}
     </div>
   );
 };

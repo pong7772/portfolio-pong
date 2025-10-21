@@ -75,7 +75,7 @@ const Stories = ({ stories }: StoriesProps) => {
               onClick={() => handleStoryClick(stories[currentIndex])}
             >
               <Image
-                src={stories[currentIndex].image}
+                src={stories[currentIndex].image || '/images/placeholder.png'}
                 alt={stories[currentIndex].title}
                 fill
                 className='object-cover'
@@ -155,7 +155,7 @@ const Stories = ({ stories }: StoriesProps) => {
                 }`}
               >
                 <Image
-                  src={story.image}
+                  src={story.image || '/images/placeholder.png'}
                   alt={story.title}
                   fill
                   className='object-cover'
