@@ -18,7 +18,7 @@ const Image = (props: ImageProps) => {
   return (
     <div className={clsx('next-image-wrapper overflow-hidden', rounded)}>
       <NextImage
-        className={cn('duration-700 ease-in-out', rounded, className)}
+        className={cn(rounded, className)}
         src={src}
         alt={alt}
         loading='lazy'

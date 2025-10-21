@@ -55,10 +55,7 @@ a {
 
 /* Image quality optimizations */
 img {
-  image-rendering: -webkit-optimize-contrast;
-  image-rendering: crisp-edges;
-  image-rendering: optimize-contrast;
-  -ms-interpolation-mode: nearest-neighbor;
+  image-rendering: auto;
 }
 
 /* Next.js Image component optimizations */
