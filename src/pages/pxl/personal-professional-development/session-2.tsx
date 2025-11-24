@@ -38,25 +38,6 @@ export default function Session2() {
             </header>
 
             {/* Instructions Card */}
-            <div className='mb-10 rounded-xl border border-indigo-100 bg-indigo-50 p-6 text-center shadow-sm dark:border-indigo-800 dark:bg-indigo-900/20'>
-              <h2 className='mb-2 text-sm font-bold uppercase tracking-wide text-indigo-900 dark:text-indigo-200'>
-                Instructions
-              </h2>
-              <p className='mb-6 font-medium text-indigo-800 dark:text-indigo-300'>
-                Your interview will take place in November / December (Book via
-                BB).
-              </p>
-              <div className='flex flex-col justify-center gap-4 sm:flex-row'>
-                <div className='flex items-center justify-center gap-2 rounded-lg border border-indigo-100 bg-white px-5 py-3 font-medium text-indigo-600 shadow-sm dark:border-indigo-800 dark:bg-neutral-800 dark:text-indigo-400'>
-                  <Upload size={18} />
-                  <span>1. Upload to BB folder</span>
-                </div>
-                <div className='flex items-center justify-center gap-2 rounded-lg border border-indigo-100 bg-white px-5 py-3 font-medium text-indigo-600 shadow-sm dark:border-indigo-800 dark:bg-neutral-800 dark:text-indigo-400'>
-                  <Copy size={18} />
-                  <span>2. Copy to OneNote</span>
-                </div>
-              </div>
-            </div>
 
             {/* 1. REALITY */}
             <section className='mb-8 rounded-xl border border-slate-100 bg-white p-8 shadow-md dark:border-neutral-700 dark:bg-neutral-800'>
