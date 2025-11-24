@@ -3,11 +3,11 @@ import { NextSeo } from 'next-seo';
 import {
   FiClipboard as ClipboardList,
   FiTarget as Target,
-  FiLightbulb as Lightbulb,
-  FiCheckSquare as CheckSquare,
   FiUpload as Upload,
   FiCopy as Copy,
 } from 'react-icons/fi';
+import { BsLightbulbFill as Lightbulb } from 'react-icons/bs';
+import { BiCheckSquare as CheckSquare } from 'react-icons/bi';
 
 import Container from '@/common/components/elements/Container';
 
