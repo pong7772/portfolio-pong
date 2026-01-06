@@ -1,6 +1,7 @@
 import useSWR from 'swr';
 
 import Breakline from '@/common/components/elements/Breakline';
+import Image from '@/common/components/elements/Image';
 import MDXComponent from '@/common/components/elements/MDXComponent';
 import { calculateReadingTime } from '@/common/helpers';
 import { BlogDetailProps } from '@/common/types/blog';
@@ -15,6 +16,7 @@ const BlogDetail = ({
   slug,
   content,
   tags_list,
+  featured_image_url,
 }: BlogDetailProps) => {
   const { data: viewsData } = useSWR(
     `/api/views?slug=${slug}&id=${id}`,
@@ -35,6 +37,17 @@ const BlogDetail = ({
         published_at={date}
         page_views_count={viewsCount}
       />
+      {featured_image_url && (
+        <div className='relative aspect-video w-full overflow-hidden rounded-xl lg:aspect-[21/9]'>
+          <Image
+            src={featured_image_url}
+            alt={title?.rendered}
+            fill
+            className='object-cover transition-transform duration-300 group-hover:scale-105'
+            priority
+          />
+        </div>
+      )}
       <div className='space-y-6 leading-[1.8] dark:text-neutral-300 '>
         {content?.rendered && <MDXComponent>{content?.markdown}</MDXComponent>}
       </div>

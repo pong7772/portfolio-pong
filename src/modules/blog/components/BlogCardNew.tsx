@@ -57,9 +57,9 @@ const BlogCardNew = ({
           <Image
             src={featured_image_url || defaultImage}
             alt={title?.rendered}
-            fill={true}
-            sizes='100vw, 100vh'
-            className='h-full w-full transform object-cover object-left transition-transform duration-300 group-hover:scale-105 group-hover:blur-sm'
+            fill
+            className='object-cover object-left transition-transform duration-300 group-hover:scale-105'
+            priority
           />
           <div className='absolute inset-0 bg-gradient-to-b from-black/20 to-black opacity-80 transition-opacity duration-300'></div>
         </div>

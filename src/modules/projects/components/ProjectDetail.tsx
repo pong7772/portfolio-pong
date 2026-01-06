@@ -43,13 +43,15 @@ const ProjectDetail = ({
           link_github={link_github}
         />
       </div>
-      <Image
-        src={image}
-        width={800}
-        height={400}
-        alt={title}
-        className='hover:scale-105'
-      />
+      <div className='relative aspect-video w-full overflow-hidden rounded-xl'>
+        <Image
+          src={image}
+          fill
+          alt={title}
+          className='object-cover transition-transform duration-300 group-hover:scale-105'
+          priority
+        />
+      </div>
       {content && (
         <div className='mt-5 space-y-6 leading-[1.8] dark:text-neutral-300'>
           <MDXComponent>{content}</MDXComponent>

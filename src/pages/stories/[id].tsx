@@ -68,7 +68,7 @@ const StoryDetailPage: NextPage<StoryDetailPageProps> = ({ story }) => {
                 src={story.image}
                 alt={story.title}
                 fill
-                className='object-cover'
+                className='object-cover transition-transform duration-300 group-hover:scale-105'
                 priority
               />
             </div>

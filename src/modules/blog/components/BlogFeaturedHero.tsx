@@ -63,9 +63,9 @@ const BlogFeaturedHero = ({ data }: BlogFeaturedProps) => {
         <Image
           src={currentFeatured?.featured_image_url || defaultImage}
           alt={currentFeatured?.title?.rendered}
-          fill={true}
-          sizes='100vw, 100vh'
-          className='h-full w-full transform object-cover transition-transform duration-300'
+          fill
+          className='object-cover transition-transform duration-300 group-hover:scale-105'
+          priority
         />
         <div className='absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-70 transition-opacity duration-300'></div>
       </div>
