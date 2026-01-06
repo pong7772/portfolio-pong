@@ -4,29 +4,31 @@ import { toast } from 'sonner';
 
 import Card from '@/common/components/elements/Card';
 import ImageManager from '@/common/components/elements/ImageManager';
-import { StoryFormData } from '@/common/types/stories';
-import { createStory } from '@/services/stories';
+import { Story, StoryFormData } from '@/common/types/stories';
+import { createStory, updateStory } from '@/services/stories';
 
 interface EnhancedStoryUploadFormProps {
+  story?: Story;
   onSuccess: () => void;
   onCancel: () => void;
 }
 
 const EnhancedStoryUploadForm = ({
+  story,
   onSuccess,
   onCancel,
 }: EnhancedStoryUploadFormProps) => {
   const [formData, setFormData] = useState<StoryFormData>({
-    title: '',
-    description: '',
-    image: '',
-    images: [],
-    link: '',
-    order: 0,
-    is_show: true,
+    title: story?.title || '',
+    description: story?.description || '',
+    image: story?.image || '',
+    images: story?.images ? JSON.parse(story.images) : [],
+    link: story?.link || '',
+    order: story?.order || 0,
+    is_show: story?.is_show ?? true,
   });
   const [isUploading, setIsUploading] = useState(false);
-  const [imagePreview, setImagePreview] = useState<string>('');
+  const [imagePreview, setImagePreview] = useState<string>(story?.image || '');
   const [dragActive, setDragActive] = useState(false);
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -106,11 +108,16 @@ const EnhancedStoryUploadForm = ({
             ? formData.images
             : undefined,
       };
-      await createStory(submitData);
-      toast.success('Story created successfully');
+      if (story) {
+        await updateStory(story.id, submitData);
+        toast.success('Story updated successfully');
+      } else {
+        await createStory(submitData);
+        toast.success('Story created successfully');
+      }
       onSuccess();
     } catch (error) {
-      toast.error('Failed to create story');
+      toast.error(story ? 'Failed to update story' : 'Failed to create story');
     } finally {
       setIsUploading(false);
     }
@@ -124,7 +131,7 @@ const EnhancedStoryUploadForm = ({
             <BiImage className='text-green-600 dark:text-green-400' size={20} />
           </div>
           <h3 className='text-xl font-bold text-neutral-800 dark:text-neutral-200'>
-            Add New Story
+            {story ? 'Edit Story' : 'Add New Story'}
           </h3>
         </div>
         <button
@@ -155,10 +162,10 @@ const EnhancedStoryUploadForm = ({
             onDragOver={handleDrag}
             onDrop={handleDrop}
           >
-            {imagePreview ? (
+            {imagePreview || formData.image ? (
               <div className='relative'>
                 <img
-                  src={imagePreview}
+                  src={imagePreview || formData.image}
                   alt='Preview'
                   className='mx-auto h-48 w-48 rounded-full border-4 border-green-500 object-cover'
                 />
@@ -324,8 +331,10 @@ const EnhancedStoryUploadForm = ({
             {isUploading ? (
               <div className='flex items-center justify-center gap-2'>
                 <div className='h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent' />
-                Creating Story...
+                {story ? 'Updating Story...' : 'Creating Story...'}
               </div>
+            ) : story ? (
+              'Update Story'
             ) : (
               'Create Story'
             )}

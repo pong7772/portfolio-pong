@@ -3,6 +3,7 @@ export interface ProjectItemProps {
   slug: string;
   description: string;
   image: string;
+  images?: string | string[]; // Can be JSON string or array
   link_demo?: string;
   link_github?: string;
   stacks: string;

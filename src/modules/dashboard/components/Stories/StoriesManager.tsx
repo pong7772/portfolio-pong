@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { BiPlus, BiTrash } from 'react-icons/bi';
+import { BiEdit, BiPlus, BiTrash } from 'react-icons/bi';
 import { toast } from 'sonner';
 
 import Card from '@/common/components/elements/Card';
@@ -13,11 +13,13 @@ const StoriesManager = () => {
   const [stories, setStories] = useState<Story[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [showUploadForm, setShowUploadForm] = useState(false);
+  const [editingStory, setEditingStory] = useState<Story | null>(null);
 
   const fetchStories = async () => {
     try {
       setIsLoading(true);
-      const data = await getStories();
+      // Fetch all stories (including hidden ones) for dashboard
+      const data = await getStories(true);
       setStories(data);
     } catch (error) {
       toast.error('Failed to fetch stories');
@@ -48,7 +50,18 @@ const StoriesManager = () => {
 
   const handleUploadSuccess = () => {
     setShowUploadForm(false);
+    setEditingStory(null);
     fetchStories();
+  };
+
+  const handleEdit = (story: Story) => {
+    setEditingStory(story);
+    setShowUploadForm(true);
+  };
+
+  const handleCancel = () => {
+    setShowUploadForm(false);
+    setEditingStory(null);
   };
 
   return (
@@ -66,8 +79,9 @@ const StoriesManager = () => {
 
       {showUploadForm && (
         <EnhancedStoryUploadForm
+          story={editingStory || undefined}
           onSuccess={handleUploadSuccess}
-          onCancel={() => setShowUploadForm(false)}
+          onCancel={handleCancel}
         />
       )}
 
@@ -93,6 +107,7 @@ const StoriesManager = () => {
                 <CircularStoryCard
                   story={story}
                   onDelete={handleDelete}
+                  onEdit={() => handleEdit(story)}
                   size='md'
                   showActions={true}
                 />
@@ -151,13 +166,22 @@ const StoriesManager = () => {
                         )}
                       </div>
                     </div>
-                    <button
-                      onClick={() => handleDelete(story.id)}
-                      className='rounded-lg bg-red-500 p-2 text-white transition-colors hover:bg-red-600'
-                      title='Delete story'
-                    >
-                      <BiTrash size={16} />
-                    </button>
+                    <div className='flex items-center gap-2'>
+                      <button
+                        onClick={() => handleEdit(story)}
+                        className='rounded-lg bg-blue-500 p-2 text-white transition-colors hover:bg-blue-600'
+                        title='Edit story'
+                      >
+                        <BiEdit size={16} />
+                      </button>
+                      <button
+                        onClick={() => handleDelete(story.id)}
+                        className='rounded-lg bg-red-500 p-2 text-white transition-colors hover:bg-red-600'
+                        title='Delete story'
+                      >
+                        <BiTrash size={16} />
+                      </button>
+                    </div>
                   </div>
                 </Card>
               ))}

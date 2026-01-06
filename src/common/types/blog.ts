@@ -54,6 +54,7 @@ export type BlogItemProps = {
   }[];
   amp_enabled: boolean;
   featured_image_url: string;
+  images?: string[];
   total_views_count: number;
 };
 
@@ -105,6 +106,7 @@ export type BlogDetailProps = {
   }[];
   amp_enabled: boolean;
   featured_image_url: string;
+  images?: string[];
   guid: {
     rendered: string;
   };

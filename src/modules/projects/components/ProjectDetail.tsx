@@ -1,4 +1,4 @@
-import Image from '@/common/components/elements/Image';
+import ImageGallery from '@/common/components/elements/ImageGallery';
 import MDXComponent from '@/common/components/elements/MDXComponent';
 import Tooltip from '@/common/components/elements/Tooltip';
 import { STACKS } from '@/common/constant/stacks';
@@ -9,6 +9,7 @@ import ProjectLink from './ProjectLink';
 const ProjectDetail = ({
   title,
   image,
+  images,
   stacks,
   link_demo,
   link_github,
@@ -43,15 +44,17 @@ const ProjectDetail = ({
           link_github={link_github}
         />
       </div>
-      <div className='relative aspect-video w-full overflow-hidden rounded-xl'>
-        <Image
-          src={image}
-          fill
-          alt={title}
-          className='object-cover transition-transform duration-300 group-hover:scale-105'
-          priority
-        />
-      </div>
+      <ImageGallery
+        images={
+          images
+            ? typeof images === 'string'
+              ? JSON.parse(images)
+              : images
+            : []
+        }
+        featuredImage={image}
+        title={title}
+      />
       {content && (
         <div className='mt-5 space-y-6 leading-[1.8] dark:text-neutral-300'>
           <MDXComponent>{content}</MDXComponent>

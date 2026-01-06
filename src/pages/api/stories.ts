@@ -17,10 +17,11 @@ export default async function handler(
 ) {
   if (req.method === 'GET') {
     try {
+      const { all } = req.query;
+      // If 'all' parameter is present, return all stories (for dashboard)
+      // Otherwise, only return visible stories (for public display)
       const stories = await prisma.stories.findMany({
-        where: {
-          is_show: true,
-        },
+        where: all === 'true' ? {} : { is_show: true },
         orderBy: {
           order: 'asc',
         },

@@ -5,7 +5,7 @@ import { BiArrowBack } from 'react-icons/bi';
 
 import Button from '@/common/components/elements/Button';
 import Container from '@/common/components/elements/Container';
-import Image from '@/common/components/elements/Image';
+import ImageGallery from '@/common/components/elements/ImageGallery';
 import prisma from '@/common/libs/prisma';
 import { Story } from '@/common/types/stories';
 
@@ -62,16 +62,12 @@ const StoryDetailPage: NextPage<StoryDetailPageProps> = ({ story }) => {
           <div className='space-y-6'>
             <h1 className='text-3xl font-bold lg:text-4xl'>{story.title}</h1>
 
-            {/* Story image */}
-            <div className='relative aspect-video w-full overflow-hidden rounded-xl lg:aspect-[21/9]'>
-              <Image
-                src={story.image}
-                alt={story.title}
-                fill
-                className='object-cover transition-transform duration-300 group-hover:scale-105'
-                priority
-              />
-            </div>
+            {/* Story images gallery */}
+            <ImageGallery
+              images={story.images ? JSON.parse(story.images) : []}
+              featuredImage={story.image}
+              title={story.title}
+            />
 
             {/* Story description */}
             {story.description && (

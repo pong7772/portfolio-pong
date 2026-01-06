@@ -2,8 +2,9 @@ import { Story, StoryFormData } from '@/common/types/stories';
 
 const API_URL = '/api/stories';
 
-export const getStories = async (): Promise<Story[]> => {
-  const response = await fetch(API_URL);
+export const getStories = async (all?: boolean): Promise<Story[]> => {
+  const url = all ? `${API_URL}?all=true` : API_URL;
+  const response = await fetch(url);
   if (!response.ok) {
     throw new Error('Failed to fetch stories');
   }
