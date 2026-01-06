@@ -23,7 +23,7 @@ const BlogPreview = () => {
         </SectionSubHeading>
       </div>
       {/* Wrap the BlogCarousel in a div with overflow-hidden to hide the scrollbar and make the carousel fit with the height of fully display the carousel */}
-      <div className='h-[400px] w-full overflow-hidden'>
+      <div className='w-full overflow-hidden'>
         <BlogCarousel />
       </div>
     </section>
