@@ -1,13 +1,8 @@
 import { useState } from 'react';
-import {
-  BiImage,
-  BiLink,
-  BiPlus,
-  BiTrash,
-  BiUpload,
-  BiX,
-} from 'react-icons/bi';
+import { BiImage, BiLink, BiTrash, BiUpload } from 'react-icons/bi';
 import { toast } from 'sonner';
+
+import Image from './Image';
 
 interface ImageItem {
   id: string;
@@ -252,10 +247,11 @@ const ImageManager = ({
               key={image.id}
               className='group relative aspect-square overflow-hidden rounded-lg border border-neutral-200 dark:border-neutral-700'
             >
-              <img
+              <Image
                 src={image.url}
                 alt={`Image ${index + 1}`}
-                className='h-full w-full object-cover'
+                fill
+                className='object-cover'
                 onError={(e) => {
                   (e.target as HTMLImageElement).src =
                     '/images/placeholder.png';

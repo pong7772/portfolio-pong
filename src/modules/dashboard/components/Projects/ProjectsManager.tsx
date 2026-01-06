@@ -85,14 +85,26 @@ const ProjectsManager = () => {
     }
   };
 
-  const onEdit = (p: ProjectItemProps & { images?: string }) => {
+  const onEdit = (p: ProjectItemProps) => {
     setEditing(p);
+    let imagesArray: string[] = [];
+    if (p.images) {
+      if (typeof p.images === 'string') {
+        try {
+          imagesArray = JSON.parse(p.images);
+        } catch {
+          imagesArray = [];
+        }
+      } else {
+        imagesArray = p.images;
+      }
+    }
     setForm({
       title: p.title,
       slug: p.slug,
       description: p.description,
       image: p.image,
-      images: p.images ? JSON.parse(p.images) : [],
+      images: imagesArray,
       link_demo: p.link_demo,
       link_github: p.link_github,
       stacks: p.stacks,

@@ -14,6 +14,10 @@ const ImageGallery = ({
   featuredImage,
   title,
 }: ImageGalleryProps) => {
+  // Hooks must be called before any conditional returns
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+
   // Filter out empty/null images
   const validImages = images.filter((img) => img && img.trim() !== '');
 
@@ -23,9 +27,6 @@ const ImageGallery = ({
     : validImages;
 
   if (allImages.length === 0) return null;
-
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isFullscreen, setIsFullscreen] = useState(false);
 
   const goToPrevious = () => {
     setCurrentIndex((prev) => (prev === 0 ? allImages.length - 1 : prev - 1));
