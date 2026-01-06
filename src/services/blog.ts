@@ -171,23 +171,88 @@ export const getBlogDetail = async (
   id: number,
 ): Promise<BlogDetailResponseProps> => {
   try {
-    const headers: any = {
-      'Content-Type': 'application/json',
-    };
+    // Import prisma for server-side database access
+    const prisma = (await import('@/common/libs/prisma')).default;
 
-    if (DEVTO_API_KEY) {
-      headers['api-key'] = DEVTO_API_KEY;
-    }
-
-    const response = await axios.get(`${DEVTO_API_URL}/articles/${id}`, {
-      headers,
+    // Fetch from database
+    const blog = await prisma.blogs.findUnique({
+      where: { id },
     });
 
-    // Transform the article to WordPress format
-    const transformedArticle = transformDevToArticle(response.data);
+    if (!blog) {
+      return { status: 404, data: null };
+    }
 
-    return { status: response.status, data: transformedArticle };
-  } catch (error) {
-    return handleAxiosError(error as AxiosError<any>);
+    // Only return published blogs (or allow draft in development)
+    if (blog.status !== 'publish' && process.env.NODE_ENV === 'production') {
+      return { status: 404, data: null };
+    }
+
+    const tags = blog.tags ? JSON.parse(blog.tags) : [];
+
+    // Get views count
+    let views = 0;
+    try {
+      const contentMeta = await prisma.contentmeta.findUnique({
+        where: { slug: blog.slug },
+      });
+      views = contentMeta?.views || 0;
+    } catch (error) {
+      // Views not found, use 0
+    }
+
+    // Transform database blog to WordPress format
+    const transformedArticle: BlogItemProps = {
+      id: blog.id,
+      date: blog.published_at?.toISOString() || blog.created_at.toISOString(),
+      modified: blog.updated_at.toISOString(),
+      slug: blog.slug,
+      status: blog.status,
+      link: `/blog/${blog.slug}?id=${blog.id}`,
+      title: {
+        rendered: blog.title,
+      },
+      content: {
+        rendered: blog.content,
+        markdown: blog.content,
+        protected: false,
+      },
+      excerpt: {
+        rendered: blog.excerpt || '',
+        protected: false,
+      },
+      author: blog.author_id,
+      featured_media: 0,
+      comment_status: 'open',
+      ping_status: 'open',
+      sticky: blog.is_featured,
+      template: '',
+      format: 'standard',
+      meta: {
+        footnotes: '',
+      },
+      categories: [],
+      tags: tags,
+      tags_list: tags.map((tag: string, index: number) => ({
+        term_id: index + 1,
+        name: tag,
+        slug: tag.toLowerCase().replace(/\s+/g, '-'),
+        term_group: 0,
+        term_taxonomy_id: index + 1,
+        taxonomy: 'post_tag',
+        description: '',
+        parent: 0,
+        count: 1,
+        filter: 'raw',
+      })),
+      amp_enabled: false,
+      featured_image_url: blog.featured_image_url || '',
+      total_views_count: views,
+    };
+
+    return { status: 200, data: transformedArticle };
+  } catch (error: any) {
+    console.error('Error fetching blog detail:', error);
+    return { status: 500, data: null };
   }
 };

@@ -1,6 +1,7 @@
 import Breakline from '@/common/components/elements/Breakline';
 import { GITHUB_ACCOUNTS } from '@/common/constant/github';
 
+import BlogsManager from './Blogs';
 import CodingActive from './CodingActive';
 import Contributions from './Contributions';
 import ProjectsManager from './Projects';
@@ -9,6 +10,8 @@ import StoriesManager from './Stories';
 const Dashboard = () => {
   return (
     <>
+      <BlogsManager />
+      <Breakline className='mb-8 mt-10' />
       <StoriesManager />
       <Breakline className='mb-8 mt-10' />
       <ProjectsManager />
