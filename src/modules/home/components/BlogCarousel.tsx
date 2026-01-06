@@ -50,7 +50,7 @@ const BlogCarousel = () => {
 
   return (
     <div
-      className='flex gap-3 overflow-x-auto px-4 py-2 scrollbar-hide sm:gap-4 sm:px-0 md:gap-5'
+      className='flex gap-3 overflow-x-auto px-4 py-4 scrollbar-hide sm:gap-4 sm:px-0 md:gap-5'
       {...events}
       ref={ref}
     >
