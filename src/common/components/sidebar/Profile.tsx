@@ -49,11 +49,11 @@ const Profile = ({ isScrolled = false }: ProfileProps) => {
     <MenuContext.Provider value={{ hideNavbar }}>
       <div
         className={clsx(
-          'fixed z-20 w-full bg-light p-3 shadow-sm dark:border-b dark:border-neutral-800 dark:bg-dark sm:p-4 sm:shadow-none md:p-5 lg:relative lg:border-none lg:!bg-transparent lg:p-0',
+          'fixed z-20 w-full bg-light p-3 shadow-sm dark:border-b dark:border-neutral-800 dark:bg-dark sm:p-4 sm:shadow-none md:relative md:border-none md:!bg-transparent md:p-0 md:shadow-none',
           expandMenu && 'pb-0',
         )}
       >
-        <div className='flex items-start justify-between lg:flex-col lg:space-y-3'>
+        <div className='flex items-start justify-between md:flex-col md:space-y-3'>
           <ProfileHeader
             expandMenu={expandMenu}
             imageSize={getImageSize()}
@@ -64,9 +64,9 @@ const Profile = ({ isScrolled = false }: ProfileProps) => {
           {isMobile && (
             <div
               className={clsx(
-                'mt-1 flex items-center gap-2 sm:mt-2 sm:gap-3 md:gap-4 lg:hidden',
+                'mt-1 flex items-center gap-2 sm:mt-2 sm:gap-3 md:hidden',
                 expandMenu &&
-                  'h-[80px] flex-col-reverse !items-end justify-between pb-1 sm:h-[100px] md:h-[120px]',
+                  'h-[80px] flex-col-reverse !items-end justify-between pb-1 sm:h-[100px]',
               )}
             >
               <BackgroundAudioButton />

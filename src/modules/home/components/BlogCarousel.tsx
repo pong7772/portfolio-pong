@@ -25,7 +25,12 @@ const BlogCarousel = () => {
   const renderBlogCards = () => {
     if (isLoading) {
       return Array.from({ length: 3 }, (_, index) => (
-        <BlogCardNewSkeleton key={index} />
+        <div
+          key={index}
+          className='w-[280px] flex-shrink-0 sm:w-[300px] md:w-[320px]'
+        >
+          <BlogCardNewSkeleton />
+        </div>
       ));
     }
 
@@ -36,7 +41,7 @@ const BlogCarousel = () => {
         animate={{ opacity: 1, x: 0 }}
         exit={{ opacity: 0, x: -100 }}
         transition={{ duration: 0.5 }}
-        className='min-w-[326px] gap-x-5'
+        className='w-[280px] flex-shrink-0 sm:w-[300px] md:w-[320px]'
       >
         <BlogCardNew {...item} />
       </motion.div>
@@ -45,7 +50,7 @@ const BlogCarousel = () => {
 
   return (
     <div
-      className='flex gap-4 overflow-x-scroll p-1 scrollbar-hide'
+      className='flex gap-3 overflow-x-auto px-4 py-2 scrollbar-hide sm:gap-4 sm:px-0 md:gap-5'
       {...events}
       ref={ref}
     >

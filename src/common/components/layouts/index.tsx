@@ -53,9 +53,9 @@ const Layout = ({ children }: LayoutProps) => {
             <main className='transition-all duration-300'>{children}</main>
           </div>
         ) : (
-          <div className='flex flex-col lg:flex-row lg:gap-4 lg:py-4 xl:gap-6 xl:pb-8'>
+          <div className='flex flex-col md:flex-row md:gap-3 md:py-4 lg:gap-4 xl:gap-6 xl:pb-8'>
             <HeaderSidebar />
-            <main className='w-full max-w-full transition-all duration-300 lg:w-4/5 lg:max-w-[915px] xl:max-w-[1000px]'>
+            <main className='w-full max-w-full transition-all duration-300 md:w-4/5 md:max-w-[915px] lg:max-w-[915px] xl:max-w-[1000px]'>
               {children}
             </main>
           </div>

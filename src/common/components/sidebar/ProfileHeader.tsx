@@ -18,7 +18,7 @@ const ProfileHeader = ({
   return (
     <div
       className={clsx(
-        'flex w-full flex-grow items-center gap-1.5 sm:gap-2 md:gap-3 lg:flex-col lg:items-start lg:gap-0.5 lg:px-2',
+        'flex w-full flex-grow items-center gap-1.5 sm:gap-2 md:flex-col md:items-start md:gap-0.5 md:px-2',
         expandMenu && 'flex-row !items-center gap-1.5 sm:gap-2',
       )}
     >
@@ -62,7 +62,7 @@ const ProfileHeader = ({
         <div
           className={clsx(
             'flex items-center gap-1 sm:gap-2',
-            expandMenu ? 'mt-0' : 'mt-1 lg:mt-3',
+            expandMenu ? 'mt-0' : 'mt-1 md:mt-2 lg:mt-3',
           )}
         >
           <Link href='/' passHref>
@@ -71,7 +71,7 @@ const ProfileHeader = ({
                 'font-medium',
                 expandMenu
                   ? 'text-[10px] sm:text-xs md:text-sm'
-                  : 'xs:text-sm text-xs sm:text-base md:text-lg lg:text-xl',
+                  : 'xs:text-sm text-xs sm:text-base md:text-base lg:text-lg xl:text-xl',
               )}
             >
               Roth Visothipong

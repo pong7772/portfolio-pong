@@ -79,7 +79,7 @@ const BlogCardNew = ({
 
           <div className='flex flex-col justify-end'>
             <div className='flex flex-col space-y-3'>
-              <h3 className=' text-lg font-medium text-neutral-100 group-hover:underline group-hover:underline-offset-4 '>
+              <h3 className='line-clamp-2 text-base font-medium text-neutral-100 group-hover:underline group-hover:underline-offset-4 sm:text-lg'>
                 {title?.rendered}
               </h3>
               <div className='flex items-center gap-1 text-neutral-400'>
@@ -87,7 +87,7 @@ const BlogCardNew = ({
                 <span className='ml-0.5 text-xs'>{formatDate(date)}</span>
               </div>
               {isExcerpt && (
-                <p className='text-sm leading-relaxed text-neutral-400'>
+                <p className='line-clamp-2 text-xs leading-relaxed text-neutral-400 sm:text-sm'>
                   {formatExcerpt(excerpt?.rendered)}
                 </p>
               )}
