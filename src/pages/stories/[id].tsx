@@ -37,14 +37,27 @@ const StoryDetailPage: NextPage<StoryDetailPageProps> = ({ story }) => {
     <>
       <NextSeo
         title={`${story.title} - Visothipong`}
-        description={story.description || undefined}
+        description={story.description || 'Photo story by Roth Visothipong'}
+        canonical={`${process.env.NEXT_PUBLIC_SITE_URL || 'https://visothipongroth.vercel.app'}/stories/${story.id}`}
         openGraph={{
+          type: 'article',
+          url: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://visothipongroth.vercel.app'}/stories/${story.id}`,
+          title: `${story.title} - Visothipong`,
+          description: story.description || 'Photo story by Roth Visothipong',
           images: [
             {
               url: story.image,
+              width: 1200,
+              height: 630,
               alt: story.title,
             },
           ],
+          siteName: 'Visothipong Portfolio',
+        }}
+        twitter={{
+          cardType: 'summary_large_image',
+          handle: '@visothipong',
+          site: '@visothipong',
         }}
       />
       <Container>

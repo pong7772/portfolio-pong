@@ -10,6 +10,7 @@ export default function Document() {
           src='https://analytics.aulianza.com/script.js'
           data-website-id='5a78190a-bdad-48a4-901a-c7400be41ca6'
         ></script>
+        <link rel='icon' href='/favicon.ico' sizes='any' />
         <link
           rel='apple-touch-icon'
           sizes='180x180'
@@ -34,6 +35,20 @@ export default function Document() {
           color='#121212'
         />
         <meta name='theme-color' content='#121212' />
+        <meta
+          name='description'
+          content='Roth Visothipong - Full-Stack Developer & EdTech Innovator. Led development of GEIP EdTech App serving 400,000+ students. Expert in PHP Laravel, Flutter, React Native, Next.js, and Firebase.'
+        />
+        <meta
+          name='keywords'
+          content='Full-Stack Developer, EdTech, Web Developer, Mobile Developer, PHP Laravel, Flutter, React Native, Next.js, Firebase, Portfolio, Cambodia, Belgium, Software Engineer, Roth Visothipong'
+        />
+        <meta name='author' content='Roth Visothipong' />
+        <meta name='robots' content='index, follow' />
+        <meta name='language' content='English' />
+        <meta name='revisit-after' content='7 days' />
+        <meta name='distribution' content='global' />
+        <meta name='rating' content='general' />
       </Head>
       <body>
         <Main />

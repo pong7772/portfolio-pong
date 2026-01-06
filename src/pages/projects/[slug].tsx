@@ -16,7 +16,9 @@ const ProjectsDetailPage: NextPage<ProjectsDetailPageProps> = ({ project }) => {
   const PAGE_TITLE = project?.title;
   const PAGE_DESCRIPTION = project?.description;
 
-  const canonicalUrl = `https://visothipongroth.vercel.app/project/${project?.slug}`;
+  const baseUrl =
+    process.env.NEXT_PUBLIC_SITE_URL || 'https://visothipongroth.vercel.app';
+  const canonicalUrl = `${baseUrl}/project/${project?.slug}`;
 
   return (
     <>
@@ -29,15 +31,34 @@ const ProjectsDetailPage: NextPage<ProjectsDetailPageProps> = ({ project }) => {
           article: {
             publishedTime: project?.updated_at.toString(),
             modifiedTime: project?.updated_at.toString(),
-            authors: ['Visothipong'],
+            authors: ['Roth Visothipong'],
           },
           url: canonicalUrl,
-          images: [
-            {
-              url: project?.image,
-            },
-          ],
-          siteName: 'Portfolio Visothipong',
+          title: `${project?.title} - Visothipong`,
+          description: project?.description,
+          images: project?.image
+            ? [
+                {
+                  url: project.image,
+                  width: 1200,
+                  height: 630,
+                  alt: project?.title,
+                },
+              ]
+            : [
+                {
+                  url: `${baseUrl}/images/pongpf.png`,
+                  width: 1200,
+                  height: 630,
+                  alt: project?.title,
+                },
+              ],
+          siteName: 'Visothipong Portfolio',
+        }}
+        twitter={{
+          cardType: 'summary_large_image',
+          handle: '@visothipong',
+          site: '@visothipong',
         }}
       />
       <Container data-aos='fade-up'>

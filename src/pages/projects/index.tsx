@@ -18,13 +18,33 @@ const PAGE_DESCRIPTION =
 
 const ProjectsPage: NextPage<ProjectsPageProps> = ({ projects }) => {
   const [visibleProjects, setVisibleProjects] = useState(6);
+  const canonicalUrl =
+    process.env.NEXT_PUBLIC_SITE_URL || 'https://visothipongroth.vercel.app';
 
   const loadMore = () => setVisibleProjects((prev) => prev + 2);
   const hasMore = visibleProjects < projects.length;
 
   return (
     <>
-      <NextSeo title={`${PAGE_TITLE} - Visothipong`} />
+      <NextSeo
+        title={PAGE_TITLE}
+        description={PAGE_DESCRIPTION}
+        canonical={`${canonicalUrl}/projects`}
+        openGraph={{
+          url: `${canonicalUrl}/projects`,
+          title: `${PAGE_TITLE} - Visothipong`,
+          description: PAGE_DESCRIPTION,
+          type: 'website',
+          images: [
+            {
+              url: `${canonicalUrl}/images/pongpf.png`,
+              width: 1200,
+              height: 630,
+              alt: 'Visothipong Projects',
+            },
+          ],
+        }}
+      />
       <Container data-aos='fade-up'>
         <PageHeading title={PAGE_TITLE} description={PAGE_DESCRIPTION} />
         <Projects
