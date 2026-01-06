@@ -10,18 +10,28 @@ interface IntroductionProps {
 
 const Introduction = ({ stories = [] }: IntroductionProps) => {
   const [isPoemExpanded, setIsPoemExpanded] = useState(false);
-  const [selectedStory, setSelectedStory] = useState<Story | null>(null);
+  const [selectedStoryIndex, setSelectedStoryIndex] = useState<number | null>(
+    null,
+  );
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleStoryClick = (story: Story) => {
-    setSelectedStory(story);
+    const index = stories.findIndex((s) => s.id === story.id);
+    setSelectedStoryIndex(index >= 0 ? index : 0);
     setIsModalOpen(true);
   };
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
-    setSelectedStory(null);
+    setSelectedStoryIndex(null);
   };
+
+  const handleStoryChange = (newIndex: number) => {
+    setSelectedStoryIndex(newIndex);
+  };
+
+  const currentStory =
+    selectedStoryIndex !== null ? stories[selectedStoryIndex] : null;
 
   return (
     <section className='bg-cover bg-no-repeat'>
@@ -124,9 +134,12 @@ const Introduction = ({ stories = [] }: IntroductionProps) => {
       </figure>
 
       <StoryModal
-        story={selectedStory}
+        story={currentStory}
+        stories={stories}
+        currentStoryIndex={selectedStoryIndex ?? 0}
         isOpen={isModalOpen}
         onClose={handleCloseModal}
+        onStoryChange={handleStoryChange}
       />
     </section>
   );
