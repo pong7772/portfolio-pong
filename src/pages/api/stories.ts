@@ -32,7 +32,8 @@ export default async function handler(
     }
   } else if (req.method === 'POST') {
     try {
-      const { title, description, image, link, order, is_show } = req.body;
+      const { title, description, image, images, link, order, is_show } =
+        req.body;
 
       if (!title || !image) {
         return res
@@ -45,6 +46,7 @@ export default async function handler(
           title,
           description: description || null,
           image,
+          images: images && images.length > 0 ? JSON.stringify(images) : null,
           link: link || null,
           order: order || 0,
           is_show: is_show ?? true,
@@ -76,7 +78,8 @@ export default async function handler(
   } else if (req.method === 'PUT') {
     try {
       const { id } = req.query;
-      const { title, description, image, link, order, is_show } = req.body;
+      const { title, description, image, images, link, order, is_show } =
+        req.body;
 
       if (!id) {
         return res.status(400).json({ message: 'Story ID is required' });
@@ -90,6 +93,12 @@ export default async function handler(
           title,
           description,
           image,
+          images:
+            images !== undefined
+              ? images && images.length > 0
+                ? JSON.stringify(images)
+                : null
+              : undefined,
           link,
           order,
           is_show,

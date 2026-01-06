@@ -40,6 +40,7 @@ export default async function handler(
         content,
         excerpt,
         featured_image_url,
+        images,
         status = 'draft',
         is_featured = false,
         tags,
@@ -68,6 +69,7 @@ export default async function handler(
           content,
           excerpt: excerpt || null,
           featured_image_url: featured_image_url || null,
+          images: images && images.length > 0 ? JSON.stringify(images) : null,
           status,
           is_featured,
           tags: tags ? JSON.stringify(tags) : null,
@@ -95,6 +97,7 @@ export default async function handler(
         content,
         excerpt,
         featured_image_url,
+        images,
         status,
         is_featured,
         tags,
@@ -119,6 +122,9 @@ export default async function handler(
       if (excerpt !== undefined) updateData.excerpt = excerpt || null;
       if (featured_image_url !== undefined)
         updateData.featured_image_url = featured_image_url || null;
+      if (images !== undefined)
+        updateData.images =
+          images && images.length > 0 ? JSON.stringify(images) : null;
       if (status) updateData.status = status;
       if (is_featured !== undefined) updateData.is_featured = is_featured;
       if (tags) updateData.tags = JSON.stringify(tags);

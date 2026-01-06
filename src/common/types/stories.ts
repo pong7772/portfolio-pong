@@ -3,6 +3,7 @@ export interface Story {
   title: string;
   description?: string | null;
   image: string;
+  images?: string | null; // JSON array of additional images
   link?: string | null;
   order: number;
   is_show: boolean;
@@ -14,6 +15,7 @@ export interface StoryFormData {
   title: string;
   description?: string;
   image: string;
+  images?: string[]; // Array of additional images
   link?: string;
   order?: number;
   is_show?: boolean;

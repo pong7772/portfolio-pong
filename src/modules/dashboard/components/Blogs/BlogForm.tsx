@@ -3,6 +3,7 @@ import { BiImage, BiX } from 'react-icons/bi';
 import { toast } from 'sonner';
 
 import Card from '@/common/components/elements/Card';
+import ImageManager from '@/common/components/elements/ImageManager';
 import { BlogFormData, Blog } from '@/services/blogs';
 import { createBlog, updateBlog } from '@/services/blogs';
 
@@ -19,6 +20,7 @@ const BlogForm = ({ blog, onSuccess, onCancel }: BlogFormProps) => {
     content: blog?.content || '',
     excerpt: blog?.excerpt || '',
     featured_image_url: blog?.featured_image_url || '',
+    images: blog?.images ? JSON.parse(blog.images) : [],
     status: (blog?.status as 'draft' | 'publish') || 'draft',
     is_featured: blog?.is_featured || false,
     tags: blog?.tags ? JSON.parse(blog.tags) : [],
@@ -68,17 +70,21 @@ const BlogForm = ({ blog, onSuccess, onCancel }: BlogFormProps) => {
 
     try {
       setIsSubmitting(true);
+      const submitData = {
+        ...formData,
+        images:
+          formData.images && formData.images.length > 0
+            ? formData.images
+            : undefined,
+        published_at:
+          formData.status === 'publish' ? new Date().toISOString() : undefined,
+      };
+
       if (blog) {
-        await updateBlog(blog.id, formData);
+        await updateBlog(blog.id, submitData);
         toast.success('Blog updated successfully');
       } else {
-        await createBlog({
-          ...formData,
-          published_at:
-            formData.status === 'publish'
-              ? new Date().toISOString()
-              : undefined,
-        });
+        await createBlog(submitData);
         toast.success('Blog created successfully');
       }
       onSuccess();
@@ -149,6 +155,15 @@ const BlogForm = ({ blog, onSuccess, onCancel }: BlogFormProps) => {
             }
             className='w-full rounded-lg border border-neutral-300 px-4 py-2 dark:border-neutral-600 dark:bg-neutral-800'
             placeholder='https://example.com/image.jpg'
+          />
+        </div>
+
+        <div>
+          <ImageManager
+            images={formData.images || []}
+            onChange={(images) => setFormData({ ...formData, images })}
+            maxImages={20}
+            label='Additional Images'
           />
         </div>
 

@@ -4,6 +4,7 @@ export interface BlogFormData {
   content: string;
   excerpt?: string;
   featured_image_url?: string;
+  images?: string[]; // Array of image URLs or base64
   status?: 'draft' | 'publish';
   is_featured?: boolean;
   tags?: string[];
@@ -17,6 +18,7 @@ export interface Blog {
   content: string;
   excerpt?: string;
   featured_image_url?: string;
+  images?: string; // JSON array of images
   status: string;
   is_featured: boolean;
   tags?: string;

@@ -27,6 +27,7 @@ export default async function handler(
         slug,
         description,
         image,
+        images,
         link_demo,
         link_github,
         stacks,
@@ -41,6 +42,7 @@ export default async function handler(
           slug,
           description,
           image,
+          images: images && images.length > 0 ? JSON.stringify(images) : null,
           link_demo,
           link_github,
           stacks,
@@ -53,13 +55,18 @@ export default async function handler(
     }
 
     if (req.method === 'PUT') {
-      const { id, ...updates } = req.body || {};
+      const { id, images, ...updates } = req.body || {};
       if (!id) {
         return res.status(400).json({ status: false, error: 'Missing id' });
       }
+      const updateData: any = { ...updates };
+      if (images !== undefined) {
+        updateData.images =
+          images && images.length > 0 ? JSON.stringify(images) : null;
+      }
       const updated = await prisma.projects.update({
         where: { id: Number(id) },
-        data: updates,
+        data: updateData,
       });
       return res.status(200).json({ status: true, data: updated });
     }

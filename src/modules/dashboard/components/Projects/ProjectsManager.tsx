@@ -3,6 +3,7 @@ import { BiEdit, BiPlus, BiTrash } from 'react-icons/bi';
 import { toast } from 'sonner';
 
 import Card from '@/common/components/elements/Card';
+import ImageManager from '@/common/components/elements/ImageManager';
 import { ProjectItemProps } from '@/common/types/projects';
 import {
   createProject,
@@ -11,11 +12,15 @@ import {
   updateProject,
 } from '@/services/projects';
 
-const emptyForm: Partial<ProjectItemProps> & { slug?: string } = {
+const emptyForm: Partial<ProjectItemProps> & {
+  slug?: string;
+  images?: string[];
+} = {
   title: '',
   slug: '',
   description: '',
   image: '',
+  images: [],
   link_demo: '',
   link_github: '',
   stacks: '',
@@ -60,11 +65,15 @@ const ProjectsManager = () => {
       return;
     }
     try {
+      const submitData = {
+        ...form,
+        images: form.images && form.images.length > 0 ? form.images : undefined,
+      };
       if (editing) {
-        await updateProject((editing as any).id, form as any);
+        await updateProject((editing as any).id, submitData as any);
         toast.success('Project updated');
       } else {
-        await createProject(form as any);
+        await createProject(submitData as any);
         toast.success('Project created');
       }
       setFormOpen(false);
@@ -76,13 +85,14 @@ const ProjectsManager = () => {
     }
   };
 
-  const onEdit = (p: ProjectItemProps) => {
+  const onEdit = (p: ProjectItemProps & { images?: string }) => {
     setEditing(p);
     setForm({
       title: p.title,
       slug: p.slug,
       description: p.description,
       image: p.image,
+      images: p.images ? JSON.parse(p.images) : [],
       link_demo: p.link_demo,
       link_github: p.link_github,
       stacks: p.stacks,
@@ -170,7 +180,7 @@ const ProjectsManager = () => {
             </div>
             <div className='md:col-span-2'>
               <label className='mb-2 block text-sm font-medium'>
-                Image URL *
+                Featured Image URL *
               </label>
               <input
                 value={form.image as string}
@@ -178,6 +188,14 @@ const ProjectsManager = () => {
                 placeholder='https://...'
                 required
                 className='w-full rounded-lg border border-neutral-300 p-2 dark:border-neutral-700 dark:bg-neutral-900'
+              />
+            </div>
+            <div className='md:col-span-2'>
+              <ImageManager
+                images={(form.images as string[]) || []}
+                onChange={(images) => setForm({ ...form, images })}
+                maxImages={20}
+                label='Additional Images'
               />
             </div>
             <div>

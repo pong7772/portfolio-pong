@@ -3,6 +3,7 @@ import { BiImage, BiKey, BiLink, BiSort, BiUpload, BiX } from 'react-icons/bi';
 import { toast } from 'sonner';
 
 import Card from '@/common/components/elements/Card';
+import ImageManager from '@/common/components/elements/ImageManager';
 import { StoryFormData } from '@/common/types/stories';
 import { createStory } from '@/services/stories';
 
@@ -19,6 +20,7 @@ const EnhancedStoryUploadForm = ({
     title: '',
     description: '',
     image: '',
+    images: [],
     link: '',
     order: 0,
     is_show: true,
@@ -97,7 +99,14 @@ const EnhancedStoryUploadForm = ({
 
     try {
       setIsUploading(true);
-      await createStory(formData);
+      const submitData = {
+        ...formData,
+        images:
+          formData.images && formData.images.length > 0
+            ? formData.images
+            : undefined,
+      };
+      await createStory(submitData);
       toast.success('Story created successfully');
       onSuccess();
     } catch (error) {
@@ -183,6 +192,16 @@ const EnhancedStoryUploadForm = ({
               </div>
             )}
           </div>
+        </div>
+
+        {/* Additional Images */}
+        <div>
+          <ImageManager
+            images={formData.images || []}
+            onChange={(images) => setFormData({ ...formData, images })}
+            maxImages={10}
+            label='Additional Images'
+          />
         </div>
 
         {/* Form Fields Grid */}

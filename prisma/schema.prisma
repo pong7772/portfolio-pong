@@ -14,6 +14,7 @@ model projects {
   slug        String   @unique
   description String
   image       String
+  images      String?  // JSON array of additional images
   link_demo   String?
   link_github String?
   stacks      String
@@ -36,6 +37,7 @@ model stories {
   title       String
   description String?
   image       String
+  images      String?  // JSON array of additional images
   link        String?
   order       Int      @default(0)
   is_show     Boolean  @default(true)
@@ -50,6 +52,7 @@ model blogs {
   content             String   @db.Text
   excerpt             String?  @db.Text
   featured_image_url  String?
+  images              String?  // JSON array of additional images
   status              String   @default("draft") // draft, publish
   is_featured         Boolean  @default(false)
   tags                String?  // JSON array of tags
