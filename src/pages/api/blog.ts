@@ -6,7 +6,7 @@ import { BlogItemProps } from '@/common/types/blog';
 // Transform database blog to WordPress-like format
 const transformBlogToWordPressFormat = (
   blog: any,
-  views: number = 0,
+  views = 0,
 ): BlogItemProps => {
   const tags = blog.tags ? JSON.parse(blog.tags) : [];
 
