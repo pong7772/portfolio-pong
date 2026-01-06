@@ -2,6 +2,7 @@
 
 import clsx from 'clsx';
 import NextImage, { ImageProps as NextImageProps } from 'next/image';
+import { useEffect, useState } from 'react';
 
 import cn from '@/common/libs/cn';
 
@@ -14,13 +15,37 @@ type ImageProps = {
 
 const Image = (props: ImageProps) => {
   const { alt, src, className, rounded, width, height, fill, ...rest } = props;
+  const [imgSrc, setImgSrc] = useState(src);
+  const [hasError, setHasError] = useState(false);
+
+  const defaultImage = '/images/placeholder.png';
+
+  // Update imgSrc when src prop changes
+  useEffect(() => {
+    setImgSrc(src);
+    setHasError(false);
+  }, [src]);
+
+  const handleError = () => {
+    if (!hasError && imgSrc !== defaultImage) {
+      setHasError(true);
+      setImgSrc(defaultImage);
+    }
+  };
+
+  // Determine if image should be unoptimized (for external URLs or problematic sources)
+  const shouldUnoptimize =
+    typeof imgSrc === 'string' &&
+    (imgSrc.startsWith('http://') ||
+      imgSrc.startsWith('https://') ||
+      imgSrc.includes('data:'));
 
   return (
     <div className={clsx('next-image-wrapper overflow-hidden', rounded)}>
       <NextImage
         className={cn(rounded, className)}
-        src={src}
-        alt={alt}
+        src={imgSrc}
+        alt={alt || 'Image'}
         loading='lazy'
         quality={100}
         placeholder='blur'
@@ -28,7 +53,8 @@ const Image = (props: ImageProps) => {
         width={fill ? undefined : width || undefined}
         height={fill ? undefined : height || undefined}
         fill={fill}
-        unoptimized={false}
+        unoptimized={shouldUnoptimize}
+        onError={handleError}
         {...rest}
       />
     </div>
