@@ -14,17 +14,20 @@ import { fetcher } from '@/services/fetcher';
 import BlogCardNew from './BlogCardNew';
 import BlogFeaturedSection from './BlogFeaturedSection';
 import CategoryFilter from './CategoryFilter';
+import SubjectFilter from './SubjectFilter';
 
 const BlogListNew = () => {
   const [page, setPage] = useState<number>(1);
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
+  const [selectedSubject, setSelectedSubject] = useState<string | null>(null);
+  const [subjectTags, setSubjectTags] = useState<string | null>(null);
   const router = useRouter();
 
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
 
   // Build API URL with filters
-  const apiUrl = `/api/blog?page=${page}&per_page=12${debouncedSearchTerm ? `&search=${debouncedSearchTerm}` : ''}${selectedTag ? `&tag=${selectedTag}` : ''}`;
+  const apiUrl = `/api/blog?page=${page}&per_page=12${debouncedSearchTerm ? `&search=${debouncedSearchTerm}` : ''}${selectedSubject && subjectTags ? `&tags=${subjectTags}` : selectedTag ? `&tag=${selectedTag}` : ''}`;
 
   const { data, error, mutate, isValidating } = useSWR(apiUrl, fetcher, {
     revalidateOnFocus: false,
@@ -38,11 +41,36 @@ const BlogListNew = () => {
     available_tags: availableTags = [],
   } = data?.data || {};
 
+  const handleSubjectSelect = (subjectId: string | null, tags?: string) => {
+    setSelectedSubject(subjectId);
+    setSubjectTags(tags || null);
+    // Clear tag selection when subject is selected
+    if (subjectId) {
+      setSelectedTag(null);
+    }
+    setPage(1);
+  };
+
+  const handleTagSelect = (tag: string | null) => {
+    setSelectedTag(tag);
+    // Clear subject selection when tag is selected
+    if (tag) {
+      setSelectedSubject(null);
+      setSubjectTags(null);
+    }
+    setPage(1);
+  };
+
   const handlePageChange = async (newPage: number) => {
     await mutate();
     const query: any = { page: newPage };
     if (debouncedSearchTerm) query.search = debouncedSearchTerm;
-    if (selectedTag) query.tag = selectedTag;
+    if (selectedSubject && subjectTags) {
+      query.subject = selectedSubject;
+      query.tags = subjectTags;
+    } else if (selectedTag) {
+      query.tag = selectedTag;
+    }
 
     router.push(
       {
@@ -62,7 +90,12 @@ const BlogListNew = () => {
 
     const query: any = { page: 1 };
     if (searchValue) query.search = searchValue;
-    if (selectedTag) query.tag = selectedTag;
+    if (selectedSubject && subjectTags) {
+      query.subject = selectedSubject;
+      query.tags = subjectTags;
+    } else if (selectedTag) {
+      query.tag = selectedTag;
+    }
 
     router.push(
       {
@@ -79,7 +112,12 @@ const BlogListNew = () => {
     setPage(1);
 
     const query: any = { page: 1 };
-    if (selectedTag) query.tag = selectedTag;
+    if (selectedSubject && subjectTags) {
+      query.subject = selectedSubject;
+      query.tags = subjectTags;
+    } else if (selectedTag) {
+      query.tag = selectedTag;
+    }
 
     router.push(
       {
@@ -94,10 +132,20 @@ const BlogListNew = () => {
   useEffect(() => {
     const queryPage = Number(router.query.page);
     const queryTag = router.query.tag as string | undefined;
+    const querySubject = router.query.subject as string | undefined;
+    const queryTags = router.query.tags as string | undefined;
     const querySearch = router.query.search as string | undefined;
 
     if (!isNaN(queryPage) && queryPage !== page) {
       setPage(queryPage);
+    }
+
+    if (querySubject !== selectedSubject) {
+      setSelectedSubject(querySubject || null);
+    }
+
+    if (queryTags !== subjectTags) {
+      setSubjectTags(queryTags || null);
     }
 
     if (queryTag !== selectedTag) {
@@ -107,7 +155,14 @@ const BlogListNew = () => {
     if (querySearch !== searchTerm) {
       setSearchTerm(querySearch || '');
     }
-  }, [router.query, page, selectedTag, searchTerm]);
+  }, [
+    router.query,
+    page,
+    selectedTag,
+    selectedSubject,
+    subjectTags,
+    searchTerm,
+  ]);
 
   const renderEmptyState = () =>
     !isValidating &&
@@ -120,17 +175,23 @@ const BlogListNew = () => {
       <BlogFeaturedSection />
 
       <div className='space-y-6'>
-        {/* Category Filter Section - Prominent Position */}
+        {/* Subject Filter Section - Main Categories */}
+        <SubjectFilter
+          selectedSubject={selectedSubject}
+          onSubjectSelect={handleSubjectSelect}
+        />
+
+        {/* Category Filter Section - Individual Tags */}
         <CategoryFilter
           availableTags={availableTags}
           selectedTag={selectedTag}
-          onTagSelect={setSelectedTag}
+          onTagSelect={handleTagSelect}
         />
 
         {/* Search and Results Header */}
         <div className='mb-6 flex flex-col items-center justify-between gap-3 sm:flex-row'>
           <div className='flex items-center gap-2 px-1  text-xl font-medium'>
-            {searchTerm || selectedTag ? (
+            {searchTerm || selectedTag || selectedSubject ? (
               <div className='flex flex-wrap items-center gap-2'>
                 {searchTerm && (
                   <div>
@@ -138,6 +199,23 @@ const BlogListNew = () => {
                       Search:
                     </span>
                     <span className='italic'>{searchTerm}</span>
+                  </div>
+                )}
+                {selectedSubject && (
+                  <div>
+                    <span className='mr-2 text-neutral-600 dark:text-neutral-400'>
+                      Subject:
+                    </span>
+                    <span className='font-semibold text-purple-600 dark:text-purple-400'>
+                      {selectedSubject === 'internationalist' &&
+                        'The Internationalist'}
+                      {selectedSubject === 'personal-development' &&
+                        'Personal & Professional Development'}
+                      {selectedSubject === 'about-myself' && 'About Myself'}
+                      {selectedSubject === 'ai-research' &&
+                        'AI Research Project'}
+                      {selectedSubject === 'moeys-edtech' && 'MoEYS EdTech'}
+                    </span>
                   </div>
                 )}
                 {selectedTag && (

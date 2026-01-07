@@ -64,7 +64,7 @@ export default async function handler(
   res: NextApiResponse,
 ): Promise<void> {
   try {
-    const { page = 1, per_page = 12, search, tag } = req.query;
+    const { page = 1, per_page = 12, search, tag, tags } = req.query;
     const pageNum = Number(page);
     const perPageNum = Number(per_page);
     const skip = (pageNum - 1) * perPageNum;
@@ -88,9 +88,30 @@ export default async function handler(
       ],
     });
 
-    // Filter by tag if provided (tags are stored as JSON string)
+    // Filter by tags if provided (tags are stored as JSON string)
     let filteredBlogs = allBlogs;
-    if (tag) {
+
+    // Handle multiple tags (for subject filters) - OR logic
+    if (tags) {
+      const tagArray = (tags as string)
+        .split(',')
+        .map((t) => t.trim().toLowerCase());
+      filteredBlogs = allBlogs.filter((blog) => {
+        if (!blog.tags) return false;
+        try {
+          const blogTags = JSON.parse(blog.tags) as string[];
+          return tagArray.some((filterTag) =>
+            blogTags.some(
+              (blogTag) => blogTag.trim().toLowerCase() === filterTag,
+            ),
+          );
+        } catch {
+          return false;
+        }
+      });
+    }
+    // Handle single tag filter
+    else if (tag) {
       filteredBlogs = allBlogs.filter((blog) => {
         if (!blog.tags) return false;
         try {
