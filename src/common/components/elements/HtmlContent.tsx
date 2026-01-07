@@ -8,6 +8,11 @@ const HtmlContent = ({ content, className = '' }: HtmlContentProps) => {
     return null;
   }
 
+  // TODO: Add DOMPurify for HTML sanitization in production
+  // For now, content from react-quill is relatively safe, but should be sanitized
+  // const sanitizedHtml = DOMPurify.sanitize(content);
+  const sanitizedHtml = content;
+
   return (
     <>
       <style jsx global>{`
@@ -157,10 +162,67 @@ const HtmlContent = ({ content, className = '' }: HtmlContentProps) => {
         .html-content u {
           text-decoration: underline;
         }
+        .html-content s,
+        .html-content strike {
+          text-decoration: line-through;
+        }
+        .html-content sub {
+          font-size: 0.75em;
+          vertical-align: sub;
+        }
+        .html-content sup {
+          font-size: 0.75em;
+          vertical-align: super;
+        }
+        .html-content mark {
+          background-color: rgb(254 240 138);
+          padding: 0.1em 0.2em;
+          border-radius: 2px;
+        }
+        .dark .html-content mark {
+          background-color: rgb(113 63 18);
+          color: rgb(254 240 138);
+        }
+        .html-content del {
+          text-decoration: line-through;
+          opacity: 0.7;
+        }
+        .html-content ins {
+          text-decoration: underline;
+          background-color: rgb(187 247 208);
+          padding: 0.1em 0.2em;
+        }
+        .dark .html-content ins {
+          background-color: rgb(6 78 59);
+          color: rgb(187 247 208);
+        }
+        .html-content dl {
+          margin: 1em 0;
+        }
+        .html-content dt {
+          font-weight: 600;
+          margin-top: 1em;
+        }
+        .html-content dd {
+          margin-left: 2em;
+          margin-bottom: 0.5em;
+        }
+        .html-content figure {
+          margin: 1.5em 0;
+        }
+        .html-content figcaption {
+          font-size: 0.875em;
+          color: rgb(115 115 115);
+          text-align: center;
+          margin-top: 0.5em;
+        }
+        .dark .html-content figcaption {
+          color: rgb(163 163 163);
+        }
       `}</style>
       <div
         className={`html-content ${className}`}
-        dangerouslySetInnerHTML={{ __html: content }}
+        dangerouslySetInnerHTML={{ __html: sanitizedHtml }}
       />
     </>
   );

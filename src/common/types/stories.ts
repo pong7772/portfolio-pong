@@ -3,7 +3,7 @@ export interface Story {
   title: string;
   description?: string | null;
   image: string;
-  images?: string | null; // JSON array of additional images
+  images?: string | string[] | null; // JSON string or array of additional images
   link?: string | null;
   order: number;
   is_show: boolean;

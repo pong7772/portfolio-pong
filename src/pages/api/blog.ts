@@ -55,6 +55,7 @@ const transformBlogToWordPressFormat = (
     })),
     amp_enabled: false,
     featured_image_url: blog.featured_image_url || '',
+    images: blog.images ? JSON.parse(blog.images) : [],
     total_views_count: views,
   };
 };

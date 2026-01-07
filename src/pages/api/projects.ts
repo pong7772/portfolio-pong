@@ -18,7 +18,20 @@ export default async function handler(
       const response = await prisma.projects.findMany({
         orderBy: { updated_at: 'desc' },
       });
-      return res.status(200).json({ status: true, data: response });
+      // Parse images JSON strings to arrays for easier frontend consumption
+      const parsedResponse = response.map((project) => ({
+        ...project,
+        images: project.images
+          ? (() => {
+              try {
+                return JSON.parse(project.images);
+              } catch {
+                return [];
+              }
+            })()
+          : [],
+      }));
+      return res.status(200).json({ status: true, data: parsedResponse });
     }
 
     if (req.method === 'POST') {

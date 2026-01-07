@@ -23,7 +23,11 @@ const EnhancedStoryUploadForm = ({
     title: story?.title || '',
     description: story?.description || '',
     image: story?.image || '',
-    images: story?.images ? JSON.parse(story.images) : [],
+    images: story?.images
+      ? typeof story.images === 'string'
+        ? JSON.parse(story.images)
+        : story.images
+      : [],
     link: story?.link || '',
     order: story?.order || 0,
     is_show: story?.is_show ?? true,

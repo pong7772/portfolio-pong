@@ -78,7 +78,13 @@ const StoryDetailPage: NextPage<StoryDetailPageProps> = ({ story }) => {
 
             {/* Story images gallery */}
             <ImageGallery
-              images={story.images ? JSON.parse(story.images) : []}
+              images={
+                story.images
+                  ? typeof story.images === 'string'
+                    ? JSON.parse(story.images)
+                    : story.images
+                  : []
+              }
               featuredImage={story.image}
               title={story.title}
             />
