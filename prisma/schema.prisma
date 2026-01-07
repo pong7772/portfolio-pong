@@ -95,7 +95,7 @@ model contact_messages {
   reply      String?   @db.Text
   replied_at DateTime?
   is_read    Boolean   @default(false)
-  created_at DateTime   @default(now())
+  created_at DateTime  @default(now())
 }
 
 model visitors {
