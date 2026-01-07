@@ -119,22 +119,14 @@ const SubjectFilter = ({
   return (
     <div className='space-y-3'>
       <div className='flex items-center justify-between'>
-        <div>
-          <h3 className='text-base font-bold text-neutral-800 dark:text-neutral-200'>
-            Filter by Subject
-          </h3>
-          {selectedSubject && (
-            <p className='mt-0.5 text-xs text-purple-600 dark:text-purple-400'>
-              Active: {subjects.find((s) => s.id === selectedSubject)?.name}
-            </p>
-          )}
-        </div>
+        <h3 className='text-base font-semibold text-neutral-800 dark:text-neutral-200'>
+          Filter by Subject
+        </h3>
         {selectedSubject && (
           <button
             onClick={handleClearFilter}
             className='flex items-center gap-1.5 rounded-lg border border-neutral-300 bg-white px-2.5 py-1 text-xs font-medium text-neutral-700 transition-colors hover:bg-neutral-50 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-300 dark:hover:bg-neutral-700'
           >
-            <HiX size={12} />
             Clear
           </button>
         )}
@@ -148,10 +140,10 @@ const SubjectFilter = ({
               key={subject.id}
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.15, delay: index * 0.02 }}
+              transition={{ duration: 0.15, delay: index * 0.03 }}
               onClick={() => handleSubjectClick(subject)}
               className={clsx(
-                'group relative flex items-center gap-2 rounded-lg border px-3 py-2 text-sm font-medium transition-all duration-200 hover:scale-105',
+                'group relative flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-medium transition-all duration-200 hover:scale-105',
                 isSelected
                   ? `border-transparent bg-gradient-to-r ${subject.color} text-white shadow-md`
                   : 'border-neutral-200 bg-white text-neutral-700 hover:border-neutral-300 hover:bg-neutral-50 dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-300 dark:hover:border-neutral-700',
