@@ -1,7 +1,6 @@
 import AOS from 'aos';
 import type { AppProps } from 'next/app';
 import dynamic from 'next/dynamic';
-import Script from 'next/script';
 import { useRouter } from 'next/router';
 import { SessionProvider } from 'next-auth/react';
 import { DefaultSeo } from 'next-seo';
@@ -108,11 +107,6 @@ const App = ({
 
   return (
     <>
-      <Script
-        src='https://cloud.umami.is/script.js'
-        data-website-id='2a660cbf-2041-4705-af1f-f1ddc9873308'
-        strategy='afterInteractive'
-      />
       <style jsx global>
         {`
           html {
