@@ -17,13 +17,13 @@ const Dashboard = () => {
       <Breakline className='mb-8 mt-10' />
       <CommentsManager />
       <Breakline className='mb-8 mt-10' />
-      <VisitorsManager />
-      <Breakline className='mb-8 mt-10' />
       <BlogsManager />
       <Breakline className='mb-8 mt-10' />
       <StoriesManager />
       <Breakline className='mb-8 mt-10' />
       <ProjectsManager />
+      <Breakline className='mb-8 mt-10' />
+      <VisitorsManager />
       <Breakline className='mb-8 mt-10' />
       <CodingActive />
       <Breakline className='mb-8 mt-10' />
