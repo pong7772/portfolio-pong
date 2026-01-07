@@ -9,7 +9,7 @@ import BlogCardNew from '@/modules/blog/components/BlogCardNew';
 import { fetcher } from '@/services/fetcher';
 
 const BlogCarousel = () => {
-  const { data, isLoading } = useSWR(`/api/blog?page=1&per_page=12`, fetcher, {
+  const { data, isLoading } = useSWR(`/api/blog?page=1&per_page=15`, fetcher, {
     revalidateOnFocus: false,
     refreshInterval: 0,
   });
@@ -24,7 +24,7 @@ const BlogCarousel = () => {
 
   const renderBlogCards = () => {
     if (isLoading) {
-      return Array.from({ length: 3 }, (_, index) => (
+      return Array.from({ length: 5 }, (_, index) => (
         <div
           key={index}
           className='w-[280px] flex-shrink-0 sm:w-[300px] md:w-[320px]'

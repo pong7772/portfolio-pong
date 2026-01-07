@@ -27,7 +27,7 @@ const BlogListNew = () => {
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
 
   // Build API URL with filters
-  const apiUrl = `/api/blog?page=${page}&per_page=12${debouncedSearchTerm ? `&search=${debouncedSearchTerm}` : ''}${selectedSubject && subjectTags ? `&tags=${subjectTags}` : selectedTag ? `&tag=${selectedTag}` : ''}`;
+  const apiUrl = `/api/blog?page=${page}&per_page=15${debouncedSearchTerm ? `&search=${debouncedSearchTerm}` : ''}${selectedSubject && subjectTags ? `&tags=${subjectTags}` : selectedTag ? `&tag=${selectedTag}` : ''}`;
 
   const { data, error, mutate, isValidating } = useSWR(apiUrl, fetcher, {
     revalidateOnFocus: false,
