@@ -88,12 +88,14 @@ model comments {
 }
 
 model contact_messages {
-  id         Int      @id @default(autoincrement())
+  id         Int       @id @default(autoincrement())
   name       String
   email      String
-  message    String   @db.Text
-  is_read    Boolean  @default(false)
-  created_at DateTime @default(now())
+  message    String    @db.Text
+  reply      String?   @db.Text
+  replied_at DateTime?
+  is_read    Boolean   @default(false)
+  created_at DateTime   @default(now())
 }
 
 model visitors {

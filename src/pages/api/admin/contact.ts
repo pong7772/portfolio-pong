@@ -24,6 +24,8 @@ export default async function handler(
         name: msg.name,
         email: msg.email,
         message: msg.message,
+        reply: msg.reply,
+        replied_at: msg.replied_at?.toISOString() || null,
         is_read: msg.is_read,
         created_at: msg.created_at.toISOString(),
       }));
@@ -39,20 +41,41 @@ export default async function handler(
 
   if (req.method === 'PATCH') {
     try {
-      const { id, is_read } = req.body;
+      const { id, is_read, reply } = req.body;
 
       if (typeof id !== 'number') {
         return res.status(400).json({ status: false, error: 'Invalid ID' });
       }
 
-      await prisma.contact_messages.update({
+      const updateData: {
+        is_read?: boolean;
+        reply?: string | null;
+        replied_at?: Date | null;
+      } = {};
+
+      if (is_read !== undefined) {
+        updateData.is_read = is_read === true;
+      }
+
+      if (reply !== undefined) {
+        updateData.reply = reply && reply.trim() ? reply.trim() : null;
+        updateData.replied_at = updateData.reply ? new Date() : null;
+      }
+
+      const updated = await prisma.contact_messages.update({
         where: { id },
-        data: {
-          is_read: is_read === true,
-        },
+        data: updateData,
       });
 
-      return res.status(200).json({ status: true });
+      return res.status(200).json({
+        status: true,
+        data: {
+          id: updated.id,
+          is_read: updated.is_read,
+          reply: updated.reply,
+          replied_at: updated.replied_at?.toISOString() || null,
+        },
+      });
     } catch (error) {
       console.error('Error updating contact message:', error);
       return res

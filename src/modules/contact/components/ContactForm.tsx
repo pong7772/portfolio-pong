@@ -23,10 +23,6 @@ const formInitialState: FormDataProps = {
   message: '',
 };
 
-const WEB3FORMS_ACCESS_KEY =
-  process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY ||
-  'a7ec671f-a051-4f42-be7b-4814a75bcebb';
-
 const ContactForm = () => {
   const [formData, setFormData] = useState<FormDataProps>(formInitialState);
   const [formErrors, setFormErrors] = useState<FormErrorsProps>({});
