@@ -68,15 +68,20 @@ const CategoryFilter = ({
   }
 
   return (
-    <div className='space-y-3'>
-      <div className='flex items-center justify-between'>
-        <h5 className='text-sm font-medium text-neutral-700 dark:text-neutral-300'>
-          Filter by Category
-        </h5>
+    <div className='rounded-xl border border-neutral-200 bg-white p-5 shadow-sm dark:border-neutral-800 dark:bg-neutral-900'>
+      <div className='mb-4 flex items-center justify-between'>
+        <div>
+          <h5 className='text-base font-semibold text-neutral-800 dark:text-neutral-200'>
+            Filter by Category
+          </h5>
+          <p className='mt-1 text-xs text-neutral-600 dark:text-neutral-400'>
+            Click on a category to filter blog posts
+          </p>
+        </div>
         {selectedTag && (
           <button
             onClick={handleClearFilter}
-            className='flex items-center gap-1 text-xs text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100'
+            className='flex items-center gap-1.5 rounded-lg border border-neutral-300 bg-white px-3 py-1.5 text-xs font-medium text-neutral-700 transition-colors hover:bg-neutral-50 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-300 dark:hover:bg-neutral-700'
           >
             <HiX size={14} />
             Clear filter
@@ -84,7 +89,7 @@ const CategoryFilter = ({
         )}
       </div>
 
-      <div className='flex flex-wrap gap-2'>
+      <div className='flex flex-wrap gap-2.5'>
         {availableTags.map((tag, index) => {
           const isSelected = selectedTag === tag.name;
           return (
@@ -95,18 +100,18 @@ const CategoryFilter = ({
               transition={{ duration: 0.2, delay: index * 0.03 }}
               onClick={() => handleTagClick(tag.name)}
               className={clsx(
-                'group relative rounded-full px-4 py-2 text-sm font-medium transition-all duration-200',
+                'group relative flex items-center gap-2 rounded-lg px-4 py-2.5 text-sm font-medium transition-all duration-200 hover:scale-105',
                 isSelected
-                  ? 'bg-blue-500 text-white shadow-md hover:bg-blue-600'
+                  ? 'bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-lg shadow-blue-500/30 hover:from-blue-600 hover:to-blue-700'
                   : 'bg-neutral-100 text-neutral-700 hover:bg-neutral-200 dark:bg-neutral-800 dark:text-neutral-300 dark:hover:bg-neutral-700',
               )}
             >
-              <span className='relative z-10'>#{tag.name}</span>
+              <span className='relative z-10 font-semibold'>#{tag.name}</span>
               <span
                 className={clsx(
-                  'ml-2 rounded-full px-2 py-0.5 text-xs',
+                  'rounded-full px-2.5 py-0.5 text-xs font-bold',
                   isSelected
-                    ? 'bg-white/20 text-white'
+                    ? 'bg-white/25 text-white'
                     : 'bg-neutral-200 text-neutral-600 dark:bg-neutral-700 dark:text-neutral-400',
                 )}
               >

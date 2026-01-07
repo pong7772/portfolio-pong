@@ -119,7 +119,15 @@ const BlogListNew = () => {
     <div className='space-y-10'>
       <BlogFeaturedSection />
 
-      <div className='space-y-5'>
+      <div className='space-y-6'>
+        {/* Category Filter Section - Prominent Position */}
+        <CategoryFilter
+          availableTags={availableTags}
+          selectedTag={selectedTag}
+          onTagSelect={setSelectedTag}
+        />
+
+        {/* Search and Results Header */}
         <div className='mb-6 flex flex-col items-center justify-between gap-3 sm:flex-row'>
           <div className='flex items-center gap-2 px-1  text-xl font-medium'>
             {searchTerm || selectedTag ? (
@@ -158,12 +166,6 @@ const BlogListNew = () => {
             onClearSearch={handleClearSearch}
           />
         </div>
-
-        <CategoryFilter
-          availableTags={availableTags}
-          selectedTag={selectedTag}
-          onTagSelect={setSelectedTag}
-        />
 
         <div className='grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3'>
           {!isValidating ? (
