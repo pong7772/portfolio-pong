@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { GetServerSideProps, NextPage } from 'next';
-import dynamic from 'next/dynamic';
 import { NextSeo } from 'next-seo';
 import { useEffect } from 'react';
 
@@ -10,11 +9,8 @@ import StructuredData from '@/common/components/elements/StructuredData';
 import { formatExcerpt } from '@/common/helpers';
 import { BlogDetailProps } from '@/common/types/blog';
 import BlogDetail from '@/modules/blog/components/BlogDetail';
+import CommentList from '@/modules/blog/components/CommentList';
 import { getBlogDetail } from '@/services/blog';
-
-const GiscusComment = dynamic(
-  () => import('@/modules/blog/components/GiscusComment'),
-);
 
 interface BlogDetailPageProps {
   blog: {
@@ -102,7 +98,7 @@ const BlogDetailPage: NextPage<BlogDetailPageProps> = ({ blog }) => {
         <BackButton url='/blog' />
         <BlogDetail {...blogData} />
         <section id='comments'>
-          <GiscusComment isEnableReaction={false} />
+          <CommentList id={blogData?.id} />
         </section>
       </Container>
     </>

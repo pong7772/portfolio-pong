@@ -10,10 +10,9 @@ import CommentItem from './CommentItem';
 
 type CommentListProps = {
   id: number;
-  totalComments: number;
 };
 
-const CommentList = ({ id, totalComments }: CommentListProps) => {
+const CommentList = ({ id }: CommentListProps) => {
   const { data, isLoading } = useSWR(`/api/comments?post_id=${id}`, fetcher);
 
   const commentsData: CommentItemProps[] = useMemo(() => {
@@ -21,6 +20,8 @@ const CommentList = ({ id, totalComments }: CommentListProps) => {
   }, [data]);
 
   if (isLoading) return <Loading />;
+
+  const totalComments = commentsData.length;
 
   return (
     <section className='space-y-5 pb-6 pt-4'>
@@ -34,7 +35,7 @@ const CommentList = ({ id, totalComments }: CommentListProps) => {
           ))}
         </>
       ) : (
-        <EmptyState message='No Comment.' />
+        <EmptyState message='No comments yet. Be the first to share your thoughts!' />
       )}
     </section>
   );
