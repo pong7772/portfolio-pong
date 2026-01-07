@@ -1,18 +1,16 @@
-import { useEffect, useRef } from 'react';
-
 interface HtmlContentProps {
   content: string;
   className?: string;
 }
 
 const HtmlContent = ({ content, className = '' }: HtmlContentProps) => {
-  const contentRef = useRef<HTMLDivElement>(null);
+  if (!content) {
+    return null;
+  }
 
-  useEffect(() => {
-    if (contentRef.current && content) {
-      // Apply custom styles to HTML content
-      const style = document.createElement('style');
-      style.textContent = `
+  return (
+    <>
+      <style jsx global>{`
         .html-content {
           line-height: 1.8;
           color: inherit;
@@ -27,6 +25,7 @@ const HtmlContent = ({ content, className = '' }: HtmlContentProps) => {
           margin-top: 1.5em;
           margin-bottom: 0.75em;
           line-height: 1.3;
+          color: inherit;
         }
         .html-content h1 {
           font-size: 2em;
@@ -149,25 +148,21 @@ const HtmlContent = ({ content, className = '' }: HtmlContentProps) => {
           border-radius: 8px;
           margin: 1.5em 0;
         }
-      `;
-      document.head.appendChild(style);
-
-      return () => {
-        document.head.removeChild(style);
-      };
-    }
-  }, [content]);
-
-  if (!content) {
-    return null;
-  }
-
-  return (
-    <div
-      ref={contentRef}
-      className={`html-content ${className}`}
-      dangerouslySetInnerHTML={{ __html: content }}
-    />
+        .html-content strong {
+          font-weight: 700;
+        }
+        .html-content em {
+          font-style: italic;
+        }
+        .html-content u {
+          text-decoration: underline;
+        }
+      `}</style>
+      <div
+        className={`html-content ${className}`}
+        dangerouslySetInnerHTML={{ __html: content }}
+      />
+    </>
   );
 };
 
