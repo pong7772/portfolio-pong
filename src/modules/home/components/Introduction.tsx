@@ -37,7 +37,9 @@ const Introduction = ({ stories = [] }: IntroductionProps) => {
     <section className='bg-cover bg-no-repeat'>
       <div className='space-y-3 sm:space-y-4'>
         <div className='flex flex-wrap items-center gap-2 text-xl font-medium sm:text-2xl md:text-3xl lg:text-4xl'>
-          <h1 className='break-words'>Hello, I&apos;m Roth Visothipong</h1>
+          <h1 className='break-words'>
+            Hello, I&apos;m Roth Samnang Visothipong
+          </h1>
           <div className='ml-1 animate-waving-hand'>👋</div>
         </div>
         <div className='space-y-3 sm:space-y-4'>
@@ -89,19 +91,49 @@ const Introduction = ({ stories = [] }: IntroductionProps) => {
         </div>
       )}
 
+      {/* About Me Summary */}
+      <div className='mt-8 sm:mt-10'>
+        <div className='rounded-xl border border-neutral-200 bg-gradient-to-br from-neutral-50 to-neutral-100/50 p-6 shadow-sm dark:border-neutral-800 dark:from-neutral-900/50 dark:to-neutral-800/30 sm:p-8'>
+          <div className='mb-4 flex items-center gap-3'>
+            <div className='flex h-10 w-10 items-center justify-center rounded-full bg-green-100 dark:bg-green-900/30'>
+              <span className='text-xl'>👨‍💻</span>
+            </div>
+            <h2 className='text-lg font-semibold text-neutral-800 dark:text-neutral-200 sm:text-xl'>
+              About Me
+            </h2>
+          </div>
+          <p className='leading-relaxed text-neutral-700 dark:text-neutral-300 sm:text-base md:text-lg'>
+            I am a Full-Stack Developer with a proven track record of building
+            scalable solutions, including a national EdTech platform serving
+            over{' '}
+            <span className='font-semibold text-green-600 dark:text-green-400'>
+              400,000 students
+            </span>
+            . Currently pursuing a{' '}
+            <span className='font-medium text-blue-600 dark:text-blue-400'>
+              Master of Education
+            </span>{' '}
+            in Belgium, I specialize in combining robust engineering (
+            <span className='font-mono text-sm'>Laravel/Flutter</span>) with
+            gamified learning experiences to drive global educational impact.
+          </p>
+        </div>
+      </div>
+
+      {/* Bio-Poem Section - Made Smaller */}
       <figure className='mt-6 sm:mt-8'>
-        <figcaption className='text-xs uppercase tracking-widest text-neutral-500 dark:text-neutral-400 sm:text-sm'>
+        <figcaption className='mb-3 text-xs uppercase tracking-widest text-neutral-500 dark:text-neutral-400 sm:text-sm'>
           Bio‑Poem
         </figcaption>
-        <blockquote className='mt-2 border-l-2 border-neutral-200 pl-3 italic text-neutral-800 dark:text-neutral-300 sm:mt-3 sm:pl-4'>
+        <blockquote className='rounded-lg border border-neutral-200 bg-neutral-50/50 p-4 italic text-neutral-700 dark:border-neutral-800 dark:bg-neutral-900/30 dark:text-neutral-300 sm:p-5'>
           <div
             className={
               isPoemExpanded
                 ? ''
-                : 'relative max-h-48 overflow-hidden sm:max-h-56 md:max-h-64'
+                : 'relative max-h-32 overflow-hidden sm:max-h-40'
             }
           >
-            <p className='whitespace-pre-line break-words font-serif text-sm leading-relaxed sm:text-base sm:leading-relaxed md:text-lg md:leading-loose'>
+            <p className='whitespace-pre-line break-words font-serif text-xs leading-relaxed sm:text-sm sm:leading-relaxed'>
               Roth
               {'\n'}Tech-head, teammate, foodie, and dreamer,
               {'\n'}Lover of a good football match, food that bites back, and
@@ -118,13 +150,13 @@ const Introduction = ({ stories = [] }: IntroductionProps) => {
               {'\n'}Visothipong
             </p>
             {!isPoemExpanded && (
-              <div className='pointer-events-none absolute inset-x-0 bottom-0 h-10 bg-gradient-to-t from-white dark:from-neutral-900 sm:h-12 md:h-16'></div>
+              <div className='pointer-events-none absolute inset-x-0 bottom-0 h-8 bg-gradient-to-t from-neutral-50 dark:from-neutral-900/30 sm:h-10'></div>
             )}
           </div>
           <button
             type='button'
             onClick={() => setIsPoemExpanded((v) => !v)}
-            className='mt-2 select-none text-xs font-medium text-green-600 hover:underline dark:text-green-400 sm:mt-3 sm:text-sm'
+            className='mt-3 select-none text-xs font-medium text-green-600 transition-colors hover:text-green-700 hover:underline dark:text-green-400 dark:hover:text-green-300 sm:text-sm'
             aria-expanded={isPoemExpanded}
             aria-controls='bio-poem'
           >
