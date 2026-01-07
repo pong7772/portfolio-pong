@@ -30,19 +30,54 @@ export default async function handler(
         country: visitor.country,
         city: visitor.city,
         user_agent: visitor.user_agent,
+        device_type: visitor.device_type,
+        browser: visitor.browser,
+        browser_version: visitor.browser_version,
+        os: visitor.os,
+        os_version: visitor.os_version,
         created_at: visitor.created_at.toISOString(),
       }));
 
       // Get unique visitor stats
-      const uniqueCountries = await prisma.visitors.groupBy({
-        by: ['country'],
-        where: {
-          country: { not: null },
-        },
-        _count: {
-          country: true,
-        },
-      });
+      const [uniqueCountries, deviceTypes, browsers, operatingSystems] =
+        await Promise.all([
+          prisma.visitors.groupBy({
+            by: ['country'],
+            where: {
+              country: { not: null },
+            },
+            _count: {
+              country: true,
+            },
+          }),
+          prisma.visitors.groupBy({
+            by: ['device_type'],
+            where: {
+              device_type: { not: null },
+            },
+            _count: {
+              device_type: true,
+            },
+          }),
+          prisma.visitors.groupBy({
+            by: ['browser'],
+            where: {
+              browser: { not: null },
+            },
+            _count: {
+              browser: true,
+            },
+          }),
+          prisma.visitors.groupBy({
+            by: ['os'],
+            where: {
+              os: { not: null },
+            },
+            _count: {
+              os: true,
+            },
+          }),
+        ]);
 
       const stats = {
         total,
@@ -53,6 +88,26 @@ export default async function handler(
           .map((c) => ({
             country: c.country,
             count: c._count.country,
+          })),
+        device_types: deviceTypes
+          .sort((a, b) => b._count.device_type - a._count.device_type)
+          .map((d) => ({
+            type: d.device_type,
+            count: d._count.device_type,
+          })),
+        top_browsers: browsers
+          .sort((a, b) => b._count.browser - a._count.browser)
+          .slice(0, 5)
+          .map((b) => ({
+            browser: b.browser,
+            count: b._count.browser,
+          })),
+        top_os: operatingSystems
+          .sort((a, b) => b._count.os - a._count.os)
+          .slice(0, 5)
+          .map((o) => ({
+            os: o.os,
+            count: o._count.os,
           })),
       };
 

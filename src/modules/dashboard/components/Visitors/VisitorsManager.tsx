@@ -12,6 +12,11 @@ interface Visitor {
   country: string | null;
   city: string | null;
   user_agent: string | null;
+  device_type: string | null;
+  browser: string | null;
+  browser_version: string | null;
+  os: string | null;
+  os_version: string | null;
   created_at: string;
 }
 
@@ -21,6 +26,9 @@ interface VisitorsResponse {
     total: number;
     unique_countries: number;
     top_countries: Array<{ country: string; count: number }>;
+    device_types: Array<{ type: string; count: number }>;
+    top_browsers: Array<{ browser: string; count: number }>;
+    top_os: Array<{ os: string; count: number }>;
   };
   pagination: {
     total: number;
@@ -94,6 +102,83 @@ const VisitorsManager = () => {
         </div>
       )}
 
+      {/* Device Stats */}
+      {data?.stats && (
+        <div className='grid grid-cols-1 gap-4 md:grid-cols-3'>
+          {/* Device Types */}
+          {data.stats.device_types && data.stats.device_types.length > 0 && (
+            <div className='rounded-lg border border-neutral-200 bg-white p-4 dark:border-neutral-800 dark:bg-neutral-900'>
+              <h3 className='mb-3 text-sm font-semibold text-neutral-700 dark:text-neutral-300'>
+                Device Types
+              </h3>
+              <div className='space-y-2'>
+                {data.stats.device_types.map((device, idx) => (
+                  <div
+                    key={idx}
+                    className='flex items-center justify-between text-sm'
+                  >
+                    <span className='capitalize text-neutral-700 dark:text-neutral-300'>
+                      {device.type}
+                    </span>
+                    <span className='font-medium text-neutral-600 dark:text-neutral-400'>
+                      {device.count.toLocaleString()}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Top Browsers */}
+          {data.stats.top_browsers && data.stats.top_browsers.length > 0 && (
+            <div className='rounded-lg border border-neutral-200 bg-white p-4 dark:border-neutral-800 dark:bg-neutral-900'>
+              <h3 className='mb-3 text-sm font-semibold text-neutral-700 dark:text-neutral-300'>
+                Top Browsers
+              </h3>
+              <div className='space-y-2'>
+                {data.stats.top_browsers.map((browser, idx) => (
+                  <div
+                    key={idx}
+                    className='flex items-center justify-between text-sm'
+                  >
+                    <span className='text-neutral-700 dark:text-neutral-300'>
+                      {browser.browser}
+                    </span>
+                    <span className='font-medium text-neutral-600 dark:text-neutral-400'>
+                      {browser.count.toLocaleString()}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Top OS */}
+          {data.stats.top_os && data.stats.top_os.length > 0 && (
+            <div className='rounded-lg border border-neutral-200 bg-white p-4 dark:border-neutral-800 dark:bg-neutral-900'>
+              <h3 className='mb-3 text-sm font-semibold text-neutral-700 dark:text-neutral-300'>
+                Top Operating Systems
+              </h3>
+              <div className='space-y-2'>
+                {data.stats.top_os.map((os, idx) => (
+                  <div
+                    key={idx}
+                    className='flex items-center justify-between text-sm'
+                  >
+                    <span className='text-neutral-700 dark:text-neutral-300'>
+                      {os.os}
+                    </span>
+                    <span className='font-medium text-neutral-600 dark:text-neutral-400'>
+                      {os.count.toLocaleString()}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+
       {/* Top Countries */}
       {data?.stats.top_countries && data.stats.top_countries.length > 0 && (
         <div className='rounded-lg border border-neutral-200 bg-white p-4 dark:border-neutral-800 dark:bg-neutral-900'>
@@ -133,6 +218,12 @@ const VisitorsManager = () => {
                 Location
               </th>
               <th className='px-4 py-3 text-left text-xs font-semibold uppercase text-neutral-600 dark:text-neutral-400'>
+                Device
+              </th>
+              <th className='px-4 py-3 text-left text-xs font-semibold uppercase text-neutral-600 dark:text-neutral-400'>
+                Browser / OS
+              </th>
+              <th className='px-4 py-3 text-left text-xs font-semibold uppercase text-neutral-600 dark:text-neutral-400'>
                 Time
               </th>
             </tr>
@@ -140,7 +231,7 @@ const VisitorsManager = () => {
           <tbody className='divide-y divide-neutral-200 dark:divide-neutral-700'>
             {!data ? (
               <tr>
-                <td colSpan={3} className='px-4 py-8 text-center'>
+                <td colSpan={5} className='px-4 py-8 text-center'>
                   <div className='inline-block h-8 w-8 animate-spin rounded-full border-4 border-neutral-300 border-t-blue-500' />
                   <p className='mt-4 text-sm text-neutral-600 dark:text-neutral-400'>
                     Loading visitors...
@@ -149,7 +240,7 @@ const VisitorsManager = () => {
               </tr>
             ) : data.data.length === 0 ? (
               <tr>
-                <td colSpan={3} className='px-4 py-8 text-center'>
+                <td colSpan={5} className='px-4 py-8 text-center'>
                   <GlobeIcon className='mx-auto mb-4 text-4xl text-neutral-400' />
                   <p className='text-neutral-600 dark:text-neutral-400'>
                     No visitors yet
@@ -183,6 +274,38 @@ const VisitorsManager = () => {
                         Unknown
                       </span>
                     )}
+                  </td>
+                  <td className='px-4 py-3 text-sm text-neutral-700 dark:text-neutral-300'>
+                    {visitor.device_type ? (
+                      <span className='inline-flex items-center rounded-full bg-blue-100 px-2 py-1 text-xs font-medium capitalize text-blue-800 dark:bg-blue-900/30 dark:text-blue-300'>
+                        {visitor.device_type}
+                      </span>
+                    ) : (
+                      <span className='text-neutral-500 dark:text-neutral-400'>
+                        Unknown
+                      </span>
+                    )}
+                  </td>
+                  <td className='px-4 py-3 text-xs text-neutral-600 dark:text-neutral-400'>
+                    <div className='space-y-1'>
+                      {visitor.browser && (
+                        <div>
+                          <span className='font-medium'>{visitor.browser}</span>
+                          {visitor.browser_version && (
+                            <span className='text-neutral-500'>
+                              {' '}
+                              {visitor.browser_version}
+                            </span>
+                          )}
+                        </div>
+                      )}
+                      {visitor.os && (
+                        <div className='text-neutral-500'>
+                          {visitor.os}
+                          {visitor.os_version && ` ${visitor.os_version}`}
+                        </div>
+                      )}
+                    </div>
                   </td>
                   <td className='px-4 py-3 text-xs text-neutral-600 dark:text-neutral-400'>
                     {new Date(visitor.created_at).toLocaleString()}
