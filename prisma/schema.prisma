@@ -14,7 +14,7 @@ model projects {
   slug        String   @unique
   description String
   image       String
-  images      String?  // JSON array of additional images
+  images      String? // JSON array of additional images
   link_demo   String?
   link_github String?
   stacks      String
@@ -37,7 +37,7 @@ model stories {
   title       String
   description String?
   image       String
-  images      String?  // JSON array of additional images
+  images      String? // JSON array of additional images
   link        String?
   order       Int      @default(0)
   is_show     Boolean  @default(true)
@@ -46,20 +46,20 @@ model stories {
 }
 
 model blogs {
-  id                  Int      @id @default(autoincrement())
-  title               String
-  slug                String   @unique
-  content             String   @db.Text
-  excerpt             String?  @db.Text
-  featured_image_url  String?
-  images              String?  // JSON array of additional images
-  status              String   @default("draft") // draft, publish
-  is_featured         Boolean  @default(false)
-  tags                String?  // JSON array of tags
-  author_id           Int      @default(1)
-  published_at        DateTime?
-  created_at          DateTime @default(now())
-  updated_at          DateTime @default(now())
+  id                 Int       @id @default(autoincrement())
+  title              String
+  slug               String    @unique
+  content            String    @db.Text
+  excerpt            String?   @db.Text
+  featured_image_url String?
+  images             String? // JSON array of additional images
+  status             String    @default("draft") // draft, publish
+  is_featured        Boolean   @default(false)
+  tags               String? // JSON array of tags
+  author_id          Int       @default(1)
+  published_at       DateTime?
+  created_at         DateTime  @default(now())
+  updated_at         DateTime  @default(now())
 }
 
 model guestbook {
@@ -67,20 +67,41 @@ model guestbook {
   name       String
   email      String
   message    String   @db.Text
-  image      String?  // Optional profile image URL
+  image      String? // Optional profile image URL
   is_show    Boolean  @default(true)
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
 }
 
 model comments {
+  id          Int       @id @default(autoincrement())
+  slug        String
+  type        String    @default("blog") // blog, learn
+  name        String
+  email       String
+  message     String    @db.Text
+  image       String?
+  is_show     Boolean   @default(true)
+  admin_reply String?   @db.Text
+  replied_at  DateTime?
+  created_at  DateTime  @default(now())
+}
+
+model contact_messages {
   id         Int      @id @default(autoincrement())
-  slug       String
-  type       String   @default("blog") // blog, learn
   name       String
   email      String
   message    String   @db.Text
-  image      String?
-  is_show    Boolean  @default(true)
+  is_read    Boolean  @default(false)
+  created_at DateTime @default(now())
+}
+
+model visitors {
+  id         Int      @id @default(autoincrement())
+  path       String
+  ip         String?
+  country    String?
+  city       String?
+  user_agent String?  @db.Text
   created_at DateTime @default(now())
 }

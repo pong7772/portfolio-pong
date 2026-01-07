@@ -34,6 +34,8 @@ export default async function handler(
         email: comment.email,
         message: comment.message,
         image: comment.image,
+        admin_reply: comment.admin_reply,
+        replied_at: comment.replied_at?.toISOString() || null,
         created_at: comment.created_at.toISOString(),
       }));
 
@@ -51,12 +53,10 @@ export default async function handler(
       const { slug, type = 'blog', name, email, message, image } = req.body;
 
       if (!slug || !name || !email || !message) {
-        res
-          .status(400)
-          .json({
-            status: false,
-            error: 'Slug, name, email, and message are required',
-          });
+        res.status(400).json({
+          status: false,
+          error: 'Slug, name, email, and message are required',
+        });
         return;
       }
 
@@ -84,6 +84,12 @@ export default async function handler(
           image: image || null,
           is_show: true,
         },
+      });
+
+      // Send Telegram notification (non-blocking)
+      const { notifyNewComment } = await import('@/services/telegram');
+      notifyNewComment(name.trim(), slug, type, message.trim()).catch((err) => {
+        console.error('Failed to send Telegram notification:', err);
       });
 
       res.status(201).json({

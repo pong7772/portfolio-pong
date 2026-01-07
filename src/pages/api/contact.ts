@@ -1,6 +1,8 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
+import prisma from '@/common/libs/prisma';
 import { sendMessage } from '@/services/contact';
+import { notifyNewContact } from '@/services/telegram';
 
 const FORM_API_KEY = process.env.CONTACT_FORM_API_KEY as string;
 
@@ -26,6 +28,30 @@ export default async function handler(
           'Contact form is not configured. Please contact the administrator.',
       });
     }
+
+    // Save to database
+    try {
+      await prisma.contact_messages.create({
+        data: {
+          name: formData.name.trim(),
+          email: formData.email.trim(),
+          message: formData.message.trim(),
+          is_read: false,
+        },
+      });
+    } catch (dbError) {
+      console.error('Failed to save contact message to database:', dbError);
+      // Continue even if DB save fails
+    }
+
+    // Send Telegram notification (non-blocking)
+    notifyNewContact(
+      formData.name.trim(),
+      formData.email.trim(),
+      formData.message.trim(),
+    ).catch((err) => {
+      console.error('Failed to send Telegram notification:', err);
+    });
 
     // Create FormData for Web3Forms API
     const web3FormData = new FormData();

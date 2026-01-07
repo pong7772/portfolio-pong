@@ -8,5 +8,7 @@ export interface Comment {
   email: string;
   message: string;
   image?: string | null;
+  admin_reply?: string | null;
+  replied_at?: string | null;
   created_at: string;
 }

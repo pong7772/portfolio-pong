@@ -83,31 +83,32 @@ const ContactForm = () => {
     setIsLoading(true);
 
     try {
-      const formDataToSend = new FormData();
-      formDataToSend.append('access_key', WEB3FORMS_ACCESS_KEY);
-      formDataToSend.append('name', formData.name.trim());
-      formDataToSend.append('email', formData.email.trim());
-      formDataToSend.append('message', formData.message.trim());
-      formDataToSend.append(
-        'subject',
-        `New Contact Form Message from ${formData.name}`,
-      );
-      formDataToSend.append('from_name', formData.name.trim());
-
-      const response = await fetch('https://api.web3forms.com/submit', {
+      // Submit to our API which will save to DB, send Telegram, and forward to Web3Forms
+      const response = await fetch('/api/contact', {
         method: 'POST',
-        body: formDataToSend,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          formData: {
+            name: formData.name.trim(),
+            email: formData.email.trim(),
+            message: formData.message.trim(),
+          },
+        }),
       });
 
       const data = await response.json();
 
-      if (data.success) {
+      if (response.ok && data.status === 200) {
         toast.success("Message sent successfully! I'll get back to you soon.");
         setFormData(formInitialState);
         setFormErrors({});
       } else {
         toast.error(
-          data.message || 'Failed to send message. Please try again.',
+          data.error ||
+            data.message ||
+            'Failed to send message. Please try again.',
         );
       }
     } catch (error: any) {
