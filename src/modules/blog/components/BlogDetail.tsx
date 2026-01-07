@@ -1,6 +1,7 @@
 import useSWR from 'swr';
 
 import Breakline from '@/common/components/elements/Breakline';
+import HtmlContent from '@/common/components/elements/HtmlContent';
 import ImageGallery from '@/common/components/elements/ImageGallery';
 import MDXComponent from '@/common/components/elements/MDXComponent';
 import { calculateReadingTime } from '@/common/helpers';
@@ -43,8 +44,19 @@ const BlogDetail = ({
         featuredImage={featured_image_url}
         title={title?.rendered}
       />
-      <div className='space-y-6 leading-[1.8] dark:text-neutral-300 '>
-        {content?.rendered && <MDXComponent>{content?.markdown}</MDXComponent>}
+      <div className='space-y-6 leading-[1.8] dark:text-neutral-300'>
+        {content?.rendered && (
+          <>
+            {/* Check if content is HTML (starts with <) or Markdown */}
+            {content.rendered.trim().startsWith('<') ? (
+              <HtmlContent content={content.rendered} />
+            ) : (
+              <MDXComponent>
+                {content?.markdown || content?.rendered}
+              </MDXComponent>
+            )}
+          </>
+        )}
       </div>
       {tagList?.length >= 1 && (
         <div className='my-10 space-y-2'>

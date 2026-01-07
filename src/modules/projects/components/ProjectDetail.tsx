@@ -1,3 +1,4 @@
+import HtmlContent from '@/common/components/elements/HtmlContent';
 import ImageGallery from '@/common/components/elements/ImageGallery';
 import MDXComponent from '@/common/components/elements/MDXComponent';
 import Tooltip from '@/common/components/elements/Tooltip';
@@ -57,7 +58,11 @@ const ProjectDetail = ({
       />
       {content && (
         <div className='mt-5 space-y-6 leading-[1.8] dark:text-neutral-300'>
-          <MDXComponent>{content}</MDXComponent>
+          {typeof content === 'string' && content.trim().startsWith('<') ? (
+            <HtmlContent content={content} />
+          ) : (
+            <MDXComponent>{content}</MDXComponent>
+          )}
         </div>
       )}
     </div>
