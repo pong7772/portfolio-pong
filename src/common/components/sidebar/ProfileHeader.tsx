@@ -26,10 +26,10 @@ const ProfileHeader = ({
         className={clsx(
           'flex-shrink-0',
           expandMenu
-            ? 'w-4 sm:w-5 md:w-7'
+            ? 'h-4 w-4 sm:h-5 sm:w-5 md:h-7 md:w-7'
             : isScrolled
-              ? 'md:w-13 w-7 sm:w-9'
-              : 'xs:max-w-[90px] w-full max-w-[60px] sm:max-w-[80px] md:max-w-[130px] lg:max-w-[150px] xl:max-w-[170px] 2xl:max-w-none',
+              ? 'md:h-13 md:w-13 h-7 w-7 sm:h-9 sm:w-9'
+              : 'h-[60px] w-[60px] sm:h-[80px] sm:w-[80px] md:h-[130px] md:w-[130px] lg:h-[150px] lg:w-[150px] xl:h-[170px] xl:w-[170px]',
         )}
       >
         <Image
@@ -37,14 +37,14 @@ const ProfileHeader = ({
           alt='Visothipong'
           width={expandMenu ? 18 : imageSize}
           height={expandMenu ? 18 : imageSize}
-          rounded={expandMenu ? 'rounded-full' : 'rounded-[12px]'}
+          rounded='rounded-lg'
           className={clsx(
-            'h-auto rotate-3 transition-transform duration-300 dark:border-neutral-600',
+            'h-full w-full object-cover transition-transform duration-300',
             expandMenu
-              ? 'w-4 sm:w-5 md:w-7'
+              ? 'h-4 w-4 sm:h-5 sm:w-5 md:h-7 md:w-7'
               : isScrolled
-                ? 'md:w-13 w-7 sm:w-9'
-                : 'w-full',
+                ? 'md:h-13 md:w-13 h-7 w-7 sm:h-9 sm:w-9'
+                : 'h-[60px] w-[60px] sm:h-[80px] sm:w-[80px] md:h-[130px] md:w-[130px] lg:h-[150px] lg:w-[150px] xl:h-[170px] xl:w-[170px]',
             !expandMenu && 'hover:scale-105',
           )}
           priority={!expandMenu}
