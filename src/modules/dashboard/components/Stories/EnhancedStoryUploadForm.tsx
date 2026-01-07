@@ -4,6 +4,7 @@ import { toast } from 'sonner';
 
 import Card from '@/common/components/elements/Card';
 import ImageManager from '@/common/components/elements/ImageManager';
+import RichTextEditor from '@/common/components/elements/RichTextEditor';
 import { Story, StoryFormData } from '@/common/types/stories';
 import { createStory, updateStory } from '@/services/stories';
 
@@ -236,15 +237,13 @@ const EnhancedStoryUploadForm = ({
             <label className='mb-2 block text-sm font-semibold text-neutral-700 dark:text-neutral-300'>
               Description
             </label>
-            <textarea
-              value={formData.description}
-              onChange={(e) =>
-                setFormData({ ...formData, description: e.target.value })
+            <RichTextEditor
+              value={formData.description || ''}
+              onChange={(description) =>
+                setFormData({ ...formData, description })
               }
-              className='w-full rounded-lg border border-neutral-300 bg-white p-3 text-neutral-800 placeholder-neutral-500 focus:border-green-500 focus:ring-2 focus:ring-green-200 dark:border-neutral-600 dark:bg-neutral-800 dark:text-neutral-200 dark:focus:border-green-400 dark:focus:ring-green-900'
-              placeholder='Tell the story behind this image...'
-              rows={4}
-              disabled={isUploading}
+              placeholder='Tell the story behind this image. You can add links, images, and format text easily...'
+              height='250px'
             />
           </div>
 

@@ -4,6 +4,7 @@ import { toast } from 'sonner';
 
 import Card from '@/common/components/elements/Card';
 import ImageManager from '@/common/components/elements/ImageManager';
+import RichTextEditor from '@/common/components/elements/RichTextEditor';
 import { ProjectItemProps } from '@/common/types/projects';
 import {
   createProject,
@@ -269,11 +270,11 @@ const ProjectsManager = () => {
               <label className='mb-2 block text-sm font-medium'>
                 Content (optional)
               </label>
-              <textarea
-                value={form.content as string}
-                onChange={(e) => setForm({ ...form, content: e.target.value })}
-                rows={6}
-                className='w-full rounded-lg border border-neutral-300 p-2 dark:border-neutral-700 dark:bg-neutral-900'
+              <RichTextEditor
+                value={(form.content as string) || ''}
+                onChange={(content) => setForm({ ...form, content })}
+                placeholder='Write project content here. You can add links, images, and format text easily...'
+                height='300px'
               />
             </div>
             <div className='flex gap-3 md:col-span-2'>

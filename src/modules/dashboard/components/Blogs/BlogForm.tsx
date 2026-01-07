@@ -4,6 +4,7 @@ import { toast } from 'sonner';
 
 import Card from '@/common/components/elements/Card';
 import ImageManager from '@/common/components/elements/ImageManager';
+import RichTextEditor from '@/common/components/elements/RichTextEditor';
 import { BlogFormData, Blog } from '@/services/blogs';
 import { createBlog, updateBlog } from '@/services/blogs';
 
@@ -186,15 +187,11 @@ const BlogForm = ({ blog, onSuccess, onCancel }: BlogFormProps) => {
           <label className='mb-2 block text-sm font-semibold text-neutral-700 dark:text-neutral-300'>
             Content <span className='text-red-500'>*</span>
           </label>
-          <textarea
+          <RichTextEditor
             value={formData.content}
-            onChange={(e) =>
-              setFormData({ ...formData, content: e.target.value })
-            }
-            rows={15}
-            className='w-full rounded-lg border border-neutral-300 px-4 py-2 font-mono text-sm dark:border-neutral-600 dark:bg-neutral-800'
-            placeholder='Write your blog content here (Markdown supported)...'
-            required
+            onChange={(content) => setFormData({ ...formData, content })}
+            placeholder='Write your blog content here. You can add links, images, and format text easily...'
+            height='500px'
           />
         </div>
 
