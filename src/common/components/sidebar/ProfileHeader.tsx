@@ -26,24 +26,24 @@ const ProfileHeader = ({
         className={clsx(
           'flex-shrink-0',
           expandMenu
-            ? 'w-6 sm:w-8 md:w-10'
+            ? 'w-5 sm:w-7 md:w-9'
             : isScrolled
-              ? 'w-10 sm:w-12 md:w-14'
-              : 'xs:max-w-[100px] w-full max-w-[80px] sm:max-w-[120px] md:max-w-[140px] lg:max-w-[160px] xl:max-w-[180px] 2xl:max-w-none',
+              ? 'md:w-13 w-9 sm:w-11'
+              : 'xs:max-w-[90px] w-full max-w-[72px] sm:max-w-[110px] md:max-w-[130px] lg:max-w-[150px] xl:max-w-[170px] 2xl:max-w-none',
         )}
       >
         <Image
           src='/images/pongpf.png'
           alt='Visothipong'
-          width={expandMenu ? 24 : imageSize}
-          height={expandMenu ? 24 : imageSize}
+          width={expandMenu ? 22 : imageSize}
+          height={expandMenu ? 22 : imageSize}
           rounded={expandMenu ? 'rounded-full' : 'rounded-[12px]'}
           className={clsx(
             'h-auto rotate-3 transition-transform duration-300 dark:border-neutral-600',
             expandMenu
-              ? 'w-6 sm:w-8 md:w-10'
+              ? 'w-5 sm:w-7 md:w-9'
               : isScrolled
-                ? 'w-10 sm:w-12 md:w-14'
+                ? 'md:w-13 w-9 sm:w-11'
                 : 'w-full',
             !expandMenu && 'hover:scale-105',
           )}
@@ -51,10 +51,10 @@ const ProfileHeader = ({
           quality={100}
           sizes={
             expandMenu
-              ? '32px'
+              ? '28px'
               : isScrolled
-                ? '(max-width: 640px) 40px, (max-width: 768px) 48px, (max-width: 1024px) 56px'
-                : '(max-width: 640px) 80px, (max-width: 768px) 100px, (max-width: 1024px) 120px, (max-width: 1280px) 140px, 160px'
+                ? '(max-width: 640px) 36px, (max-width: 768px) 44px, (max-width: 1024px) 52px'
+                : '(max-width: 640px) 72px, (max-width: 768px) 92px, (max-width: 1024px) 112px, (max-width: 1280px) 132px, 152px'
           }
         />
       </div>

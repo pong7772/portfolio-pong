@@ -20,7 +20,7 @@ const Profile = ({ isScrolled = false }: ProfileProps) => {
   const isMobile = useIsMobile();
 
   const getImageSize = () => {
-    let size = isMobile ? 28 : 56;
+    let size = isMobile ? 24 : 56;
     if (!isMobile && isScrolled) {
       size = 40; // Maintain minimum size when scrolled
     }
