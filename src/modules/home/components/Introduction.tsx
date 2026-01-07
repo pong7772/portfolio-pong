@@ -91,17 +91,17 @@ const Introduction = ({ stories = [] }: IntroductionProps) => {
       )}
 
       {/* About Me Summary */}
-      <div className='mt-8 sm:mt-10'>
-        <div className='rounded-xl border border-neutral-200 bg-gradient-to-br from-neutral-50 to-neutral-100/50 p-6 shadow-sm dark:border-neutral-800 dark:from-neutral-900/50 dark:to-neutral-800/30 sm:p-8'>
-          <div className='mb-4 flex items-center gap-3'>
-            <div className='flex h-10 w-10 items-center justify-center rounded-full bg-green-100 dark:bg-green-900/30'>
-              <span className='text-xl'>👨‍💻</span>
+      <div className='mt-6 sm:mt-8'>
+        <div className='rounded-lg border border-neutral-200/60 bg-neutral-50/50 p-4 dark:border-neutral-800/60 dark:bg-neutral-900/30 sm:p-5'>
+          <div className='mb-3 flex items-center gap-2'>
+            <div className='flex h-8 w-8 items-center justify-center rounded-lg bg-green-100 dark:bg-green-900/20'>
+              <span className='text-base'>👨‍💻</span>
             </div>
-            <h2 className='text-lg font-semibold text-neutral-800 dark:text-neutral-200 sm:text-xl'>
+            <h2 className='text-base font-semibold text-neutral-800 dark:text-neutral-200 sm:text-lg'>
               About Me
             </h2>
           </div>
-          <p className='leading-relaxed text-neutral-700 dark:text-neutral-300 sm:text-base md:text-lg'>
+          <p className='text-sm leading-relaxed text-neutral-700 dark:text-neutral-300 sm:text-base'>
             I am a Full-Stack Developer with a proven track record of building
             scalable solutions, including a national EdTech platform serving
             over{' '}
@@ -114,7 +114,7 @@ const Introduction = ({ stories = [] }: IntroductionProps) => {
             </span>{' '}
             in Cambodia and Belgium, I specialize in combining robust
             engineering (
-            <span className='font-mono text-sm'>Laravel/Flutter/Next/Node</span>
+            <span className='font-mono text-xs'>Laravel/Flutter/Next/Node</span>
             ) with gamified learning experiences to drive global educational
             impact.
           </p>

@@ -73,7 +73,10 @@ const PxlPage: NextPage<PxlPageProps> = () => {
           </Link>
 
           {/* The Internationalist */}
-          <div className='group relative overflow-hidden rounded-xl border border-neutral-200/60 bg-white shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md dark:border-neutral-800/60 dark:bg-neutral-900'>
+          <Link
+            href='/blog'
+            className='group relative overflow-hidden rounded-xl border border-neutral-200/60 bg-white shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md dark:border-neutral-800/60 dark:bg-neutral-900'
+          >
             <div className='p-6'>
               <div className='mb-4'>
                 <div className='flex h-12 w-12 items-center justify-center rounded-lg bg-purple-100 dark:bg-purple-900/30'>
@@ -99,13 +102,22 @@ const PxlPage: NextPage<PxlPageProps> = () => {
                 Experiences and insights from an international perspective at
                 PXL.
               </p>
-              <div className='mt-4'>
+              <div className='mt-4 flex items-center justify-between'>
                 <span className='inline-flex items-center rounded-full bg-yellow-100 px-2.5 py-0.5 text-xs font-medium text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400'>
                   Coming Soon
                 </span>
+                <svg
+                  xmlns='http://www.w3.org/2000/svg'
+                  viewBox='0 0 24 24'
+                  fill='currentColor'
+                  className='h-4 w-4 text-neutral-400 transition-transform group-hover:translate-x-0.5'
+                  aria-hidden='true'
+                >
+                  <path d='M13.5 4.5a.75.75 0 0 0 0 1.5h4.69l-9.72 9.72a.75.75 0 1 0 1.06 1.06l9.72-9.72v4.69a.75.75 0 0 0 1.5 0v-7.5a.75.75 0 0 0-.75-.75h-7.5Z' />
+                </svg>
               </div>
             </div>
-          </div>
+          </Link>
 
           {/* Life at Belgium */}
           <div className='group relative overflow-hidden rounded-xl border border-neutral-200/60 bg-white shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md dark:border-neutral-800/60 dark:bg-neutral-900'>
