@@ -2,11 +2,9 @@ import {
   SiDart,
   SiFlutter,
   SiReact,
-  SiReactquery,
   SiNodedotjs,
   SiExpress,
   SiNestjs,
-  SiPhp,
   SiLaravel,
   SiNextdotjs,
   SiVuedotjs,
@@ -21,7 +19,6 @@ import {
   SiKotlin,
   SiAndroid,
 } from 'react-icons/si';
-import { FaAws } from 'react-icons/fa';
 
 import SectionHeading from '@/common/components/elements/SectionHeading';
 import { STACKS } from '@/common/constant/stacks';
