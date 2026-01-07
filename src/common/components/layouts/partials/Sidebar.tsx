@@ -60,6 +60,18 @@ const Sidebar = () => {
                 <BackgroundAudioButton />
               </div>
             </div>
+            <Breakline className='mx-1' />
+            <div className='px-2 pt-2 sm:px-3 sm:pt-3'>
+              <p className='text-[9px] leading-relaxed text-neutral-500 dark:text-neutral-500 sm:text-[10px]'>
+                © {new Date().getFullYear()} Copyright
+              </p>
+              <p className='mt-1 text-[9px] leading-relaxed text-neutral-500 dark:text-neutral-500 sm:text-[10px]'>
+                The whole website built by{' '}
+                <span className='font-medium text-neutral-700 dark:text-neutral-300'>
+                  Visothipong
+                </span>
+              </p>
+            </div>
           </div>
         </div>
       )}
