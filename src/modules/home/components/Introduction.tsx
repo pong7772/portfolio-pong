@@ -58,7 +58,7 @@ const Introduction = ({ stories = [] }: IntroductionProps) => {
       {stories.length > 0 && (
         <div className='mt-6 sm:mt-8'>
           <div className='mb-3 sm:mb-4'>
-            <h3 className='text-xs uppercase tracking-widest text-neutral-500 dark:text-neutral-400 sm:text-sm'>
+            <h3 className='mt-2 text-xs uppercase tracking-widest text-neutral-500 dark:text-neutral-400 sm:text-sm'>
               Stories about Roth Visothipong
             </h3>
           </div>
