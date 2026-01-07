@@ -14,6 +14,7 @@ import '@/common/styles/globals.css';
 import CommandPalette from '@/common/components/elements/CommandPalette';
 import Layout from '@/common/components/layouts';
 import { CommandPaletteProvider } from '@/common/context/CommandPaletteContext';
+import { MusicProvider, useMusic } from '@/common/context/MusicContext';
 import {
   firaCode,
   jakartaSans,
@@ -30,7 +31,39 @@ const ProgressBar = dynamic(
   { ssr: false },
 );
 
-const App = ({ Component, pageProps: { session, ...pageProps } }: AppProps) => {
+const WelcomeModal = dynamic(
+  () => import('src/common/components/elements/WelcomeModal'),
+  { ssr: false },
+);
+
+const AppContent = ({ Component, pageProps, router }: AppProps) => {
+  const { enable, disable } = useMusic();
+
+  return (
+    <>
+      <WelcomeModal
+        onMusicChoice={(enableMusic) => {
+          if (enableMusic) {
+            enable();
+          } else {
+            disable();
+          }
+        }}
+      />
+      <Layout>
+        <CommandPalette />
+        <ProgressBar />
+        <Component {...pageProps} router={router} />
+      </Layout>
+    </>
+  );
+};
+
+const App = ({
+  Component,
+  pageProps: { session, ...pageProps },
+  router,
+}: AppProps) => {
   useEffect(() => {
     AOS.init({
       duration: 800,
@@ -61,12 +94,14 @@ const App = ({ Component, pageProps: { session, ...pageProps } }: AppProps) => {
       <SessionProvider session={session}>
         <ThemeProvider attribute='class' defaultTheme='light'>
           <CommandPaletteProvider>
-            <Toaster richColors position='top-right' />
-            <Layout>
-              <CommandPalette />
-              <ProgressBar />
-              <Component {...pageProps} />
-            </Layout>
+            <MusicProvider>
+              <Toaster richColors position='top-right' />
+              <AppContent
+                Component={Component}
+                pageProps={pageProps}
+                router={router}
+              />
+            </MusicProvider>
           </CommandPaletteProvider>
         </ThemeProvider>
       </SessionProvider>
