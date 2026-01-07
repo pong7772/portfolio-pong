@@ -1,4 +1,3 @@
-import axios from 'axios';
 import clsx from 'clsx';
 import { useState } from 'react';
 import { FiClock as ClockIcon } from 'react-icons/fi';
@@ -23,6 +22,10 @@ const formInitialState: FormDataProps = {
   email: '',
   message: '',
 };
+
+const WEB3FORMS_ACCESS_KEY =
+  process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY ||
+  'a7ec671f-a051-4f42-be7b-4814a75bcebb';
 
 const ContactForm = () => {
   const [formData, setFormData] = useState<FormDataProps>(formInitialState);
@@ -69,7 +72,7 @@ const ContactForm = () => {
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!validateForm()) {
@@ -78,19 +81,38 @@ const ContactForm = () => {
     }
 
     setIsLoading(true);
+
     try {
-      const response = await axios.post('/api/contact', { formData });
-      if (response.status === 200) {
+      const formDataToSend = new FormData();
+      formDataToSend.append('access_key', WEB3FORMS_ACCESS_KEY);
+      formDataToSend.append('name', formData.name.trim());
+      formDataToSend.append('email', formData.email.trim());
+      formDataToSend.append('message', formData.message.trim());
+      formDataToSend.append(
+        'subject',
+        `New Contact Form Message from ${formData.name}`,
+      );
+      formDataToSend.append('from_name', formData.name.trim());
+
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: formDataToSend,
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
         toast.success("Message sent successfully! I'll get back to you soon.");
         setFormData(formInitialState);
         setFormErrors({});
+      } else {
+        toast.error(
+          data.message || 'Failed to send message. Please try again.',
+        );
       }
     } catch (error: any) {
-      const errorMessage =
-        error?.response?.data?.error ||
-        error?.message ||
-        'Failed to send message. Please try again later.';
-      toast.error(errorMessage);
+      console.error('Contact form error:', error);
+      toast.error('Failed to send message. Please try again later.');
     } finally {
       setIsLoading(false);
     }
