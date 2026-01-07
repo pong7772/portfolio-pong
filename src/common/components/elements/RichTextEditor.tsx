@@ -1,11 +1,18 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
+import { useEffect, useState } from 'react';
 import 'react-quill/dist/quill.snow.css';
 
 // Dynamically import ReactQuill to avoid SSR issues
-const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
+const ReactQuill = dynamic(() => import('react-quill'), {
+  ssr: false,
+  loading: () => (
+    <div className='flex h-[400px] items-center justify-center rounded-lg border border-neutral-300 bg-white dark:border-neutral-600 dark:bg-neutral-800'>
+      <div className='text-neutral-500'>Loading editor...</div>
+    </div>
+  ),
+});
 
 interface RichTextEditorProps {
   value: string;
@@ -48,10 +55,10 @@ const RichTextEditor = ({
         ['clean'],
       ],
       handlers: {
-        image: function () {
+        image: function (this: { quill: any }) {
           const url = prompt('Enter image URL:');
           if (url) {
-            const quill = (this as any).quill;
+            const quill = this.quill;
             const range = quill.getSelection();
             quill.insertEmbed(range.index, 'image', url);
           }
@@ -83,22 +90,14 @@ const RichTextEditor = ({
     'align',
   ];
 
-  if (!mounted) {
-    return (
-      <div
-        className={`rounded-lg border border-neutral-300 bg-white p-4 dark:border-neutral-600 dark:bg-neutral-800 ${className}`}
-        style={{ height }}
-      >
-        <div className='flex h-full items-center justify-center text-neutral-500'>
-          Loading editor...
-        </div>
-      </div>
-    );
-  }
-
   return (
-    <div className={`rich-text-editor ${className}`}>
+    <div className={`rich-text-editor w-full ${className}`}>
       <style jsx global>{`
+        .rich-text-editor {
+          display: block !important;
+          width: 100% !important;
+          visibility: visible !important;
+        }
         .rich-text-editor .ql-container {
           font-size: 14px;
           font-family: inherit;
@@ -106,6 +105,7 @@ const RichTextEditor = ({
           border-bottom-right-radius: 8px;
           border-color: rgb(212 212 212);
           background: white;
+          min-height: ${height};
         }
         .dark .rich-text-editor .ql-container {
           border-color: rgb(38 38 38);
@@ -117,6 +117,8 @@ const RichTextEditor = ({
           border-top-right-radius: 8px;
           border-color: rgb(212 212 212);
           background: rgb(250 250 250);
+          display: flex;
+          flex-wrap: wrap;
         }
         .dark .rich-text-editor .ql-toolbar {
           border-color: rgb(38 38 38);
@@ -166,15 +168,25 @@ const RichTextEditor = ({
           color: rgb(96 165 250);
         }
       `}</style>
-      <ReactQuill
-        theme='snow'
-        value={value}
-        onChange={onChange}
-        modules={modules}
-        formats={formats}
-        placeholder={placeholder}
-        style={{ height: 'auto' }}
-      />
+      {!mounted ? (
+        <div
+          className='flex h-[400px] w-full items-center justify-center rounded-lg border border-neutral-300 bg-white dark:border-neutral-600 dark:bg-neutral-800'
+          style={{ minHeight: height }}
+        >
+          <div className='text-sm text-neutral-500 dark:text-neutral-400'>
+            Loading editor...
+          </div>
+        </div>
+      ) : (
+        <ReactQuill
+          theme='snow'
+          value={value || ''}
+          onChange={onChange}
+          modules={modules}
+          formats={formats}
+          placeholder={placeholder}
+        />
+      )}
     </div>
   );
 };
