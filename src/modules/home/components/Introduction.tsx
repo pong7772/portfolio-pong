@@ -107,15 +107,17 @@ const Introduction = ({ stories = [] }: IntroductionProps) => {
             scalable solutions, including a national EdTech platform serving
             over{' '}
             <span className='font-semibold text-green-600 dark:text-green-400'>
-              400,000 students
+              1,000,000 students
             </span>
             . Currently pursuing a{' '}
             <span className='font-medium text-blue-600 dark:text-blue-400'>
               Master of Education
             </span>{' '}
-            in Belgium, I specialize in combining robust engineering (
-            <span className='font-mono text-sm'>Laravel/Flutter</span>) with
-            gamified learning experiences to drive global educational impact.
+            in Cambodia and Belgium, I specialize in combining robust
+            engineering (
+            <span className='font-mono text-sm'>Laravel/Flutter/Next/Node</span>
+            ) with gamified learning experiences to drive global educational
+            impact.
           </p>
         </div>
       </div>
@@ -130,7 +132,7 @@ const Introduction = ({ stories = [] }: IntroductionProps) => {
             className={
               isPoemExpanded
                 ? ''
-                : 'relative max-h-32 overflow-hidden sm:max-h-40'
+                : 'relative max-h-24  overflow-hidden sm:max-h-32'
             }
           >
             <p className='whitespace-pre-line break-words font-serif text-xs leading-relaxed sm:text-sm sm:leading-relaxed'>
