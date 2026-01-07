@@ -5,7 +5,7 @@ import useSWR from 'swr';
 import NavigationSection from '@/common/components/elements/NavigationSection';
 import { parseUrl } from '@/common/helpers';
 import { SubContentMetaProps } from '@/common/types/learn';
-import GiscusComment from '@/modules/blog/components/GiscusComment';
+import CommentList from '@/modules/blog/components/CommentList';
 import { fetcher } from '@/services/fetcher';
 
 import ContentBody from './ContentBody';
@@ -33,6 +33,10 @@ const ContentDetail = ({ content, frontMatter }: ContentDetailProps) => {
   const router = useRouter();
   const currentUrl = router.asPath;
   const { parentSlug, contentSlug } = parseUrl(currentUrl);
+  const commentSlug =
+    parentSlug && contentSlug
+      ? `learn/${parentSlug}/${contentSlug}`
+      : currentUrl;
 
   const meta = frontMatter;
   const isShowPlayground = meta?.is_playground ?? false;
@@ -100,7 +104,7 @@ const ContentDetail = ({ content, frontMatter }: ContentDetailProps) => {
           id='comments'
           className='my-10 border-t border-gray-300 dark:border-neutral-700'
         >
-          <GiscusComment />
+          <CommentList slug={commentSlug} type='learn' />
         </section>
       )}
     </>

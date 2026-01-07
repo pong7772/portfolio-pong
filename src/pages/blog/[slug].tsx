@@ -9,8 +9,8 @@ import StructuredData from '@/common/components/elements/StructuredData';
 import { formatExcerpt } from '@/common/helpers';
 import { BlogDetailProps } from '@/common/types/blog';
 import BlogDetail from '@/modules/blog/components/BlogDetail';
-import CommentList from '@/modules/blog/components/CommentList';
 import { getBlogDetail } from '@/services/blog';
+import CommentList from '@/modules/blog/components/CommentList';
 
 interface BlogDetailPageProps {
   blog: {
@@ -21,7 +21,7 @@ interface BlogDetailPageProps {
 const BlogDetailPage: NextPage<BlogDetailPageProps> = ({ blog }) => {
   const blogData = blog?.data || {};
 
-  const slug = `blog/${blogData?.slug}?id=${blogData?.id}`;
+  const slug = `blog/${blogData?.slug}`;
   const baseUrl =
     process.env.NEXT_PUBLIC_SITE_URL || 'https://visothipongroth.vercel.app';
   const canonicalUrl = `${baseUrl}/${slug}`;
@@ -98,7 +98,7 @@ const BlogDetailPage: NextPage<BlogDetailPageProps> = ({ blog }) => {
         <BackButton url='/blog' />
         <BlogDetail {...blogData} />
         <section id='comments'>
-          <CommentList id={blogData?.id} />
+          <CommentList slug={slug} type='blog' />
         </section>
       </Container>
     </>
