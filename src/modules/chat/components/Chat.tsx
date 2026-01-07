@@ -1,62 +1,57 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import { getDatabase, onValue, ref, remove, set } from 'firebase/database';
+import axios from 'axios';
 import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
+import useSWR from 'swr';
 
-import { firebase } from '@/common/libs/firebase';
 import { MessageProps } from '@/common/types/chat';
 
-import ChatAuth from './ChatAuth';
-import ChatInput from './ChatInput';
+import GuestbookForm from './GuestbookForm';
 import ChatList from './ChatList';
+
+const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 
 const Chat = ({ isWidget = false }: { isWidget?: boolean }) => {
   const { data: session } = useSession();
-
   const [messages, setMessages] = useState<MessageProps[]>([]);
 
-  const database = getDatabase(firebase);
-  const databaseChat = process.env.NEXT_PUBLIC_FIREBASE_CHAT_DB as string;
-
-  const handleSendMessage = (message: string) => {
-    const messageId = uuidv4();
-    const messageRef = ref(database, `${databaseChat}/${messageId}`);
-
-    set(messageRef, {
-      id: messageId,
-      name: session?.user?.name,
-      email: session?.user?.email,
-      image: session?.user?.image,
-      message,
-      created_at: new Date().toISOString(),
-      is_show: true,
-    });
-  };
-
-  const handleDeleteMessage = (id: string) => {
-    const messageRef = ref(database, `${databaseChat}/${id}`);
-
-    if (messageRef) {
-      remove(messageRef);
-    }
-  };
+  const { data, error, mutate } = useSWR<MessageProps[]>(
+    '/api/guestbook',
+    fetcher,
+    {
+      refreshInterval: 5000, // Refresh every 5 seconds
+      revalidateOnFocus: true,
+    },
+  );
 
   useEffect(() => {
-    const messagesRef = ref(database, databaseChat);
-    onValue(messagesRef, (snapshot) => {
-      const messagesData = snapshot.val();
-      if (messagesData) {
-        const messagesArray = Object.values(messagesData) as MessageProps[];
-        const sortedMessage = messagesArray.sort((a, b) => {
-          const dateA = new Date(a.created_at);
-          const dateB = new Date(b.created_at);
-          return dateA.getTime() - dateB.getTime();
-        });
-        setMessages(sortedMessage);
-      }
+    if (data) {
+      setMessages(data);
+    }
+  }, [data]);
+
+  const handleSendMessage = async (
+    name: string,
+    email: string,
+    message: string,
+    image?: string,
+  ) => {
+    await axios.post('/api/guestbook', {
+      name,
+      email,
+      message,
+      image: image || session?.user?.image || null,
     });
-  }, [database]);
+    mutate(); // Refresh the messages
+  };
+
+  const handleDeleteMessage = async (id: string) => {
+    try {
+      await axios.delete(`/api/guestbook?id=${id}`);
+      mutate(); // Refresh the messages
+    } catch (error) {
+      console.error('Error deleting message:', error);
+    }
+  };
 
   return (
     <>
@@ -65,11 +60,11 @@ const Chat = ({ isWidget = false }: { isWidget?: boolean }) => {
         messages={messages}
         onDeleteMessage={handleDeleteMessage}
       />
-      {session ? (
-        <ChatInput onSendMessage={handleSendMessage} isWidget={isWidget} />
-      ) : (
-        <ChatAuth isWidget={isWidget} />
-      )}
+      <GuestbookForm
+        onSendMessage={handleSendMessage}
+        isWidget={isWidget}
+        session={session}
+      />
     </>
   );
 };

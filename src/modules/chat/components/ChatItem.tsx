@@ -23,7 +23,8 @@ const ChatItem = ({
 }: ChatItemProps) => {
   const { data: session } = useSession();
 
-  const authorEmail = 'aulianza.dev@gmail.com';
+  const authorEmail =
+    process.env.NEXT_PUBLIC_AUTHOR_EMAIL || 'visothipong7772@gmail.com';
 
   const pattern = /@([^:]+):/g;
   const modifiedMessage = message?.split(pattern).map((part, index) => {
@@ -41,9 +42,19 @@ const ChatItem = ({
     onDelete(id);
   };
 
+  // Generate a default avatar based on name initials
+  const getInitials = (name: string) => {
+    return name
+      .split(' ')
+      .map((n) => n[0])
+      .join('')
+      .toUpperCase()
+      .slice(0, 2);
+  };
+
   return (
     <div className='flex items-start gap-3 px-3'>
-      {image && (
+      {image ? (
         <Image
           src={image}
           width={40}
@@ -51,6 +62,10 @@ const ChatItem = ({
           alt={name}
           className='mt-1 rounded-full border dark:border-neutral-800'
         />
+      ) : (
+        <div className='mt-1 flex h-10 w-10 items-center justify-center rounded-full border bg-gradient-to-br from-blue-500 to-purple-600 text-sm font-semibold text-white dark:border-neutral-800'>
+          {getInitials(name)}
+        </div>
       )}
       <div className='space-y-1'>
         <div className='flex flex-col items-start gap-3 md:flex-row md:items-center'>

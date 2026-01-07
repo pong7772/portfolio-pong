@@ -61,3 +61,14 @@ model blogs {
   created_at          DateTime @default(now())
   updated_at          DateTime @default(now())
 }
+
+model guestbook {
+  id         Int      @id @default(autoincrement())
+  name       String
+  email      String
+  message    String   @db.Text
+  image      String?  // Optional profile image URL
+  is_show    Boolean  @default(true)
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+}
