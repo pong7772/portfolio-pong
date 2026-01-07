@@ -23,11 +23,7 @@ const EnhancedStoryUploadForm = ({
     title: story?.title || '',
     description: story?.description || '',
     image: story?.image || '',
-    images: story?.images
-      ? typeof story.images === 'string'
-        ? JSON.parse(story.images)
-        : story.images
-      : [],
+    images: story?.images ? JSON.parse(story.images) : [],
     link: story?.link || '',
     order: story?.order || 0,
     is_show: story?.is_show ?? true,
@@ -246,8 +242,8 @@ const EnhancedStoryUploadForm = ({
               onChange={(description) =>
                 setFormData({ ...formData, description })
               }
-              placeholder='Tell the story behind this image. You can add links, images, and format text easily...'
-              height='250px'
+              placeholder='Tell the story behind this image...'
+              disabled={isUploading}
             />
           </div>
 

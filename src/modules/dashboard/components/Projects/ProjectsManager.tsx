@@ -273,8 +273,7 @@ const ProjectsManager = () => {
               <RichTextEditor
                 value={(form.content as string) || ''}
                 onChange={(content) => setForm({ ...form, content })}
-                placeholder='Write project content here. You can add links, images, and format text easily...'
-                height='300px'
+                placeholder='Write project content here...'
               />
             </div>
             <div className='flex gap-3 md:col-span-2'>

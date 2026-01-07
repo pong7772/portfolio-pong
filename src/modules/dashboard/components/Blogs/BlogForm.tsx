@@ -190,8 +190,8 @@ const BlogForm = ({ blog, onSuccess, onCancel }: BlogFormProps) => {
           <RichTextEditor
             value={formData.content}
             onChange={(content) => setFormData({ ...formData, content })}
-            placeholder='Write your blog content here. You can add links, images, and format text easily...'
-            height='500px'
+            placeholder='Write your blog content here...'
+            disabled={isSubmitting}
           />
         </div>
 

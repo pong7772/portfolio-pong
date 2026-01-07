@@ -27,21 +27,7 @@ export default async function handler(
         },
       });
 
-      // Parse images JSON strings to arrays for easier frontend consumption
-      const parsedStories = stories.map((story) => ({
-        ...story,
-        images: story.images
-          ? (() => {
-              try {
-                return JSON.parse(story.images);
-              } catch {
-                return [];
-              }
-            })()
-          : [],
-      }));
-
-      res.status(200).json(parsedStories);
+      res.status(200).json(stories);
     } catch (error) {
       res.status(500).json({ message: 'Error fetching stories' });
     }

@@ -1,5 +1,5 @@
-import HtmlContent from '@/common/components/elements/HtmlContent';
 import ImageGallery from '@/common/components/elements/ImageGallery';
+import MDXComponent from '@/common/components/elements/MDXComponent';
 import Tooltip from '@/common/components/elements/Tooltip';
 import { STACKS } from '@/common/constant/stacks';
 import { ProjectItemProps } from '@/common/types/projects';
@@ -56,11 +56,8 @@ const ProjectDetail = ({
         title={title}
       />
       {content && (
-        <div className='mt-5 space-y-6'>
-          <HtmlContent
-            content={content}
-            className='prose prose-neutral dark:prose-invert max-w-none'
-          />
+        <div className='mt-5 space-y-6 leading-[1.8] dark:text-neutral-300'>
+          <MDXComponent>{content}</MDXComponent>
         </div>
       )}
     </div>

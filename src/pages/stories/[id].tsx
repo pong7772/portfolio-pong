@@ -5,7 +5,6 @@ import { BiArrowBack } from 'react-icons/bi';
 
 import Button from '@/common/components/elements/Button';
 import Container from '@/common/components/elements/Container';
-import HtmlContent from '@/common/components/elements/HtmlContent';
 import ImageGallery from '@/common/components/elements/ImageGallery';
 import prisma from '@/common/libs/prisma';
 import { Story } from '@/common/types/stories';
@@ -78,13 +77,7 @@ const StoryDetailPage: NextPage<StoryDetailPageProps> = ({ story }) => {
 
             {/* Story images gallery */}
             <ImageGallery
-              images={
-                story.images
-                  ? typeof story.images === 'string'
-                    ? JSON.parse(story.images)
-                    : story.images
-                  : []
-              }
+              images={story.images ? JSON.parse(story.images) : []}
               featuredImage={story.image}
               title={story.title}
             />
@@ -92,10 +85,9 @@ const StoryDetailPage: NextPage<StoryDetailPageProps> = ({ story }) => {
             {/* Story description */}
             {story.description && (
               <div className='prose prose-neutral dark:prose-invert max-w-none'>
-                <HtmlContent
-                  content={story.description}
-                  className='text-lg leading-relaxed'
-                />
+                <p className='text-lg leading-relaxed text-neutral-700 dark:text-neutral-300'>
+                  {story.description}
+                </p>
               </div>
             )}
 

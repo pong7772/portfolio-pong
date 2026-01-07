@@ -32,9 +32,7 @@ const StoryModal = ({
   const getStoryImages = (storyItem: Story | null): string[] => {
     if (!storyItem) return [];
     const additionalImages = storyItem.images
-      ? typeof storyItem.images === 'string'
-        ? JSON.parse(storyItem.images)
-        : storyItem.images
+      ? JSON.parse(storyItem.images)
       : [];
     return storyItem.image ? [storyItem.image, ...additionalImages] : [];
   };
