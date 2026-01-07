@@ -13,35 +13,41 @@ import { fetcher } from '@/services/fetcher';
 
 import BlogCardNew from './BlogCardNew';
 import BlogFeaturedSection from './BlogFeaturedSection';
+import CategoryFilter from './CategoryFilter';
 
 const BlogListNew = () => {
   const [page, setPage] = useState<number>(1);
   const [searchTerm, setSearchTerm] = useState<string>('');
+  const [selectedTag, setSelectedTag] = useState<string | null>(null);
   const router = useRouter();
 
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
 
-  const { data, error, mutate, isValidating } = useSWR(
-    `/api/blog?page=${page}&per_page=12&search=${debouncedSearchTerm}`,
-    fetcher,
-    {
-      revalidateOnFocus: false,
-      refreshInterval: 0,
-    },
-  );
+  // Build API URL with filters
+  const apiUrl = `/api/blog?page=${page}&per_page=12${debouncedSearchTerm ? `&search=${debouncedSearchTerm}` : ''}${selectedTag ? `&tag=${selectedTag}` : ''}`;
+
+  const { data, error, mutate, isValidating } = useSWR(apiUrl, fetcher, {
+    revalidateOnFocus: false,
+    refreshInterval: 0,
+  });
 
   const {
     posts: blogData = [],
     total_pages: totalPages = 1,
     total_posts = 0,
+    available_tags: availableTags = [],
   } = data?.data || {};
 
   const handlePageChange = async (newPage: number) => {
     await mutate();
+    const query: any = { page: newPage };
+    if (debouncedSearchTerm) query.search = debouncedSearchTerm;
+    if (selectedTag) query.tag = selectedTag;
+
     router.push(
       {
         pathname: '/blog',
-        query: { page: newPage, search: debouncedSearchTerm },
+        query,
       },
       undefined,
       { shallow: true },
@@ -54,10 +60,14 @@ const BlogListNew = () => {
     setSearchTerm(searchValue);
     setPage(1);
 
+    const query: any = { page: 1 };
+    if (searchValue) query.search = searchValue;
+    if (selectedTag) query.tag = selectedTag;
+
     router.push(
       {
         pathname: '/blog',
-        query: searchValue ? { page: 1, search: searchValue } : { page: 1 },
+        query,
       },
       undefined,
       { shallow: true },
@@ -68,10 +78,13 @@ const BlogListNew = () => {
     setSearchTerm('');
     setPage(1);
 
+    const query: any = { page: 1 };
+    if (selectedTag) query.tag = selectedTag;
+
     router.push(
       {
         pathname: '/blog',
-        query: { page: 1 },
+        query,
       },
       undefined,
       { shallow: true },
@@ -80,10 +93,21 @@ const BlogListNew = () => {
 
   useEffect(() => {
     const queryPage = Number(router.query.page);
+    const queryTag = router.query.tag as string | undefined;
+    const querySearch = router.query.search as string | undefined;
+
     if (!isNaN(queryPage) && queryPage !== page) {
       setPage(queryPage);
     }
-  }, [page, router.query.page, searchTerm]);
+
+    if (queryTag !== selectedTag) {
+      setSelectedTag(queryTag || null);
+    }
+
+    if (querySearch !== searchTerm) {
+      setSearchTerm(querySearch || '');
+    }
+  }, [router.query, page, selectedTag, searchTerm]);
 
   const renderEmptyState = () =>
     !isValidating &&
@@ -98,12 +122,26 @@ const BlogListNew = () => {
       <div className='space-y-5'>
         <div className='mb-6 flex flex-col items-center justify-between gap-3 sm:flex-row'>
           <div className='flex items-center gap-2 px-1  text-xl font-medium'>
-            {searchTerm ? (
-              <div>
-                <span className='mr-2 text-neutral-600 dark:text-neutral-400'>
-                  Search:
-                </span>
-                <span className='italic'>{searchTerm}</span>
+            {searchTerm || selectedTag ? (
+              <div className='flex flex-wrap items-center gap-2'>
+                {searchTerm && (
+                  <div>
+                    <span className='mr-2 text-neutral-600 dark:text-neutral-400'>
+                      Search:
+                    </span>
+                    <span className='italic'>{searchTerm}</span>
+                  </div>
+                )}
+                {selectedTag && (
+                  <div>
+                    <span className='mr-2 text-neutral-600 dark:text-neutral-400'>
+                      Category:
+                    </span>
+                    <span className='font-semibold text-blue-600 dark:text-blue-400'>
+                      #{selectedTag}
+                    </span>
+                  </div>
+                )}
               </div>
             ) : (
               <h4 className='text-neutral-800 dark:text-neutral-200'>
@@ -120,6 +158,12 @@ const BlogListNew = () => {
             onClearSearch={handleClearSearch}
           />
         </div>
+
+        <CategoryFilter
+          availableTags={availableTags}
+          selectedTag={selectedTag}
+          onTagSelect={setSelectedTag}
+        />
 
         <div className='grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3'>
           {!isValidating ? (

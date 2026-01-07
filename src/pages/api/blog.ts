@@ -64,38 +64,65 @@ export default async function handler(
   res: NextApiResponse,
 ): Promise<void> {
   try {
-    const { page = 1, per_page = 12, search } = req.query;
+    const { page = 1, per_page = 12, search, tag } = req.query;
     const pageNum = Number(page);
     const perPageNum = Number(per_page);
     const skip = (pageNum - 1) * perPageNum;
 
-    // Build where clause
-    const where: any = {
-      status: 'publish', // Only show published blogs
-    };
+    // Get all published blogs
+    const allBlogs = await prisma.blogs.findMany({
+      where: {
+        status: 'publish',
+        ...(search && {
+          OR: [
+            { title: { contains: search as string, mode: 'insensitive' } },
+            { content: { contains: search as string, mode: 'insensitive' } },
+            { excerpt: { contains: search as string, mode: 'insensitive' } },
+          ],
+        }),
+      },
+      orderBy: [
+        { is_featured: 'desc' },
+        { published_at: 'desc' },
+        { created_at: 'desc' },
+      ],
+    });
 
-    if (search) {
-      where.OR = [
-        { title: { contains: search as string, mode: 'insensitive' } },
-        { content: { contains: search as string, mode: 'insensitive' } },
-        { excerpt: { contains: search as string, mode: 'insensitive' } },
-      ];
+    // Filter by tag if provided (tags are stored as JSON string)
+    let filteredBlogs = allBlogs;
+    if (tag) {
+      filteredBlogs = allBlogs.filter((blog) => {
+        if (!blog.tags) return false;
+        try {
+          const tags = JSON.parse(blog.tags) as string[];
+          return tags.some(
+            (t) =>
+              t.trim().toLowerCase() === (tag as string).trim().toLowerCase(),
+          );
+        } catch {
+          return false;
+        }
+      });
     }
 
-    // Get blogs from database
-    const [blogs, totalCount] = await Promise.all([
-      prisma.blogs.findMany({
-        where,
-        skip,
-        take: perPageNum,
-        orderBy: [
-          { is_featured: 'desc' },
-          { published_at: 'desc' },
-          { created_at: 'desc' },
-        ],
-      }),
-      prisma.blogs.count({ where }),
-    ]);
+    // Apply pagination
+    const totalCount = filteredBlogs.length;
+    const blogs = filteredBlogs.slice(skip, skip + perPageNum);
+
+    // Get blogs from database (if no tag filter, use original query)
+    // const [blogs, totalCount] = await Promise.all([
+    //   prisma.blogs.findMany({
+    //     where,
+    //     skip,
+    //     take: perPageNum,
+    //     orderBy: [
+    //       { is_featured: 'desc' },
+    //       { published_at: 'desc' },
+    //       { created_at: 'desc' },
+    //     ],
+    //   }),
+    //   prisma.blogs.count({ where }),
+    // ]);
 
     // Get views for each blog
     const blogSlugs = blogs.map((blog) => blog.slug);
@@ -115,6 +142,38 @@ export default async function handler(
       transformBlogToWordPressFormat(blog, viewsMap.get(blog.slug) || 0),
     );
 
+    // Get all available tags from published blogs
+    const allPublishedBlogs = await prisma.blogs.findMany({
+      where: { status: 'publish' },
+      select: { tags: true },
+    });
+
+    // Extract and count all tags
+    const tagCountMap = new Map<string, number>();
+    allPublishedBlogs.forEach((blog) => {
+      if (blog.tags) {
+        try {
+          const tags = JSON.parse(blog.tags) as string[];
+          tags.forEach((tag) => {
+            const normalizedTag = tag.trim();
+            if (normalizedTag) {
+              tagCountMap.set(
+                normalizedTag,
+                (tagCountMap.get(normalizedTag) || 0) + 1,
+              );
+            }
+          });
+        } catch (e) {
+          // Skip invalid JSON
+        }
+      }
+    });
+
+    // Convert to array and sort by count (most popular first)
+    const availableTags = Array.from(tagCountMap.entries())
+      .map(([name, count]) => ({ name, count }))
+      .sort((a, b) => b.count - a.count);
+
     const totalPages = Math.ceil(totalCount / perPageNum);
 
     const responses = {
@@ -126,6 +185,7 @@ export default async function handler(
         per_page: perPageNum,
         posts: transformedPosts,
         categories: [],
+        available_tags: availableTags,
       },
     };
 
