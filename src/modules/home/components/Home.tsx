@@ -13,7 +13,7 @@ interface HomeProps {
 
 const Home = ({ stories = [] }: HomeProps) => {
   return (
-    <>
+    <div className='mt-0 sm:mt-2 md:mt-2'>
       <Introduction stories={stories} />
       <Breakline className='mb-7 mt-8' />
       <BlogPreview />
@@ -23,7 +23,7 @@ const Home = ({ stories = [] }: HomeProps) => {
       <SkillsSection />
       <Breakline className='my-8' />
       <Services />
-    </>
+    </div>
   );
 };
 
