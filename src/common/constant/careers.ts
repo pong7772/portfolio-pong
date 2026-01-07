@@ -5,7 +5,7 @@ export const CAREERS: CareerProps[] = [
     position: 'Software Engineer & Assistant Coordinator',
     company: 'GEIP EdTech Project',
     company_legal_name: 'Faculty of Education (MoEYS), Cambodia',
-    logo: '/images/careers/geip.png',
+    logo: '/images/careers/moeys.png',
     location: 'Phnom Penh, Cambodia 🇰🇭',
     location_type: 'Onsite',
     type: 'Full-time',

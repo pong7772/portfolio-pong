@@ -14,7 +14,7 @@ export const EDUCATION: EducationProps[] = [
   {
     school: 'Kirirom Institute of Technology',
     major: 'Bachelor of Science in Software Engineering (100% Scholarship)',
-    logo: '/images/education/kit.png',
+    logo: '/images/education/kirirom.png',
     location: 'Phnom Penh, Cambodia 🇰🇭',
     degree: "Bachelor's degree",
     start_year: 2019,

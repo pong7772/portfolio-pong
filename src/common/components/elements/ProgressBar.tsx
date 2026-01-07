@@ -5,10 +5,11 @@ import { FC } from 'react';
 import 'nprogress/nprogress.css';
 
 NProgress.configure({
-  minimum: 0.3,
+  minimum: 0.2,
   easing: 'ease',
-  speed: 500,
+  speed: 400,
   showSpinner: false,
+  trickleSpeed: 200,
 });
 
 Router.events.on('routeChangeStart', () => NProgress.start());
