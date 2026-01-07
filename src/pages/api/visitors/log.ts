@@ -2,7 +2,6 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 
 import prisma from '@/common/libs/prisma';
 import { notifyNewVisit } from '@/services/telegram';
-import { parseUserAgent } from '@/common/utils/userAgentParser';
 
 export default async function handler(
   req: NextApiRequest,
@@ -35,9 +34,6 @@ export default async function handler(
       null;
     const userAgent = req.headers['user-agent'] || null;
 
-    // Parse device information from user agent
-    const deviceInfo = parseUserAgent(userAgent);
-
     // Save to database
     await prisma.visitors.create({
       data: {
@@ -46,11 +42,6 @@ export default async function handler(
         country: country ? String(country).substring(0, 100) : null,
         city: city ? String(city).substring(0, 100) : null,
         user_agent: userAgent ? String(userAgent).substring(0, 500) : null,
-        device_type: deviceInfo.device_type,
-        browser: deviceInfo.browser,
-        browser_version: deviceInfo.browser_version,
-        os: deviceInfo.os,
-        os_version: deviceInfo.os_version,
       },
     });
 
