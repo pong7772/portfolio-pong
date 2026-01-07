@@ -29,16 +29,33 @@ interface VisitorsResponse {
   };
 }
 
-const fetcher = (url: string) =>
-  fetch(url).then((res) => res.json().then((data) => data));
+const fetcher = async (url: string) => {
+  const res = await fetch(url);
+  if (!res.ok) {
+    throw new Error('Failed to fetch visitors');
+  }
+  const data = await res.json();
+  if (!data.status) {
+    throw new Error(data.error || 'Failed to fetch visitors');
+  }
+  return data;
+};
 
 const VisitorsManager = () => {
   const [limit] = useState(50);
-  const { data, mutate } = useSWR<VisitorsResponse>(
+  const { data, error, mutate } = useSWR<VisitorsResponse>(
     `/api/admin/visitors?limit=${limit}`,
     fetcher,
     {
       refreshInterval: 60000, // Refresh every minute
+      onErrorRetry: (error, key, config, revalidate, { retryCount }) => {
+        // Don't retry on 4xx errors
+        if (error.status === 404 || error.status === 403) return;
+        // Retry up to 3 times
+        if (retryCount >= 3) return;
+        // Retry after 5 seconds
+        setTimeout(() => revalidate({ retryCount }), 5000);
+      },
     },
   );
 
@@ -67,7 +84,7 @@ const VisitorsManager = () => {
         <div className='grid grid-cols-1 gap-4 md:grid-cols-3'>
           <div className='rounded-lg border border-neutral-200 bg-white p-4 dark:border-neutral-800 dark:bg-neutral-900'>
             <div className='text-2xl font-bold text-neutral-800 dark:text-neutral-200'>
-              {data.stats.total.toLocaleString()}
+              {(data.stats.total || 0).toLocaleString()}
             </div>
             <div className='text-sm text-neutral-600 dark:text-neutral-400'>
               Total Visits
@@ -75,7 +92,7 @@ const VisitorsManager = () => {
           </div>
           <div className='rounded-lg border border-neutral-200 bg-white p-4 dark:border-neutral-800 dark:bg-neutral-900'>
             <div className='text-2xl font-bold text-neutral-800 dark:text-neutral-200'>
-              {data.stats.unique_countries}
+              {data.stats.unique_countries || 0}
             </div>
             <div className='text-sm text-neutral-600 dark:text-neutral-400'>
               Countries
@@ -83,7 +100,7 @@ const VisitorsManager = () => {
           </div>
           <div className='rounded-lg border border-neutral-200 bg-white p-4 dark:border-neutral-800 dark:bg-neutral-900'>
             <div className='text-2xl font-bold text-neutral-800 dark:text-neutral-200'>
-              {data.stats.top_countries.length > 0
+              {data.stats.top_countries && data.stats.top_countries.length > 0
                 ? data.stats.top_countries[0].country
                 : 'N/A'}
             </div>
@@ -95,7 +112,7 @@ const VisitorsManager = () => {
       )}
 
       {/* Top Countries */}
-      {data?.stats.top_countries && data.stats.top_countries.length > 0 && (
+      {data?.stats?.top_countries && data.stats.top_countries.length > 0 && (
         <div className='rounded-lg border border-neutral-200 bg-white p-4 dark:border-neutral-800 dark:bg-neutral-900'>
           <h3 className='mb-3 text-sm font-semibold text-neutral-700 dark:text-neutral-300'>
             Top Countries
@@ -138,7 +155,19 @@ const VisitorsManager = () => {
             </tr>
           </thead>
           <tbody className='divide-y divide-neutral-200 dark:divide-neutral-700'>
-            {!data ? (
+            {error ? (
+              <tr>
+                <td colSpan={3} className='px-4 py-8 text-center'>
+                  <GlobeIcon className='mx-auto mb-4 text-4xl text-red-400' />
+                  <p className='text-sm font-medium text-red-600 dark:text-red-400'>
+                    Error loading visitors
+                  </p>
+                  <p className='mt-2 text-xs text-neutral-500 dark:text-neutral-400'>
+                    {error.message || 'Please try again later'}
+                  </p>
+                </td>
+              </tr>
+            ) : !data ? (
               <tr>
                 <td colSpan={3} className='px-4 py-8 text-center'>
                   <div className='inline-block h-8 w-8 animate-spin rounded-full border-4 border-neutral-300 border-t-blue-500' />
@@ -147,7 +176,7 @@ const VisitorsManager = () => {
                   </p>
                 </td>
               </tr>
-            ) : data.data.length === 0 ? (
+            ) : !data.data || data.data.length === 0 ? (
               <tr>
                 <td colSpan={3} className='px-4 py-8 text-center'>
                   <GlobeIcon className='mx-auto mb-4 text-4xl text-neutral-400' />

@@ -34,15 +34,25 @@ export default async function handler(
       }));
 
       // Get unique visitor stats
-      const uniqueCountries = await prisma.visitors.groupBy({
-        by: ['country'],
-        where: {
-          country: { not: null },
-        },
-        _count: {
-          country: true,
-        },
-      });
+      let uniqueCountries: Array<{
+        country: string | null;
+        _count: { country: number };
+      }> = [];
+      try {
+        uniqueCountries = await prisma.visitors.groupBy({
+          by: ['country'],
+          where: {
+            country: { not: null },
+          },
+          _count: {
+            country: true,
+          },
+        });
+      } catch (groupByError) {
+        // If groupBy fails (e.g., no data yet), use empty array
+        console.error('Error grouping countries:', groupByError);
+        uniqueCountries = [];
+      }
 
       const stats = {
         total,
@@ -51,7 +61,7 @@ export default async function handler(
           .sort((a, b) => b._count.country - a._count.country)
           .slice(0, 10)
           .map((c) => ({
-            country: c.country,
+            country: c.country || 'Unknown',
             count: c._count.country,
           })),
       };
