@@ -39,7 +39,7 @@ export default async function handler(
         _count: { country: number };
       }> = [];
       try {
-        uniqueCountries = await prisma.visitors.groupBy({
+        const result = await prisma.visitors.groupBy({
           by: ['country'],
           where: {
             country: { not: null },
@@ -48,6 +48,7 @@ export default async function handler(
             country: true,
           },
         });
+        uniqueCountries = result;
       } catch (groupByError) {
         // If groupBy fails (e.g., no data yet), use empty array
         console.error('Error grouping countries:', groupByError);
