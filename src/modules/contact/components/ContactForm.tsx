@@ -2,6 +2,7 @@ import axios from 'axios';
 import clsx from 'clsx';
 import { useState } from 'react';
 import { FiClock as ClockIcon } from 'react-icons/fi';
+import { toast } from 'sonner';
 
 import Button from '@/common/components/elements/Button';
 
@@ -9,6 +10,12 @@ interface FormDataProps {
   name: string;
   email: string;
   message: string;
+}
+
+interface FormErrorsProps {
+  name?: string;
+  email?: string;
+  message?: string;
 }
 
 const formInitialState: FormDataProps = {
@@ -19,9 +26,31 @@ const formInitialState: FormDataProps = {
 
 const ContactForm = () => {
   const [formData, setFormData] = useState<FormDataProps>(formInitialState);
-
-  const [formErrors, setFormErrors] = useState<Partial<FormDataProps>>({});
+  const [formErrors, setFormErrors] = useState<FormErrorsProps>({});
   const [isLoading, setIsLoading] = useState(false);
+
+  const validateForm = (): boolean => {
+    const errors: FormErrorsProps = {};
+
+    if (!formData.name.trim()) {
+      errors.name = 'Name is required';
+    }
+
+    if (!formData.email.trim()) {
+      errors.email = 'Email is required';
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      errors.email = 'Please enter a valid email address';
+    }
+
+    if (!formData.message.trim()) {
+      errors.message = 'Message is required';
+    } else if (formData.message.trim().length < 10) {
+      errors.message = 'Message must be at least 10 characters';
+    }
+
+    setFormErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -31,80 +60,127 @@ const ContactForm = () => {
       ...formData,
       [name]: value,
     });
-    setFormErrors({
-      ...formErrors,
-      [name]: value ? undefined : `${name} is required`,
-    });
+    // Clear error for this field when user starts typing
+    if (formErrors[name as keyof FormErrorsProps]) {
+      setFormErrors({
+        ...formErrors,
+        [name]: undefined,
+      });
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const hasErrors = Object.values(formErrors).some((error) => error);
+    if (!validateForm()) {
+      toast.error('Please fill in all fields correctly');
+      return;
+    }
 
-    if (!hasErrors) {
-      setIsLoading(true);
-      try {
-        const response = await axios.post('/api/contact', { formData });
-        if (response.status === 200) {
-          alert('Message sent!');
-          setFormData(formInitialState);
-        }
-      } catch (error) {
-        alert(error);
+    setIsLoading(true);
+    try {
+      const response = await axios.post('/api/contact', { formData });
+      if (response.status === 200) {
+        toast.success("Message sent successfully! I'll get back to you soon.");
+        setFormData(formInitialState);
+        setFormErrors({});
       }
+    } catch (error: any) {
+      const errorMessage =
+        error?.response?.data?.error ||
+        error?.message ||
+        'Failed to send message. Please try again later.';
+      toast.error(errorMessage);
+    } finally {
       setIsLoading(false);
-    } else {
-      alert('Error!');
     }
   };
 
-  const isSubmitDisabled = Object.values(formErrors).some((error) => error);
+  const isFormValid =
+    formData.name.trim() &&
+    formData.email.trim() &&
+    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email) &&
+    formData.message.trim().length >= 10;
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div className='flex flex-grow flex-col gap-5'>
-        <div className='flex flex-col gap-5 md:flex-row'>
+    <form onSubmit={handleSubmit} className='space-y-5'>
+      <div className='flex flex-col gap-5 md:flex-row'>
+        <div className='flex-1'>
           <input
-            className='w-full rounded-md border border-neutral-200 px-3 py-2 focus:outline-none dark:border-neutral-700'
+            className={`w-full rounded-lg border px-4 py-3 transition-colors focus:outline-none focus:ring-2 ${
+              formErrors.name
+                ? 'border-red-300 focus:border-red-500 focus:ring-red-200 dark:border-red-700 dark:focus:border-red-500'
+                : 'border-neutral-200 focus:border-blue-500 focus:ring-blue-200 dark:border-neutral-700 dark:focus:border-blue-400'
+            } bg-white dark:bg-neutral-900`}
             type='text'
-            placeholder='Name*'
+            placeholder='Your Name *'
             name='name'
             value={formData.name}
             onChange={handleChange}
-            required
           />
+          {formErrors.name && (
+            <p className='mt-1 text-xs text-red-600 dark:text-red-400'>
+              {formErrors.name}
+            </p>
+          )}
+        </div>
+        <div className='flex-1'>
           <input
-            className='w-full rounded-md border border-neutral-200 px-3 py-2 focus:outline-none dark:border-neutral-700'
+            className={`w-full rounded-lg border px-4 py-3 transition-colors focus:outline-none focus:ring-2 ${
+              formErrors.email
+                ? 'border-red-300 focus:border-red-500 focus:ring-red-200 dark:border-red-700 dark:focus:border-red-500'
+                : 'border-neutral-200 focus:border-blue-500 focus:ring-blue-200 dark:border-neutral-700 dark:focus:border-blue-400'
+            } bg-white dark:bg-neutral-900`}
             type='email'
-            placeholder='Email*'
+            placeholder='Your Email *'
             name='email'
             value={formData.email}
             onChange={handleChange}
-            required
           />
+          {formErrors.email && (
+            <p className='mt-1 text-xs text-red-600 dark:text-red-400'>
+              {formErrors.email}
+            </p>
+          )}
         </div>
+      </div>
+      <div>
         <textarea
-          className='w-full rounded-md border border-neutral-200 px-3 py-2 focus:outline-none dark:border-neutral-700'
-          rows={5}
-          placeholder='Message*'
+          className={`w-full rounded-lg border px-4 py-3 transition-colors focus:outline-none focus:ring-2 ${
+            formErrors.message
+              ? 'border-red-300 focus:border-red-500 focus:ring-red-200 dark:border-red-700 dark:focus:border-red-500'
+              : 'border-neutral-200 focus:border-blue-500 focus:ring-blue-200 dark:border-neutral-700 dark:focus:border-blue-400'
+          } bg-white dark:bg-neutral-900`}
+          rows={6}
+          placeholder='Your Message *'
           name='message'
           value={formData.message}
           onChange={handleChange}
-          required
         />
-        <Button
-          className={clsx(
-            'flex justify-center bg-neutral-800 py-2.5 hover:scale-[101%] hover:bg-neutral-900 dark:bg-neutral-50 dark:text-neutral-950 hover:dark:bg-neutral-50',
-          )}
-          type='submit'
-          icon={<></>}
-          data-umami-event='Send Contact Message'
-          disabled={isSubmitDisabled}
-        >
-          {isLoading ? 'Sending Message...' : 'Send Message'}
-        </Button>
+        {formErrors.message && (
+          <p className='mt-1 text-xs text-red-600 dark:text-red-400'>
+            {formErrors.message}
+          </p>
+        )}
       </div>
+      <Button
+        className={clsx(
+          'w-full justify-center bg-neutral-800 py-3 font-medium transition-all hover:scale-[101%] hover:bg-neutral-900 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-neutral-50 dark:text-neutral-950 hover:dark:bg-neutral-100',
+        )}
+        type='submit'
+        icon={<></>}
+        data-umami-event='Send Contact Message'
+        disabled={!isFormValid || isLoading}
+      >
+        {isLoading ? (
+          <span className='flex items-center gap-2'>
+            <span className='h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent' />
+            Sending...
+          </span>
+        ) : (
+          'Send Message'
+        )}
+      </Button>
 
       <div className='my-5 flex items-center gap-2 dark:text-neutral-400'>
         <ClockIcon />
