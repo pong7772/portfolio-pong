@@ -44,16 +44,18 @@ const BlogDetail = ({
         featuredImage={featured_image_url}
         title={title?.rendered}
       />
-      <div className='space-y-6 leading-[1.8] dark:text-neutral-300'>
+      <div className='mt-6'>
         {content?.rendered && (
           <>
             {/* Check if content is HTML (starts with <) or Markdown */}
             {content.rendered.trim().startsWith('<') ? (
               <HtmlContent content={content.rendered} />
             ) : (
-              <MDXComponent>
-                {content?.markdown || content?.rendered}
-              </MDXComponent>
+              <div className='space-y-6 leading-[1.8] dark:text-neutral-300'>
+                <MDXComponent>
+                  {content?.markdown || content?.rendered}
+                </MDXComponent>
+              </div>
             )}
           </>
         )}

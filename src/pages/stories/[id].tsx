@@ -85,15 +85,17 @@ const StoryDetailPage: NextPage<StoryDetailPageProps> = ({ story }) => {
 
             {/* Story description */}
             {story.description && (
-              <div className='prose prose-neutral dark:prose-invert max-w-none'>
+              <>
                 {story.description.trim().startsWith('<') ? (
                   <HtmlContent content={story.description} />
                 ) : (
-                  <p className='text-lg leading-relaxed text-neutral-700 dark:text-neutral-300'>
-                    {story.description}
-                  </p>
+                  <div className='prose prose-lg max-w-none'>
+                    <p className='text-lg leading-relaxed text-neutral-700 dark:text-neutral-300'>
+                      {story.description}
+                    </p>
+                  </div>
                 )}
-              </div>
+              </>
             )}
 
             {/* Story metadata */}

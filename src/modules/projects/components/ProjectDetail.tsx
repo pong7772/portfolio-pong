@@ -57,11 +57,13 @@ const ProjectDetail = ({
         title={title}
       />
       {content && (
-        <div className='mt-5 space-y-6 leading-[1.8] dark:text-neutral-300'>
+        <div className='mt-5'>
           {typeof content === 'string' && content.trim().startsWith('<') ? (
             <HtmlContent content={content} />
           ) : (
-            <MDXComponent>{content}</MDXComponent>
+            <div className='space-y-6 leading-[1.8] dark:text-neutral-300'>
+              <MDXComponent>{content}</MDXComponent>
+            </div>
           )}
         </div>
       )}

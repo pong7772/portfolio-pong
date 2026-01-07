@@ -78,3 +78,111 @@ img {
   transition: transform 0.3s ease-in-out;
   will-change: transform;
 }
+
+/* Rich Text Editor Content Display Styles */
+.prose {
+  /* Ensure proper word wrapping */
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+/* Quill-generated content styling */
+.prose p {
+  margin-bottom: 1rem;
+  line-height: 1.75;
+}
+
+.prose p:last-child {
+  margin-bottom: 0;
+}
+
+/* Ensure images are responsive and don't overflow */
+.prose img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Code blocks should scroll horizontally on mobile */
+.prose pre {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.prose pre code {
+  display: block;
+  padding: 0;
+  background: transparent;
+  border-radius: 0;
+}
+
+/* Ensure tables are responsive */
+.prose table {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+@media (min-width: 768px) {
+  .prose table {
+    display: table;
+  }
+}
+
+/* Better list spacing */
+.prose ul,
+.prose ol {
+  padding-left: 1.5rem;
+}
+
+.prose li {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.prose li > p {
+  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+/* Blockquote improvements */
+.prose blockquote p {
+  margin-bottom: 0.5rem;
+}
+
+.prose blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+/* Heading spacing */
+.prose h1 + *,
+.prose h2 + *,
+.prose h3 + *,
+.prose h4 + * {
+  margin-top: 0.5rem;
+}
+
+/* Ensure links don't break layout */
+.prose a {
+  word-break: break-word;
+}
+
+/* Video and iframe responsiveness */
+.prose iframe,
+.prose video {
+  max-width: 100%;
+  height: auto;
+  border-radius: 0.5rem;
+}
+
+/* Better spacing for nested elements */
+.prose > *:first-child {
+  margin-top: 0;
+}
+
+.prose > *:last-child {
+  margin-bottom: 0;
+}
