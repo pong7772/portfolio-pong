@@ -5,6 +5,7 @@ import { BiArrowBack } from 'react-icons/bi';
 
 import Button from '@/common/components/elements/Button';
 import Container from '@/common/components/elements/Container';
+import HtmlContent from '@/common/components/elements/HtmlContent';
 import ImageGallery from '@/common/components/elements/ImageGallery';
 import prisma from '@/common/libs/prisma';
 import { Story } from '@/common/types/stories';
@@ -85,9 +86,10 @@ const StoryDetailPage: NextPage<StoryDetailPageProps> = ({ story }) => {
             {/* Story description */}
             {story.description && (
               <div className='prose prose-neutral dark:prose-invert max-w-none'>
-                <p className='text-lg leading-relaxed text-neutral-700 dark:text-neutral-300'>
-                  {story.description}
-                </p>
+                <HtmlContent
+                  content={story.description}
+                  className='text-lg leading-relaxed'
+                />
               </div>
             )}
 
