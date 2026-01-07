@@ -26,24 +26,24 @@ const ProfileHeader = ({
         className={clsx(
           'flex-shrink-0',
           expandMenu
-            ? 'w-5 sm:w-7 md:w-9'
+            ? 'w-4 sm:w-5 md:w-7'
             : isScrolled
-              ? 'md:w-13 w-9 sm:w-11'
-              : 'xs:max-w-[90px] w-full max-w-[72px] sm:max-w-[110px] md:max-w-[130px] lg:max-w-[150px] xl:max-w-[170px] 2xl:max-w-none',
+              ? 'md:w-13 w-7 sm:w-9'
+              : 'xs:max-w-[90px] w-full max-w-[60px] sm:max-w-[80px] md:max-w-[130px] lg:max-w-[150px] xl:max-w-[170px] 2xl:max-w-none',
         )}
       >
         <Image
           src='/images/pongpf.png'
           alt='Visothipong'
-          width={expandMenu ? 22 : imageSize}
-          height={expandMenu ? 22 : imageSize}
+          width={expandMenu ? 18 : imageSize}
+          height={expandMenu ? 18 : imageSize}
           rounded={expandMenu ? 'rounded-full' : 'rounded-[12px]'}
           className={clsx(
             'h-auto rotate-3 transition-transform duration-300 dark:border-neutral-600',
             expandMenu
-              ? 'w-5 sm:w-7 md:w-9'
+              ? 'w-4 sm:w-5 md:w-7'
               : isScrolled
-                ? 'md:w-13 w-9 sm:w-11'
+                ? 'md:w-13 w-7 sm:w-9'
                 : 'w-full',
             !expandMenu && 'hover:scale-105',
           )}
@@ -51,10 +51,10 @@ const ProfileHeader = ({
           quality={100}
           sizes={
             expandMenu
-              ? '28px'
+              ? '20px'
               : isScrolled
-                ? '(max-width: 640px) 36px, (max-width: 768px) 44px, (max-width: 1024px) 52px'
-                : '(max-width: 640px) 72px, (max-width: 768px) 92px, (max-width: 1024px) 112px, (max-width: 1280px) 132px, 152px'
+                ? '(max-width: 640px) 28px, (max-width: 768px) 36px, (max-width: 1024px) 52px'
+                : '(max-width: 640px) 60px, (max-width: 768px) 80px, (max-width: 1024px) 112px, (max-width: 1280px) 132px, 152px'
           }
         />
       </div>
@@ -70,21 +70,21 @@ const ProfileHeader = ({
               className={clsx(
                 'font-medium',
                 expandMenu
-                  ? 'text-[10px] sm:text-xs md:text-sm'
-                  : 'xs:text-sm text-xs sm:text-base md:text-base lg:text-lg xl:text-xl',
+                  ? 'text-[9px] sm:text-[10px] md:text-xs'
+                  : 'xs:text-sm text-[10px] sm:text-sm md:text-base lg:text-lg xl:text-xl',
               )}
             >
               Roth Visothipong
             </h2>
           </Link>
-          <VerifiedIcon size={expandMenu ? 10 : 14} className='text-blue-400' />
+          <VerifiedIcon size={expandMenu ? 8 : 14} className='text-blue-400' />
         </div>
         <div
           className={clsx(
             'text-neutral-600 transition-all duration-300 hover:text-neutral-700 dark:text-neutral-500 dark:hover:text-neutral-400',
             expandMenu
-              ? 'text-[8px] sm:text-[10px] md:text-xs'
-              : 'xs:text-xs hidden text-[10px] sm:text-sm md:text-[15px] lg:flex',
+              ? 'text-[7px] sm:text-[8px] md:text-[10px]'
+              : 'xs:text-xs hidden text-[9px] sm:text-xs md:text-[15px] lg:flex',
           )}
         >
           @pong7772

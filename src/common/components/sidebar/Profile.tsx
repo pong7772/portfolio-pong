@@ -20,7 +20,7 @@ const Profile = ({ isScrolled = false }: ProfileProps) => {
   const isMobile = useIsMobile();
 
   const getImageSize = () => {
-    let size = isMobile ? 24 : 56;
+    let size = isMobile ? 20 : 56;
     if (!isMobile && isScrolled) {
       size = 40; // Maintain minimum size when scrolled
     }
@@ -49,24 +49,23 @@ const Profile = ({ isScrolled = false }: ProfileProps) => {
     <MenuContext.Provider value={{ hideNavbar }}>
       <div
         className={clsx(
-          'fixed z-20 w-full bg-light p-3 shadow-sm dark:border-b dark:border-neutral-800 dark:bg-dark sm:p-4 sm:shadow-none md:relative md:border-none md:!bg-transparent md:p-0 md:shadow-none',
+          'fixed z-20 w-full bg-light p-2.5 shadow-sm dark:border-b dark:border-neutral-800 dark:bg-dark sm:p-3 md:relative md:border-none md:!bg-transparent md:p-0 md:shadow-none',
           expandMenu && 'pb-0',
         )}
       >
-        <div className='flex items-start justify-between md:flex-col md:space-y-3'>
+        <div className='flex items-center justify-between md:flex-col md:items-start md:space-y-3'>
           <ProfileHeader
             expandMenu={expandMenu}
             imageSize={getImageSize()}
             isScrolled={isScrolled}
           />
-          {/* <ProfileHeader expandMenu={expandMenu} imageSize={55} /> */}
 
           {isMobile && (
             <div
               className={clsx(
-                'mt-1 flex items-center gap-2 sm:mt-2 sm:gap-3 md:hidden',
+                'flex items-center gap-1.5 sm:gap-2 md:hidden',
                 expandMenu &&
-                  'h-[80px] flex-col-reverse !items-end justify-between pb-1 sm:h-[100px]',
+                  'h-[70px] flex-col-reverse !items-end justify-between pb-1 sm:h-[80px]',
               )}
             >
               <BackgroundAudioButton />
@@ -82,7 +81,7 @@ const Profile = ({ isScrolled = false }: ProfileProps) => {
         {isMobile && (
           <AnimatePresence>
             {expandMenu && (
-              <div className='space-y-3 pt-3 sm:space-y-4 sm:pt-4 md:space-y-5 md:pt-6'>
+              <div className='space-y-2.5 pt-2.5 sm:space-y-3 sm:pt-3'>
                 <SearchBox />
                 <MobileMenu />
               </div>
