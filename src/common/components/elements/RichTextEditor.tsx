@@ -1,4 +1,3 @@
-import { useEffect, useRef } from 'react';
 import dynamic from 'next/dynamic';
 import 'react-quill/dist/quill.snow.css';
 
@@ -20,8 +19,6 @@ const RichTextEditor = ({
   className = '',
   disabled = false,
 }: RichTextEditorProps) => {
-  const quillRef = useRef<any>(null);
-
   const modules = {
     toolbar: [
       [{ header: [1, 2, 3, 4, 5, 6, false] }],
@@ -67,7 +64,6 @@ const RichTextEditor = ({
   return (
     <div className={`rich-text-editor ${className}`}>
       <ReactQuill
-        ref={quillRef}
         theme='snow'
         value={value}
         onChange={onChange}
