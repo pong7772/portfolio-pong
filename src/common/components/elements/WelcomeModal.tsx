@@ -40,23 +40,24 @@ const WelcomeModal = ({ onMusicChoice }: WelcomeModalProps) => {
   return (
     <AnimatePresence>
       {isOpen && (
-        <>
+        <div className='fixed inset-0 z-[9999] flex items-center justify-center'>
           {/* Backdrop */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className='fixed inset-0 z-[9999] bg-black/60 backdrop-blur-sm'
+            className='absolute inset-0 bg-black/60 backdrop-blur-sm'
             onClick={handleClose}
           />
 
-          {/* Modal */}
+          {/* Modal - Centered */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 20 }}
             transition={{ type: 'spring', duration: 0.5 }}
-            className='fixed left-1/2 top-1/2 z-[10000] w-[90%] max-w-md -translate-x-1/2 -translate-y-1/2 rounded-2xl border border-neutral-200 bg-white p-8 shadow-2xl dark:border-neutral-800 dark:bg-neutral-900'
+            className='relative z-[10000] w-[90%] max-w-md rounded-2xl border border-neutral-200 bg-white p-8 shadow-2xl dark:border-neutral-800 dark:bg-neutral-900'
+            onClick={(e) => e.stopPropagation()}
           >
             <button
               onClick={handleClose}
@@ -78,7 +79,7 @@ const WelcomeModal = ({ onMusicChoice }: WelcomeModalProps) => {
                   👋
                 </motion.div>
                 <h2 className='text-2xl font-bold text-neutral-800 dark:text-neutral-200'>
-                  Welcome to My Portfolio!
+                  Welcome to Visothipong&apos;s Portfolio!
                 </h2>
                 <p className='text-neutral-600 dark:text-neutral-400'>
                   I&apos;m excited to have you here. Would you like to enhance
@@ -113,7 +114,7 @@ const WelcomeModal = ({ onMusicChoice }: WelcomeModalProps) => {
               </p>
             </div>
           </motion.div>
-        </>
+        </div>
       )}
     </AnimatePresence>
   );

@@ -37,56 +37,26 @@ export const MusicProvider = ({ children }: MusicProviderProps) => {
 
   useEffect(() => {
     // Check localStorage for music preference
+    // But don't autoplay - only play when user explicitly enables it
     const musicEnabled = localStorage.getItem('musicEnabled') === 'true';
     setIsEnabled(musicEnabled);
 
-    if (musicEnabled) {
+    // Initialize audio only if enabled, but don't play automatically
+    if (musicEnabled && !audioRef.current) {
       const audio = new Audio('/background_song.mp3');
       audio.loop = true;
       audio.preload = 'auto';
       audio.volume = 0.15;
       audioRef.current = audio;
-
-      const tryAutoplay = async () => {
-        try {
-          await audio.play();
-          setIsPlaying(true);
-          setIsBlocked(false);
-        } catch {
-          setIsBlocked(true);
-          setIsPlaying(false);
-        }
-      };
-
-      // Try autoplay after user interaction
-      const onFirstUserGesture = async () => {
-        try {
-          await audio.play();
-          setIsPlaying(true);
-          setIsBlocked(false);
-        } catch {
-          // ignore
-        } finally {
-          window.removeEventListener('click', onFirstUserGesture);
-          window.removeEventListener('keydown', onFirstUserGesture);
-        }
-      };
-
-      // Try immediate autoplay
-      void tryAutoplay();
-
-      // Also try after user gesture
-      window.addEventListener('click', onFirstUserGesture, { once: true });
-      window.addEventListener('keydown', onFirstUserGesture, { once: true });
-
-      return () => {
-        audio.pause();
-        audioRef.current = null;
-        window.removeEventListener('click', onFirstUserGesture);
-        window.removeEventListener('keydown', onFirstUserGesture);
-      };
     }
-  }, [isEnabled]);
+
+    return () => {
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current = null;
+      }
+    };
+  }, []);
 
   const toggle = async () => {
     const audio = audioRef.current;
@@ -127,13 +97,28 @@ export const MusicProvider = ({ children }: MusicProviderProps) => {
     }
   };
 
-  const enable = () => {
+  const enable = async () => {
     setIsEnabled(true);
     localStorage.setItem('musicEnabled', 'true');
-    if (audioRef.current) {
-      audioRef.current.play().catch(() => {
-        setIsBlocked(true);
-      });
+
+    // Initialize audio if not already done
+    if (!audioRef.current) {
+      const audio = new Audio('/background_song.mp3');
+      audio.loop = true;
+      audio.preload = 'auto';
+      audio.volume = 0.15;
+      audioRef.current = audio;
+    }
+
+    // Play music when user explicitly enables it
+    try {
+      await audioRef.current.play();
+      setIsPlaying(true);
+      setIsBlocked(false);
+    } catch (error) {
+      setIsBlocked(true);
+      setIsPlaying(false);
+      console.error('Failed to play music:', error);
     }
   };
 
