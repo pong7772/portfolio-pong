@@ -13,7 +13,7 @@ const ThemeToggleButton = () => {
 
   if (!mounted) {
     return (
-      <div className='relative h-11 w-20 rounded-full bg-neutral-200 dark:bg-neutral-700' />
+      <div className='relative h-7 w-12 rounded-full bg-neutral-200 dark:bg-neutral-700 sm:h-8 sm:w-14' />
     );
   }
 
@@ -26,7 +26,7 @@ const ThemeToggleButton = () => {
   return (
     <button
       onClick={toggleTheme}
-      className='group relative flex h-11 w-20 items-center rounded-full border-2 border-neutral-300 bg-gradient-to-r from-yellow-400 via-orange-400 to-pink-400 p-1 transition-all duration-500 ease-in-out hover:scale-105 hover:shadow-lg hover:shadow-yellow-400/50 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-offset-2 dark:border-neutral-600 dark:from-blue-900 dark:via-indigo-900 dark:to-purple-900 dark:hover:shadow-blue-400/50 dark:focus:ring-blue-400'
+      className='group relative flex h-7 w-12 items-center rounded-full border border-neutral-300 bg-gradient-to-r from-yellow-400 via-orange-400 to-pink-400 p-0.5 transition-all duration-500 ease-in-out hover:scale-105 hover:shadow-md hover:shadow-yellow-400/50 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-offset-1 dark:border-neutral-600 dark:from-blue-900 dark:via-indigo-900 dark:to-purple-900 dark:hover:shadow-blue-400/50 dark:focus:ring-blue-400 sm:h-8 sm:w-14 sm:p-1'
       data-umami-event={`Switch to ${isDark ? 'Light' : 'Dark'} Mode`}
       aria-label={`Switch to ${isDark ? 'light' : 'dark'} mode`}
     >
@@ -40,10 +40,10 @@ const ThemeToggleButton = () => {
 
       {/* Toggle circle */}
       <motion.div
-        className='relative z-10 flex h-8 w-8 items-center justify-center rounded-full bg-white shadow-lg ring-0 transition-all duration-500 group-hover:ring-4 group-hover:ring-yellow-200 dark:bg-neutral-800 dark:group-hover:ring-blue-200'
+        className='relative z-10 flex h-6 w-6 items-center justify-center rounded-full bg-white shadow-md ring-0 transition-all duration-500 group-hover:ring-2 group-hover:ring-yellow-200 dark:bg-neutral-800 dark:group-hover:ring-blue-200 sm:h-7 sm:w-7'
         initial={false}
         animate={{
-          x: isDark ? 0 : 40,
+          x: isDark ? 0 : 'calc(100% - 0.5rem)',
         }}
         transition={{
           type: 'spring',
@@ -62,7 +62,7 @@ const ThemeToggleButton = () => {
           }}
           transition={{ duration: 0.3 }}
         >
-          <HiMoon className='h-5 w-5 text-indigo-600 dark:text-blue-300' />
+          <HiMoon className='h-3.5 w-3.5 text-indigo-600 dark:text-blue-300 sm:h-4 sm:w-4' />
         </motion.div>
         <motion.div
           className='absolute'
@@ -74,7 +74,7 @@ const ThemeToggleButton = () => {
           }}
           transition={{ duration: 0.3 }}
         >
-          <HiSun className='h-5 w-5 text-yellow-500' />
+          <HiSun className='h-3.5 w-3.5 text-yellow-500 sm:h-4 sm:w-4' />
         </motion.div>
       </motion.div>
 
