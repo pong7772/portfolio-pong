@@ -1,75 +1,83 @@
-import { Listbox, Transition } from '@headlessui/react';
 import { useTheme } from 'next-themes';
-import { Fragment, useEffect, useState } from 'react';
-import { LuChevronsUpDown } from 'react-icons/lu';
-import { MdDarkMode, MdLightMode } from 'react-icons/md';
+import { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
+import { HiMoon, HiSun } from 'react-icons/hi';
 
 const ThemeSwitcher = () => {
   const { resolvedTheme, setTheme } = useTheme();
-
   const [mounted, setMounted] = useState(false);
 
-  const toggleTheme = () =>
-    setTheme(resolvedTheme === 'light' ? 'dark' : 'light');
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
-  useEffect(() => setMounted(true), []);
+  if (!mounted) {
+    return (
+      <div className='relative h-12 w-full rounded-xl bg-neutral-200 dark:bg-neutral-700' />
+    );
+  }
 
-  if (!mounted) return null;
+  const isDark = resolvedTheme === 'dark';
+
+  const toggleTheme = () => {
+    setTheme(isDark ? 'light' : 'dark');
+  };
 
   return (
-    <Listbox>
-      <div className='relative mt-1 '>
-        <Listbox.Button className='group relative w-full cursor-pointer rounded-lg border-[1.8px] bg-white py-2 pl-4 pr-10 text-left text-neutral-600 focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-400 sm:text-[15px]'>
-          <span className='flex items-center gap-2 truncate'>
-            {resolvedTheme === 'dark' ? (
-              <>
-                <MdDarkMode size={20} />
-                <span>Dark Mode</span>
-              </>
-            ) : (
-              <>
-                <MdLightMode size={20} />
-                <span>Light Mode</span>
-              </>
-            )}
-          </span>
-          <span className='pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2.5'>
-            <LuChevronsUpDown
-              className='h-5 w-5 text-neutral-500 transition-all duration-300 group-hover:text-neutral-600 group-hover:dark:text-neutral-400'
-              aria-hidden='true'
-            />
-          </span>
-        </Listbox.Button>
-        <Transition as={Fragment} leaveFrom='opacity-100' leaveTo='opacity-0'>
-          <Listbox.Options className='absolute mt-1.5 max-h-60 w-full overflow-auto rounded-md border border-neutral-200 bg-white py-1 text-base ring-1 ring-black/5 focus:outline-none dark:border-neutral-800 dark:bg-neutral-900 sm:text-sm'>
-            <Listbox.Option
-              className='relative cursor-pointer select-none py-1.5 pl-11 pr-4 text-neutral-600 hover:text-neutral-700 dark:text-neutral-400 hover:dark:text-neutral-300'
-              value={`theme-${resolvedTheme}`}
-              onClick={toggleTheme}
-            >
-              {({ selected }) => (
-                <>
-                  <span
-                    className={`block truncate ${
-                      selected ? 'font-medium' : 'font-normal'
-                    }`}
-                  >
-                    {resolvedTheme === 'dark' ? 'Light Mode' : 'Dark Mode'}
-                  </span>
-                  <span className='absolute inset-y-0 left-0 flex items-center pl-4'>
-                    {resolvedTheme === 'dark' ? (
-                      <MdLightMode size={20} />
-                    ) : (
-                      <MdDarkMode size={20} />
-                    )}
-                  </span>
-                </>
-              )}
-            </Listbox.Option>
-          </Listbox.Options>
-        </Transition>
-      </div>
-    </Listbox>
+    <button
+      onClick={toggleTheme}
+      className='group relative flex h-12 w-full items-center justify-between overflow-hidden rounded-xl border-2 border-neutral-200 bg-gradient-to-r from-yellow-50 via-orange-50 to-pink-50 p-1.5 transition-all duration-500 ease-in-out hover:scale-[1.02] hover:shadow-lg hover:shadow-yellow-200/50 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-offset-2 dark:border-neutral-700 dark:from-blue-950 dark:via-indigo-950 dark:to-purple-950 dark:hover:shadow-blue-900/50 dark:focus:ring-blue-400'
+      data-umami-event={`Switch to ${isDark ? 'Light' : 'Dark'} Mode`}
+      aria-label={`Switch to ${isDark ? 'light' : 'dark'} mode`}
+    >
+      {/* Background gradient overlay */}
+      <motion.div
+        className='absolute inset-0 rounded-xl bg-gradient-to-r from-yellow-400 via-orange-400 to-pink-400 opacity-0 dark:opacity-100'
+        initial={false}
+        animate={{ opacity: isDark ? 1 : 0 }}
+        transition={{ duration: 0.5 }}
+      />
+
+      {/* Light Mode Option */}
+      <motion.div
+        className='relative z-10 flex flex-1 items-center justify-center gap-2 rounded-lg px-3 py-2 transition-all duration-300'
+        initial={false}
+        animate={{
+          backgroundColor: isDark ? 'transparent' : 'rgba(255, 255, 255, 0.9)',
+          color: isDark ? '#6b7280' : '#f59e0b',
+        }}
+      >
+        <HiSun className='h-5 w-5' />
+        <span className='text-sm font-medium'>Light</span>
+      </motion.div>
+
+      {/* Dark Mode Option */}
+      <motion.div
+        className='relative z-10 flex flex-1 items-center justify-center gap-2 rounded-lg px-3 py-2 transition-all duration-300'
+        initial={false}
+        animate={{
+          backgroundColor: isDark ? 'rgba(30, 41, 59, 0.9)' : 'transparent',
+          color: isDark ? '#60a5fa' : '#6b7280',
+        }}
+      >
+        <HiMoon className='h-5 w-5' />
+        <span className='text-sm font-medium'>Dark</span>
+      </motion.div>
+
+      {/* Animated indicator */}
+      <motion.div
+        className='absolute left-1.5 top-1.5 z-0 h-[calc(100%-12px)] w-[calc(50%-6px)] rounded-lg bg-white shadow-md dark:bg-slate-800'
+        initial={false}
+        animate={{
+          x: isDark ? 'calc(100% + 6px)' : 0,
+        }}
+        transition={{
+          type: 'spring',
+          stiffness: 500,
+          damping: 30,
+        }}
+      />
+    </button>
   );
 };
 
