@@ -21,34 +21,55 @@ const HomePage: NextPage<HomePageProps> = ({ stories }) => {
   const canonicalUrl =
     process.env.NEXT_PUBLIC_SITE_URL || 'https://visothipongroth.vercel.app';
   const metaDescription =
-    'Full-Stack Developer & EdTech Innovator with 3+ years of experience. Led development of GEIP EdTech App serving 400,000+ students. Expert in PHP Laravel, Flutter, React Native, Next.js, and Firebase.';
+    'Roth Samnangvisothipong (រ័ត្ន សំណាងវិសុទ្ធិពង្ស) - Full-Stack Developer & EdTech Innovator with 3+ years of experience. Led development of GEIP EdTech App serving 400,000+ students. Expert in PHP Laravel, Flutter, React Native, Next.js, and Firebase.';
 
   return (
     <>
       <NextSeo
-        title='Roth Visothipong - Full-Stack Developer & EdTech Innovator'
+        title='Roth Samnangvisothipong (រ័ត្ន សំណាងវិសុទ្ធិពង្ស) - Full-Stack Developer & EdTech Innovator'
         description={metaDescription}
         canonical={canonicalUrl}
         openGraph={{
           url: canonicalUrl,
-          title: 'Roth Visothipong - Full-Stack Developer & EdTech Innovator',
+          title:
+            'Roth Samnangvisothipong (រ័ត្ន សំណាងវិសុទ្ធិពង្ស) - Full-Stack Developer & EdTech Innovator',
           description: metaDescription,
           type: 'website',
+          locale: 'en_US',
           images: [
             {
               url: `${canonicalUrl}/images/pongpf.png`,
               width: 1200,
               height: 630,
-              alt: 'Roth Visothipong - Full-Stack Developer & EdTech Innovator',
+              alt: 'Roth Samnangvisothipong (រ័ត្ន សំណាងវិសុទ្ធិពង្ស) - Full-Stack Developer & EdTech Innovator',
             },
           ],
-          siteName: 'Visothipong Portfolio',
+          siteName: 'Roth Samnangvisothipong Portfolio',
         }}
         twitter={{
           cardType: 'summary_large_image',
           handle: '@visothipong',
           site: '@visothipong',
         }}
+        additionalMetaTags={[
+          {
+            name: 'keywords',
+            content:
+              'Roth Samnangvisothipong, រ័ត្ន សំណាងវិសុទ្ធិពង្ស, Roth Visothipong, Visothipong, Full-Stack Developer, EdTech, Cambodia, Belgium',
+          },
+        ]}
+        additionalLinkTags={[
+          {
+            rel: 'alternate',
+            hrefLang: 'en',
+            href: canonicalUrl,
+          },
+          {
+            rel: 'alternate',
+            hrefLang: 'km',
+            href: canonicalUrl,
+          },
+        ]}
       />
       <StructuredData type='Person' />
       <StructuredData type='WebSite' />
