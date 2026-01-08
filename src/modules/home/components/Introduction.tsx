@@ -1,14 +1,23 @@
+import dynamic from 'next/dynamic';
 import { useState } from 'react';
+import { memo } from 'react';
 
 import Image from '@/common/components/elements/Image';
-import StoryModal from '@/common/components/elements/StoryModal';
 import { Story } from '@/common/types/stories';
+
+// Lazy load StoryModal - only load when needed
+const StoryModal = dynamic(
+  () => import('@/common/components/elements/StoryModal'),
+  {
+    ssr: false,
+  },
+);
 
 interface IntroductionProps {
   stories?: Story[];
 }
 
-const Introduction = ({ stories = [] }: IntroductionProps) => {
+const Introduction = memo(({ stories = [] }: IntroductionProps) => {
   const [selectedStoryIndex, setSelectedStoryIndex] = useState<number | null>(
     null,
   );
@@ -131,6 +140,8 @@ const Introduction = ({ stories = [] }: IntroductionProps) => {
       />
     </section>
   );
-};
+});
+
+Introduction.displayName = 'Introduction';
 
 export default Introduction;

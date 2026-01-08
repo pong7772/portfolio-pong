@@ -9,9 +9,9 @@ type MenuProps = {
 
 const Menu = ({ title, list }: MenuProps) => {
   return (
-    <div className='flex flex-col space-y-1 sm:space-y-1.5'>
+    <div className='flex flex-col space-y-0.5 sm:space-y-1'>
       {title && (
-        <div className='mb-2 ml-1 mt-1 hidden text-[10px] font-semibold uppercase tracking-wider text-neutral-500 dark:text-neutral-400 sm:mb-2.5 sm:ml-2 sm:text-xs md:text-sm lg:block'>
+        <div className='mb-1.5 ml-1 mt-1 hidden text-[9px] font-semibold uppercase tracking-wider text-neutral-500 dark:text-neutral-400 sm:mb-2 sm:ml-2 sm:text-[10px] md:text-xs lg:block'>
           {title}
         </div>
       )}

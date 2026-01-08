@@ -1,17 +1,41 @@
+import dynamic from 'next/dynamic';
+import { memo } from 'react';
+
 import Breakline from '@/common/components/elements/Breakline';
 import { Story } from '@/common/types/stories';
 
-import BioPoem from './BioPoem';
-import BlogPreview from './BlogPreview';
 import Introduction from './Introduction';
-import Services from './Services';
-import SkillsSection from './SkillsSection';
+
+// Lazy load heavy components below the fold
+const BlogPreview = dynamic(() => import('./BlogPreview'), {
+  loading: () => (
+    <div className='h-64 animate-pulse rounded-lg bg-neutral-100 dark:bg-neutral-800' />
+  ),
+});
+
+const BioPoem = dynamic(() => import('./BioPoem'), {
+  loading: () => (
+    <div className='h-32 animate-pulse rounded-lg bg-neutral-100 dark:bg-neutral-800' />
+  ),
+});
+
+const SkillsSection = dynamic(() => import('./SkillsSection'), {
+  loading: () => (
+    <div className='h-96 animate-pulse rounded-lg bg-neutral-100 dark:bg-neutral-800' />
+  ),
+});
+
+const Services = dynamic(() => import('./Services'), {
+  loading: () => (
+    <div className='h-48 animate-pulse rounded-lg bg-neutral-100 dark:bg-neutral-800' />
+  ),
+});
 
 interface HomeProps {
   stories?: Story[];
 }
 
-const Home = ({ stories = [] }: HomeProps) => {
+const Home = memo(({ stories = [] }: HomeProps) => {
   return (
     <>
       <Introduction stories={stories} />
@@ -25,6 +49,8 @@ const Home = ({ stories = [] }: HomeProps) => {
       <Services />
     </>
   );
-};
+});
+
+Home.displayName = 'Home';
 
 export default Home;

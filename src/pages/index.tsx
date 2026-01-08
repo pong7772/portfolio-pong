@@ -1,11 +1,17 @@
-import { GetServerSideProps, NextPage } from 'next';
+import { GetStaticProps, NextPage } from 'next';
 import { NextSeo } from 'next-seo';
+import dynamic from 'next/dynamic';
 
 import Container from '@/common/components/elements/Container';
 import StructuredData from '@/common/components/elements/StructuredData';
 import prisma from '@/common/libs/prisma';
 import { Story } from '@/common/types/stories';
-import Home from '@/modules/home';
+
+// Lazy load heavy components
+const Home = dynamic(() => import('@/modules/home'), {
+  loading: () => <div className='min-h-screen' />,
+  ssr: true,
+});
 
 interface HomePageProps {
   stories: Story[];
@@ -53,7 +59,7 @@ const HomePage: NextPage<HomePageProps> = ({ stories }) => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
   try {
     const stories = await prisma.stories.findMany({
       where: {
@@ -62,12 +68,15 @@ export const getServerSideProps: GetServerSideProps = async () => {
       orderBy: {
         order: 'asc',
       },
+      take: 10, // Limit to 10 stories for faster load
     });
 
     return {
       props: {
         stories: JSON.parse(JSON.stringify(stories)),
       },
+      // Revalidate every 60 seconds (ISR)
+      revalidate: 60,
     };
   } catch (error) {
     // Error fetching stories
@@ -75,6 +84,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
       props: {
         stories: [],
       },
+      revalidate: 60,
     };
   }
 };

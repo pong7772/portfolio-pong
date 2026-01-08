@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { useMemo, useRef } from 'react';
+import { memo, useMemo, useRef } from 'react';
 import { useDraggable } from 'react-use-draggable-scroll';
 import useSWR from 'swr';
 
@@ -8,10 +8,11 @@ import { BlogItemProps } from '@/common/types/blog';
 import BlogCardNew from '@/modules/blog/components/BlogCardNew';
 import { fetcher } from '@/services/fetcher';
 
-const BlogCarousel = () => {
+const BlogCarousel = memo(() => {
   const { data, isLoading } = useSWR(`/api/blog?page=1&per_page=15`, fetcher, {
     revalidateOnFocus: false,
     refreshInterval: 0,
+    dedupingInterval: 60000, // Cache for 60 seconds
   });
 
   const blogData: BlogItemProps[] = useMemo(() => {
@@ -36,11 +37,10 @@ const BlogCarousel = () => {
 
     return blogData.map((item, index) => (
       <motion.div
-        key={index}
-        initial={{ opacity: 0, x: 100 }}
-        animate={{ opacity: 1, x: 0 }}
-        exit={{ opacity: 0, x: -100 }}
-        transition={{ duration: 0.5 }}
+        key={item.id || index}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.3, delay: index * 0.05 }}
         className='w-[280px] flex-shrink-0 sm:w-[300px] md:w-[320px]'
       >
         <BlogCardNew {...item} />
@@ -57,6 +57,8 @@ const BlogCarousel = () => {
       {renderBlogCards()}
     </div>
   );
-};
+});
+
+BlogCarousel.displayName = 'BlogCarousel';
 
 export default BlogCarousel;

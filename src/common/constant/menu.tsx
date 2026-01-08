@@ -21,7 +21,7 @@ import { SiJavascript } from 'react-icons/si';
 
 import { MenuItemProps } from '../types/menu';
 
-const iconSize = 20;
+const iconSize = 18;
 
 export const MENU_ITEMS: MenuItemProps[] = [
   {
