@@ -15,18 +15,19 @@ const StructuredData = ({ type = 'Person', data }: StructuredDataProps) => {
         return {
           '@context': 'https://schema.org',
           '@type': 'Person',
-          name: 'Roth Samnangvisothipong',
+          name: 'Visothipong',
           alternateName: [
             'រ័ត្ន សំណាងវិសុទ្ធិពង្ស',
+            'វិសុទ្ធិពង្ស',
+            'Roth Samnangvisothipong',
             'Roth Visothipong',
-            'Visothipong',
             'Roth Samnang Visothipong',
           ],
           givenName: 'Roth Samnang',
           familyName: 'Visothipong',
           jobTitle: 'Full-Stack Developer & EdTech Innovator',
           description:
-            'Roth Samnangvisothipong (រ័ត្ន សំណាងវិសុទ្ធិពង្ស) - Full-Stack Developer & EdTech Innovator with 3+ years of experience. Led development of GEIP EdTech App serving 400,000+ students. Expert in PHP Laravel, Flutter, React Native, Next.js, and Firebase.',
+            'Visothipong (រ័ត្ន សំណាងវិសុទ្ធិពង្ស, វិសុទ្ធិពង្ស) - Full-Stack Developer & EdTech Innovator from Cambodia. Led development of GEIP EdTech App and MoEYS EdTech projects serving 400,000+ students. Expert in PHP Laravel, Flutter, React Native, Next.js, and Firebase. Currently in Belgium, originally from Cambodia.',
           url: baseUrl,
           image: `${baseUrl}/images/pongpf.png`,
           email: 'visothipong7772@gmail.com',
@@ -40,6 +41,8 @@ const StructuredData = ({ type = 'Person', data }: StructuredDataProps) => {
             'Web Development',
             'Mobile Development',
             'EdTech',
+            'GEIP EdTech',
+            'MoEYS EdTech',
             'PHP Laravel',
             'Flutter',
             'React Native',
@@ -47,16 +50,55 @@ const StructuredData = ({ type = 'Person', data }: StructuredDataProps) => {
             'Firebase',
             'Full-Stack Development',
             'Software Engineering',
+            'Cambodia EdTech',
+            'Educational Technology',
           ],
           address: {
             '@type': 'PostalAddress',
-            addressCountry: 'BE',
-            addressLocality: 'Hasselt',
+            addressCountry: 'KH',
+            addressLocality: 'Phnom Penh',
+            addressRegion: 'Phnom Penh',
+          },
+          homeLocation: {
+            '@type': 'Place',
+            address: {
+              '@type': 'PostalAddress',
+              addressCountry: 'KH',
+              addressLocality: 'Phnom Penh',
+            },
+          },
+          workLocation: {
+            '@type': 'Place',
+            address: {
+              '@type': 'PostalAddress',
+              addressCountry: 'BE',
+              addressLocality: 'Hasselt',
+              addressRegion: 'Limburg',
+            },
           },
           nationality: {
             '@type': 'Country',
             name: 'Cambodia',
           },
+          birthPlace: {
+            '@type': 'Place',
+            addressCountry: 'KH',
+            addressLocality: 'Cambodia',
+          },
+          worksFor: [
+            {
+              '@type': 'Organization',
+              name: 'GEIP EdTech',
+              description:
+                'GEIP EdTech Platform serving 400,000+ students in Cambodia',
+            },
+            {
+              '@type': 'Organization',
+              name: 'MoEYS EdTech',
+              description:
+                'Ministry of Education, Youth and Sport EdTech projects',
+            },
+          ],
           alumniOf: [
             {
               '@type': 'EducationalOrganization',
@@ -73,16 +115,20 @@ const StructuredData = ({ type = 'Person', data }: StructuredDataProps) => {
         return {
           '@context': 'https://schema.org',
           '@type': 'WebSite',
-          name: 'Roth Samnangvisothipong Portfolio',
-          alternateName: 'រ័ត្ន សំណាងវិសុទ្ធិពង្ស Portfolio',
+          name: 'Visothipong Portfolio',
+          alternateName: [
+            'រ័ត្ន សំណាងវិសុទ្ធិពង្ស Portfolio',
+            'វិសុទ្ធិពង្ស Portfolio',
+            'Roth Samnangvisothipong Portfolio',
+          ],
           url: baseUrl,
           description:
-            'Portfolio website of Roth Samnangvisothipong (រ័ត្ន សំណាងវិសុទ្ធិពង្ស) - Full-Stack Developer & EdTech Innovator',
+            'Portfolio website of Visothipong (រ័ត្ន សំណាងវិសុទ្ធិពង្ស, វិសុទ្ធិពង្ស) - Full-Stack Developer & EdTech Innovator. GEIP EdTech and MoEYS EdTech Developer from Cambodia.',
           inLanguage: ['en', 'km'],
           author: {
             '@type': 'Person',
-            name: 'Roth Samnangvisothipong',
-            alternateName: 'រ័ត្ន សំណាងវិសុទ្ធិពង្ស',
+            name: 'Visothipong',
+            alternateName: ['រ័ត្ន សំណាងវិសុទ្ធិពង្ស', 'វិសុទ្ធិពង្ស'],
           },
           potentialAction: {
             '@type': 'SearchAction',
@@ -107,14 +153,17 @@ const StructuredData = ({ type = 'Person', data }: StructuredDataProps) => {
           dateModified: data.modifiedTime || data.date,
           author: {
             '@type': 'Person',
-            name: 'Roth Samnangvisothipong',
-            alternateName: 'រ័ត្ន សំណាងវិសុទ្ធិពង្ស',
+            name: 'Visothipong',
+            alternateName: ['រ័ត្ន សំណាងវិសុទ្ធិពង្ស', 'វិសុទ្ធិពង្ស'],
             url: baseUrl,
           },
           publisher: {
             '@type': 'Organization',
-            name: 'Roth Samnangvisothipong Portfolio',
-            alternateName: 'រ័ត្ន សំណាងវិសុទ្ធិពង្ស Portfolio',
+            name: 'Visothipong Portfolio',
+            alternateName: [
+              'រ័ត្ន សំណាងវិសុទ្ធិពង្ស Portfolio',
+              'វិសុទ្ធិពង្ស Portfolio',
+            ],
             logo: {
               '@type': 'ImageObject',
               url: `${baseUrl}/images/pongpf.png`,

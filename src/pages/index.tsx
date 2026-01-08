@@ -21,18 +21,18 @@ const HomePage: NextPage<HomePageProps> = ({ stories }) => {
   const canonicalUrl =
     process.env.NEXT_PUBLIC_SITE_URL || 'https://visothipongroth.vercel.app';
   const metaDescription =
-    'Roth Samnangvisothipong (រ័ត្ន សំណាងវិសុទ្ធិពង្ស) - Full-Stack Developer & EdTech Innovator with 3+ years of experience. Led development of GEIP EdTech App serving 400,000+ students. Expert in PHP Laravel, Flutter, React Native, Next.js, and Firebase.';
+    'Visothipong (រ័ត្ន សំណាងវិសុទ្ធិពង្ស, វិសុទ្ធិពង្ស) - Full-Stack Developer & EdTech Innovator from Cambodia. Led development of GEIP EdTech App and MoEYS EdTech projects serving 400,000+ students. Expert in PHP Laravel, Flutter, React Native, Next.js, and Firebase. Currently in Belgium, originally from Cambodia.';
 
   return (
     <>
       <NextSeo
-        title='Roth Samnangvisothipong (រ័ត្ន សំណាងវិសុទ្ធិពង្ស) - Full-Stack Developer & EdTech Innovator'
+        title='Visothipong (រ័ត្ន សំណាងវិសុទ្ធិពង្ស, វិសុទ្ធិពង្ស) - Full-Stack Developer & EdTech Innovator | GEIP & MoEYS EdTech'
         description={metaDescription}
         canonical={canonicalUrl}
         openGraph={{
           url: canonicalUrl,
           title:
-            'Roth Samnangvisothipong (រ័ត្ន សំណាងវិសុទ្ធិពង្ស) - Full-Stack Developer & EdTech Innovator',
+            'Visothipong (រ័ត្ន សំណាងវិសុទ្ធិពង្ស, វិសុទ្ធិពង្ស) - Full-Stack Developer & EdTech Innovator | GEIP & MoEYS EdTech',
           description: metaDescription,
           type: 'website',
           locale: 'en_US',
@@ -41,10 +41,10 @@ const HomePage: NextPage<HomePageProps> = ({ stories }) => {
               url: `${canonicalUrl}/images/pongpf.png`,
               width: 1200,
               height: 630,
-              alt: 'Roth Samnangvisothipong (រ័ត្ន សំណាងវិសុទ្ធិពង្ស) - Full-Stack Developer & EdTech Innovator',
+              alt: 'Visothipong (រ័ត្ន សំណាងវិសុទ្ធិពង្ស, វិសុទ្ធិពង្ស) - Full-Stack Developer & EdTech Innovator | GEIP & MoEYS EdTech',
             },
           ],
-          siteName: 'Roth Samnangvisothipong Portfolio',
+          siteName: 'Visothipong Portfolio - GEIP & MoEYS EdTech Developer',
         }}
         twitter={{
           cardType: 'summary_large_image',
@@ -55,7 +55,19 @@ const HomePage: NextPage<HomePageProps> = ({ stories }) => {
           {
             name: 'keywords',
             content:
-              'Roth Samnangvisothipong, រ័ត្ន សំណាងវិសុទ្ធិពង្ស, Roth Visothipong, Visothipong, Full-Stack Developer, EdTech, Cambodia, Belgium',
+              'Visothipong, រ័ត្ន សំណាងវិសុទ្ធិពង្ស, វិសុទ្ធិពង្ស, Roth Samnangvisothipong, GEIP EdTech, MoEYS EdTech, GEIP, MoEYS, Cambodia EdTech, Cambodian Developer, Full-Stack Developer, EdTech, Cambodia, Phnom Penh, Belgium',
+          },
+          {
+            name: 'geo.region',
+            content: 'KH',
+          },
+          {
+            name: 'geo.placename',
+            content: 'Cambodia, Phnom Penh',
+          },
+          {
+            name: 'geo.position',
+            content: '11.5564;104.9282',
           },
         ]}
         additionalLinkTags={[
