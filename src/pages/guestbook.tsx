@@ -7,7 +7,7 @@ import PageHeading from '@/common/components/elements/PageHeading';
 
 const Chat = dynamic(() => import('@/modules/chat'), { ssr: false });
 
-const PAGE_TITLE = 'Guestbook';
+const PAGE_TITLE = 'Community Chat';
 const PAGE_DESCRIPTION =
   'Leave whatever you like to say, suggestions, questions or anything!';
 
@@ -31,7 +31,7 @@ const GuestBookPage: NextPage = () => {
               url: `${canonicalUrl}/images/pongpf.png`,
               width: 1200,
               height: 630,
-              alt: 'Visothipong Guestbook',
+              alt: 'Visothipong Community Chat',
             },
           ],
         }}

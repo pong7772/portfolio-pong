@@ -97,7 +97,7 @@ export const MENU_ITEMS: MenuItemProps[] = [
     type: 'Pages',
   },
   {
-    title: 'Guestbook',
+    title: 'Community Chat',
     href: '/guestbook',
     icon: <ChatIcon size={iconSize} />,
     isShow: true,
