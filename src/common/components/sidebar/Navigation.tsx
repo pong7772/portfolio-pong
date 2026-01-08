@@ -10,10 +10,10 @@ const Navigation = () => {
   return (
     <>
       <Menu list={filteredMenu} />
-      <Breakline className='mx-1 my-1.5 sm:my-2' />
-      <div className='space-y-1'>
+      <Breakline className='mx-1 my-2 sm:my-2.5' />
+      <div className='space-y-1.5'>
         <div className='px-2 sm:px-3 md:px-4'>
-          <span className='text-[9px] text-neutral-600 dark:text-neutral-400 sm:text-[10px] md:text-xs'>
+          <span className='text-[10px] font-semibold uppercase tracking-wider text-neutral-500 dark:text-neutral-400 sm:text-xs md:text-sm'>
             Apps
           </span>
         </div>

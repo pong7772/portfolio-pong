@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 
 import { MenuContext } from '@/common/context/MenuContext';
@@ -63,9 +63,9 @@ const Profile = ({ isScrolled = false }: ProfileProps) => {
           {isMobile && (
             <div
               className={clsx(
-                'flex items-center gap-1.5 sm:gap-2 md:hidden',
+                'flex items-center gap-2 sm:gap-2.5 md:hidden',
                 expandMenu &&
-                  'h-[70px] flex-col-reverse !items-end justify-between pb-1 sm:h-[80px]',
+                  'h-auto flex-col-reverse !items-end justify-between gap-2 pb-1 sm:gap-2.5',
               )}
             >
               <BackgroundAudioButton />
@@ -81,10 +81,16 @@ const Profile = ({ isScrolled = false }: ProfileProps) => {
         {isMobile && (
           <AnimatePresence>
             {expandMenu && (
-              <div className='space-y-2.5 pt-2.5 sm:space-y-3 sm:pt-3'>
+              <motion.div
+                className='space-y-3 border-t border-neutral-200 pt-3 dark:border-neutral-800 sm:space-y-4 sm:pt-4'
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: 'auto' }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.3, ease: 'easeInOut' }}
+              >
                 <SearchBox />
                 <MobileMenu />
-              </div>
+              </motion.div>
             )}
           </AnimatePresence>
         )}

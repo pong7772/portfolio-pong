@@ -163,7 +163,6 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 Visit the live portfolio: [https://visothipongroth.vercel.app](https://visothipongroth.vercel.app)
 
-## 📸 Screenshots
 
 <!-- Add screenshots of your portfolio here -->
 

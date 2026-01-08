@@ -22,10 +22,10 @@ const MenuItem = ({
   const isHashLink = href === '#';
   const router = useRouter();
 
-  const activeClasses = `flex items-center gap-1.5 py-1 pl-2 pr-1.5 text-xs sm:gap-2 sm:py-1.5 sm:pl-3 sm:pr-2 sm:text-sm md:pl-4 md:pr-2.5 text-neutral-700 dark:text-neutral-400 hover:text-neutral-900 hover:dark:text-neutral-300 rounded-lg group transition-all duration-200 ${
+  const activeClasses = `flex items-center gap-2 py-2.5 pl-3 pr-2.5 text-sm sm:gap-2.5 sm:py-3 sm:pl-4 sm:pr-3 sm:text-base md:pl-4 md:pr-2.5 text-neutral-700 dark:text-neutral-400 hover:text-neutral-900 hover:dark:text-neutral-300 rounded-lg group transition-all duration-200 active:scale-[0.98] ${
     router.pathname === href
-      ? 'bg-neutral-200 dark:bg-neutral-800 text-neutral-900 dark:!text-neutral-200'
-      : 'hover:bg-neutral-100 hover:dark:bg-neutral-800/50 hover:dark:!text-neutral-300'
+      ? 'bg-neutral-200 dark:bg-neutral-800 text-neutral-900 dark:!text-neutral-200 font-medium shadow-sm'
+      : 'hover:bg-neutral-100 hover:dark:bg-neutral-800/50 hover:dark:!text-neutral-300 active:bg-neutral-200 active:dark:bg-neutral-800'
   }`;
 
   const handleClick = () => {
@@ -56,14 +56,14 @@ const MenuItem = ({
         {!hideIcon && (
           <div
             className={clsx(
-              'transition-all duration-300 group-hover:-rotate-12',
+              'flex-shrink-0 transition-all duration-300 group-hover:-rotate-12',
               isActiveRoute && 'animate-pulse',
             )}
           >
             {icon}
           </div>
         )}
-        <div className='ml-0.5 flex-grow truncate'>{title}</div>
+        <div className='flex-grow truncate font-medium'>{title}</div>
         {children && <>{children}</>}
         {isActiveRoute && (
           <ExternalLinkIcon size={22} className='animate-pulse text-gray-500' />
