@@ -119,7 +119,7 @@ const Introduction = memo(({ stories = [] }: IntroductionProps) => {
             </span>
             . Currently pursuing a{' '}
             <span className='font-medium text-blue-600 dark:text-blue-400'>
-              Master of Education
+              Master of Education and AI Project in Education
             </span>{' '}
             in Cambodia and Belgium, I specialize in combining robust
             engineering (
