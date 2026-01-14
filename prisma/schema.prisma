@@ -114,13 +114,13 @@ model ppd_posts {
   slug               String    @unique
   content            String    @db.Text
   excerpt            String?   @db.Text
-  thumbnail_url      String?   // Banner/thumbnail for card display
-  featured_image_url String?   // Main featured image
-  images             String?   // JSON array of additional images
-  youtube_video_url  String?   // YouTube video URL
+  thumbnail_url      String? // Banner/thumbnail for card display
+  featured_image_url String? // Main featured image
+  images             String? // JSON array of additional images
+  youtube_video_url  String? // YouTube video URL
   status             String    @default("draft") // draft, publish
   is_featured        Boolean   @default(false)
-  tags               String?   // JSON array of tags
+  tags               String? // JSON array of tags
   author_id          Int       @default(1)
   published_at       DateTime?
   created_at         DateTime  @default(now())

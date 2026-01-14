@@ -30,7 +30,7 @@ const PPDDetailPage: NextPage<PPDDetailPageProps> = ({ post }) => {
     'Read this personal and professional development post by Roth Visothipong.';
 
   const incrementViews = async () => {
-    await axios.post(`/api/views?&slug=${postData?.slug}&type=ppd`);
+    await axios.post(`/api/views?slug=${postData?.slug}&type=ppd`);
   };
 
   useEffect(() => {
