@@ -90,7 +90,8 @@ export const notifyNewComment = async (
   type: string,
   message: string,
 ): Promise<void> => {
-  const typeLabel = type === 'blog' ? '📝 Blog' : '📚 Learning';
+  const typeLabel =
+    type === 'blog' ? '📝 Blog' : type === 'ppd' ? '🎓 PPD' : '📚 Learning';
   const text = `💬 <b>New Comment</b>
 
 ${typeLabel}

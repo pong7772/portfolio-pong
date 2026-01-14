@@ -1,4 +1,4 @@
-export type CommentType = 'blog' | 'learn';
+export type CommentType = 'blog' | 'learn' | 'ppd';
 
 export interface Comment {
   id: number;

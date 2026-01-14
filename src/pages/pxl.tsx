@@ -20,6 +20,21 @@ const PxlPage: NextPage<PxlPageProps> = () => {
       <NextSeo
         title={`${PAGE_TITLE} - Visothipong`}
         description={PAGE_DESCRIPTION}
+        canonical={`${process.env.NEXT_PUBLIC_SITE_URL || 'https://visothipongroth.vercel.app'}/pxl`}
+        openGraph={{
+          url: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://visothipongroth.vercel.app'}/pxl`,
+          title: `${PAGE_TITLE} - Visothipong`,
+          description: PAGE_DESCRIPTION,
+          type: 'website',
+          siteName: 'Visothipong Portfolio',
+        }}
+        additionalMetaTags={[
+          {
+            name: 'keywords',
+            content:
+              'Hogeschool PXL, PXL University, Belgium, International Student, Visothipong, រ័ត្ន សំណាងវិសុទ្ធិពង្ស, Personal Development, Professional Development, Master of Education, EdTech, Cambodia, Hasselt',
+          },
+        ]}
       />
       <Container data-aos='fade-up'>
         <PageHeading title={PAGE_TITLE} description={PAGE_DESCRIPTION} />
@@ -103,8 +118,8 @@ const PxlPage: NextPage<PxlPageProps> = () => {
                 PXL.
               </p>
               <div className='mt-4 flex items-center justify-between'>
-                <span className='inline-flex items-center rounded-full bg-yellow-100 px-2.5 py-0.5 text-xs font-medium text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400'>
-                  Coming Soon
+                <span className='inline-flex items-center rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-800 dark:bg-green-900/30 dark:text-green-400'>
+                  Available
                 </span>
                 <svg
                   xmlns='http://www.w3.org/2000/svg'

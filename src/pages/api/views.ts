@@ -10,12 +10,16 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
-  const { slug } = req.query;
+  const { slug, type = 'blog' } = req.query;
+  const contentType = (type as string) || 'blog';
 
   if (req.method === 'GET') {
     try {
-      const contentMeta = await prisma.contentmeta.findUnique({
-        where: { slug: slug as string },
+      const contentMeta = await prisma.contentmeta.findFirst({
+        where: {
+          slug: slug as string,
+          type: contentType,
+        },
         select: { views: true },
       });
 
@@ -31,21 +35,60 @@ export default async function handler(
     }
   } else if (req.method === 'POST') {
     try {
-      const contentMeta = await prisma.contentmeta.upsert({
-        where: { slug: slug as string },
-        update: {
-          views: {
-            increment: 1,
-          },
-        },
-        create: {
+      // Find existing record by slug and type
+      const existing = await prisma.contentmeta.findFirst({
+        where: {
           slug: slug as string,
-          type: 'blog',
-          views: 1,
+          type: contentType,
         },
-        select: { views: true },
       });
-      return res.json(contentMeta);
+
+      if (existing) {
+        // Update existing record
+        const updated = await prisma.contentmeta.update({
+          where: { id: existing.id },
+          data: {
+            views: {
+              increment: 1,
+            },
+          },
+          select: { views: true },
+        });
+        return res.json(updated);
+      } else {
+        // Create new record
+        // Note: Since slug is unique, we need to check if slug exists with different type
+        const existingSlug = await prisma.contentmeta.findUnique({
+          where: { slug: slug as string },
+        });
+
+        if (existingSlug) {
+          // If slug exists but with different type, we can't create a new one
+          // Instead, update the existing one (this handles edge case)
+          const updated = await prisma.contentmeta.update({
+            where: { id: existingSlug.id },
+            data: {
+              type: contentType,
+              views: {
+                increment: 1,
+              },
+            },
+            select: { views: true },
+          });
+          return res.json(updated);
+        } else {
+          // Create new record
+          const created = await prisma.contentmeta.create({
+            data: {
+              slug: slug as string,
+              type: contentType,
+              views: 1,
+            },
+            select: { views: true },
+          });
+          return res.json(created);
+        }
+      }
     } catch (error) {
       return res.status(500).json({ error: 'Failed to update views count' });
     }

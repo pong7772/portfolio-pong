@@ -107,3 +107,22 @@ model visitors {
   user_agent String?  @db.Text
   created_at DateTime @default(now())
 }
+
+model ppd_posts {
+  id                 Int       @id @default(autoincrement())
+  title              String
+  slug               String    @unique
+  content            String    @db.Text
+  excerpt            String?   @db.Text
+  thumbnail_url      String?   // Banner/thumbnail for card display
+  featured_image_url String?   // Main featured image
+  images             String?   // JSON array of additional images
+  youtube_video_url  String?   // YouTube video URL
+  status             String    @default("draft") // draft, publish
+  is_featured        Boolean   @default(false)
+  tags               String?   // JSON array of tags
+  author_id          Int       @default(1)
+  published_at       DateTime?
+  created_at         DateTime  @default(now())
+  updated_at         DateTime  @default(now())
+}

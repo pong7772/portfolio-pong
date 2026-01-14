@@ -5,7 +5,7 @@ import PageHeading from '@/common/components/elements/PageHeading';
 
 const PAGE_TITLE = 'Personal and Professional Development';
 const PAGE_DESCRIPTION =
-  'Visothipong PDD Growth Portfolio - Preparation for Coaching Session 1';
+  'Visothipong PPD Growth Portfolio - Preparation for Coaching Session 1';
 
 const PersonalProfessionalDevelopment = () => {
   return (
@@ -21,7 +21,7 @@ const PersonalProfessionalDevelopment = () => {
           {/* Header Section */}
           <header className='my-12 text-center'>
             <h1 className='text-4xl font-bold text-slate-900 dark:text-slate-100 sm:text-5xl'>
-              Visothipong PDD Growth Portfolio
+              Visothipong PPD Growth Portfolio
             </h1>
             <p className='mt-4 text-2xl font-semibold text-slate-700 dark:text-slate-300'>
               Roth Samnang Visothipong

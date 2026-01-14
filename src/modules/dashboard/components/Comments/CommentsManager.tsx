@@ -141,10 +141,16 @@ const CommentsManager = () => {
                         className={`rounded px-2 py-0.5 text-xs font-medium ${
                           comment.type === 'blog'
                             ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300'
-                            : 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300'
+                            : comment.type === 'ppd'
+                              ? 'bg-indigo-100 text-indigo-700 dark:bg-indigo-900/30 dark:text-indigo-300'
+                              : 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300'
                         }`}
                       >
-                        {comment.type === 'blog' ? '📝 Blog' : '📚 Learning'}
+                        {comment.type === 'blog'
+                          ? '📝 Blog'
+                          : comment.type === 'ppd'
+                            ? '🎓 PPD'
+                            : '📚 Learning'}
                       </span>
                       <span className='text-sm text-neutral-500 dark:text-neutral-400'>
                         /{comment.slug}
