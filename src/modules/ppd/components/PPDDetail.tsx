@@ -33,14 +33,14 @@ const PPDDetail = ({
 
   const readingTimeMinutes = calculateReadingTime(content?.rendered) ?? 0;
 
-  // Combine thumbnail and featured image with additional images
-  const allImages = [
-    ...(thumbnail_url ? [thumbnail_url] : []),
-    ...(featured_image_url && featured_image_url !== thumbnail_url
-      ? [featured_image_url]
-      : []),
-    ...(images || []),
-  ].filter(Boolean);
+  // Ensure images is an array
+  const imagesArray = Array.isArray(images) ? images : [];
+
+  // Check if we have any images to display
+  const hasImages =
+    thumbnail_url ||
+    featured_image_url ||
+    (imagesArray && imagesArray.length > 0);
 
   return (
     <>
@@ -53,10 +53,10 @@ const PPDDetail = ({
       />
 
       {/* Image Gallery */}
-      {allImages.length > 0 && (
+      {hasImages && (
         <ImageGallery
-          images={images || []}
-          featuredImage={thumbnail_url || featured_image_url || undefined}
+          images={imagesArray}
+          featuredImage={featured_image_url || thumbnail_url || undefined}
           title={title?.rendered}
         />
       )}
@@ -68,7 +68,7 @@ const PPDDetail = ({
 
       {/* Content */}
       <div className='mt-6'>
-        {content?.rendered && (
+        {content?.rendered ? (
           <>
             {/* Check if content is HTML (starts with <) or Markdown */}
             {content.rendered.trim().startsWith('<') ? (
@@ -81,6 +81,10 @@ const PPDDetail = ({
               </div>
             )}
           </>
+        ) : (
+          <div className='rounded-lg border border-neutral-200 bg-neutral-50 p-6 text-center text-neutral-500 dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-400'>
+            <p>No content available for this post.</p>
+          </div>
         )}
       </div>
 

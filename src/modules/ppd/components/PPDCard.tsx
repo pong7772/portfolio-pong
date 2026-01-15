@@ -35,7 +35,10 @@ const PPDCard = ({
   const defaultImage = '/images/placeholder.png';
 
   return (
-    <Link href={`/pxl/personal-professional-development/${slug}?id=${id}`}>
+    <Link
+      href={`/pxl/personal-professional-development/${slug}?id=${id}`}
+      className='h-full'
+    >
       <Card className='group flex h-full flex-col overflow-hidden rounded-xl border border-neutral-200 bg-white shadow-sm transition-all duration-300 hover:border-neutral-300 hover:shadow-lg dark:border-neutral-800 dark:bg-neutral-900 dark:hover:border-neutral-700'>
         {/* Thumbnail/Banner Section */}
         <div className='relative aspect-[16/9] w-full overflow-hidden bg-neutral-100 dark:bg-neutral-800'>

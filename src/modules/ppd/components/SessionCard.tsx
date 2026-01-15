@@ -21,7 +21,7 @@ const SessionCard = ({
   href,
 }: SessionCardProps) => {
   return (
-    <Link href={href}>
+    <Link href={href} className='h-full'>
       <Card className='group flex h-full flex-col overflow-hidden rounded-xl border border-neutral-200 bg-white shadow-sm transition-all duration-300 hover:border-neutral-300 hover:shadow-lg dark:border-neutral-800 dark:bg-neutral-900 dark:hover:border-neutral-700'>
         {/* Icon Section */}
         <div className='relative aspect-[16/9] w-full overflow-hidden bg-gradient-to-br from-indigo-100 to-indigo-200 dark:from-indigo-900/30 dark:to-indigo-800/30'>
@@ -38,12 +38,12 @@ const SessionCard = ({
         {/* Content Section */}
         <div className='flex flex-1 flex-col p-5'>
           {/* Title */}
-          <h3 className='mb-2 line-clamp-2 text-lg font-semibold leading-tight text-neutral-800 transition-colors group-hover:text-indigo-600 dark:text-neutral-100 dark:group-hover:text-indigo-400'>
+          <h3 className='mb-3 line-clamp-2 text-lg font-semibold leading-tight text-neutral-800 transition-colors group-hover:text-indigo-600 dark:text-neutral-100 dark:group-hover:text-indigo-400'>
             {title}
           </h3>
 
           {/* Description */}
-          <p className='mb-3 line-clamp-2 text-sm leading-relaxed text-neutral-600 dark:text-neutral-400'>
+          <p className='mb-4 line-clamp-2 text-sm leading-relaxed text-neutral-600 dark:text-neutral-400'>
             {description}
           </p>
 

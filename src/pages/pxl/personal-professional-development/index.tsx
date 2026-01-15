@@ -119,7 +119,9 @@ const PersonalProfessionalDevelopment = () => {
             {!isValidating ? (
               <>
                 {allCards.map((item, index) => (
-                  <div key={index}>{item.component}</div>
+                  <div key={index} className='h-full'>
+                    {item.component}
+                  </div>
                 ))}
               </>
             ) : (
