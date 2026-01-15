@@ -14,8 +14,8 @@ interface TableProps {
 }
 
 const Table = ({ children }: TableProps) => (
-  <div className='table-container'>
-    <table className='table w-full'>{children}</table>
+  <div className='my-6 overflow-x-auto rounded-lg border border-neutral-200 dark:border-neutral-700'>
+    <table className='w-full border-collapse'>{children}</table>
   </div>
 );
 
@@ -30,7 +30,12 @@ const MDXComponent = ({ children }: MarkdownRendererProps) => {
             {...props}
           />
         ),
-        p: (props) => <div {...props} />,
+        p: (props) => (
+          <p
+            className='my-4 leading-relaxed text-neutral-700 dark:text-neutral-300'
+            {...props}
+          />
+        ),
         h2: (props) => (
           <h2
             className='text-xl font-medium dark:text-neutral-300'
@@ -44,11 +49,18 @@ const MDXComponent = ({ children }: MarkdownRendererProps) => {
           />
         ),
         ul: ({ ordered, ...props }) => (
-          <ul className='list-disc space-y-3 pb-2 pl-10' {...props} />
+          <ul
+            className='my-4 list-disc space-y-2 pl-6 text-neutral-700 dark:text-neutral-300'
+            {...props}
+          />
         ),
         ol: ({ ordered, ...props }) => (
-          <ol className='list-decimal space-y-3 pb-2 pl-10' {...props} />
+          <ol
+            className='my-4 list-decimal space-y-2 pl-6 text-neutral-700 dark:text-neutral-300'
+            {...props}
+          />
         ),
+        li: (props) => <li className='my-1 pl-2 leading-relaxed' {...props} />,
         code: (props) => <CodeBlock {...props} />,
         blockquote: (props) => (
           <blockquote
@@ -58,14 +70,20 @@ const MDXComponent = ({ children }: MarkdownRendererProps) => {
         ),
         table: (props) => <Table {...props} />,
         th: (props) => (
-          <th className='border px-3 py-1 text-left dark:border-neutral-600'>
+          <th className='border border-neutral-300 bg-neutral-100 px-4 py-3 text-left font-semibold text-neutral-900 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-100'>
             {props.children}
           </th>
         ),
         td: (props) => (
-          <td className='border px-3  py-1 dark:border-neutral-600'>
+          <td className='border border-neutral-300 px-4 py-3 text-neutral-700 dark:border-neutral-700 dark:text-neutral-300'>
             {props.children}
           </td>
+        ),
+        tr: (props) => (
+          <tr
+            className='hover:bg-neutral-50 dark:hover:bg-neutral-800/50'
+            {...props}
+          />
         ),
       }}
     >

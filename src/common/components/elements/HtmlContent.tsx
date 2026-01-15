@@ -68,16 +68,22 @@ const HtmlContent = ({ content, className = '' }: HtmlContentProps) => {
         // Images
         'prose-img:rounded-lg prose-img:shadow-md prose-img:my-6 prose-img:mx-auto prose-img:max-w-full prose-img:h-auto',
         // Lists
-        'prose-ul:my-4 prose-ul:pl-6 prose-ul:list-disc',
-        'prose-ol:my-4 prose-ol:pl-6 prose-ol:list-decimal',
-        'prose-li:my-2 prose-li:leading-relaxed',
+        'prose-ul:my-4 prose-ul:pl-6 prose-ul:list-disc prose-ul:space-y-2',
+        'prose-ol:my-4 prose-ol:pl-6 prose-ol:list-decimal prose-ol:space-y-2',
+        'prose-li:my-1 prose-li:leading-relaxed prose-li:pl-2',
         'prose-li:text-neutral-700 dark:prose-li:text-neutral-300',
+        'prose-ul:prose-li:marker:text-neutral-500 dark:prose-ul:prose-li:marker:text-neutral-400',
+        'prose-ol:prose-li:marker:text-neutral-500 dark:prose-ol:prose-li:marker:text-neutral-400',
+        // Nested lists
+        'prose-li:prose-ul:mt-2 prose-li:prose-ul:mb-2 prose-li:prose-ul:pl-6',
+        'prose-li:prose-ol:mt-2 prose-li:prose-ol:mb-2 prose-li:prose-ol:pl-6',
         // Tables
-        'prose-table:w-full prose-table:my-6 prose-table:border-collapse',
-        'prose-th:border prose-th:border-neutral-300 prose-th:bg-neutral-100 prose-th:px-4 prose-th:py-2 prose-th:text-left prose-th:font-semibold',
-        'dark:prose-th:border-neutral-700 dark:prose-th:bg-neutral-800',
-        'prose-td:border prose-td:border-neutral-300 prose-td:px-4 prose-td:py-2',
-        'dark:prose-td:border-neutral-700',
+        'prose-table:w-full prose-table:my-6 prose-table:border-collapse prose-table:overflow-x-auto',
+        'prose-th:border prose-th:border-neutral-300 prose-th:bg-neutral-100 prose-th:px-4 prose-th:py-3 prose-th:text-left prose-th:font-semibold prose-th:text-neutral-900',
+        'dark:prose-th:border-neutral-700 dark:prose-th:bg-neutral-800 dark:prose-th:text-neutral-100',
+        'prose-td:border prose-td:border-neutral-300 prose-td:px-4 prose-td:py-3 prose-td:text-neutral-700',
+        'dark:prose-td:border-neutral-700 dark:prose-td:text-neutral-300',
+        'prose-tr:hover:bg-neutral-50 dark:prose-tr:hover:bg-neutral-800/50',
         // Horizontal rules
         'prose-hr:my-8 prose-hr:border-neutral-200 dark:prose-hr:border-neutral-700',
         className,
