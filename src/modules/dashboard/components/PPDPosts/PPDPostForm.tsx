@@ -4,6 +4,7 @@ import { toast } from 'sonner';
 
 import Card from '@/common/components/elements/Card';
 import ImageManager from '@/common/components/elements/ImageManager';
+import ImageUploadField from '@/common/components/elements/ImageUploadField';
 import RichTextEditor from '@/common/components/elements/RichTextEditor';
 import {
   PPDPost,
@@ -77,15 +78,46 @@ const PPDPostForm = ({ post, onSuccess, onCancel }: PPDPostFormProps) => {
 
     try {
       setIsSubmitting(true);
-      const submitData = {
-        ...formData,
-        images:
-          formData.images && formData.images.length > 0
-            ? formData.images
-            : undefined,
-        published_at:
-          formData.status === 'publish' ? new Date().toISOString() : undefined,
+
+      // Clean up the data before sending
+      const submitData: any = {
+        title: formData.title.trim(),
+        slug: formData.slug.trim(),
+        content: formData.content.trim(),
+        status: formData.status,
+        is_featured: formData.is_featured,
       };
+
+      // Add optional fields only if they have values
+      if (formData.excerpt && formData.excerpt.trim()) {
+        submitData.excerpt = formData.excerpt.trim();
+      }
+      if (formData.thumbnail_url && formData.thumbnail_url.trim()) {
+        submitData.thumbnail_url = formData.thumbnail_url.trim();
+      }
+      if (formData.featured_image_url && formData.featured_image_url.trim()) {
+        submitData.featured_image_url = formData.featured_image_url.trim();
+      }
+      if (formData.youtube_video_url && formData.youtube_video_url.trim()) {
+        submitData.youtube_video_url = formData.youtube_video_url.trim();
+      }
+      if (
+        formData.images &&
+        Array.isArray(formData.images) &&
+        formData.images.length > 0
+      ) {
+        submitData.images = formData.images;
+      }
+      if (
+        formData.tags &&
+        Array.isArray(formData.tags) &&
+        formData.tags.length > 0
+      ) {
+        submitData.tags = formData.tags;
+      }
+      if (formData.status === 'publish') {
+        submitData.published_at = new Date().toISOString();
+      }
 
       if (post) {
         await updatePPDPost(post.id, submitData);
@@ -96,7 +128,9 @@ const PPDPostForm = ({ post, onSuccess, onCancel }: PPDPostFormProps) => {
       }
       onSuccess();
     } catch (error: any) {
-      toast.error(error.message || 'Failed to save PPD post');
+      console.error('Error saving PPD post:', error);
+      const errorMessage = error.message || 'Failed to save PPD post';
+      toast.error(errorMessage);
     } finally {
       setIsSubmitting(false);
     }
@@ -154,31 +188,23 @@ const PPDPostForm = ({ post, onSuccess, onCancel }: PPDPostFormProps) => {
         </div>
 
         <div>
-          <label className='mb-2 block text-sm font-semibold text-neutral-700 dark:text-neutral-300'>
-            Thumbnail URL (for card display)
-          </label>
-          <input
-            type='url'
-            value={formData.thumbnail_url}
-            onChange={(e) =>
-              setFormData({ ...formData, thumbnail_url: e.target.value })
+          <ImageUploadField
+            label='Thumbnail (for card display)'
+            value={formData.thumbnail_url || ''}
+            onChange={(value) =>
+              setFormData({ ...formData, thumbnail_url: value })
             }
-            className='w-full rounded-lg border border-neutral-300 px-4 py-2 dark:border-neutral-600 dark:bg-neutral-800'
             placeholder='https://example.com/thumbnail.jpg'
           />
         </div>
 
         <div>
-          <label className='mb-2 block text-sm font-semibold text-neutral-700 dark:text-neutral-300'>
-            Featured Image URL
-          </label>
-          <input
-            type='url'
-            value={formData.featured_image_url}
-            onChange={(e) =>
-              setFormData({ ...formData, featured_image_url: e.target.value })
+          <ImageUploadField
+            label='Featured Image'
+            value={formData.featured_image_url || ''}
+            onChange={(value) =>
+              setFormData({ ...formData, featured_image_url: value })
             }
-            className='w-full rounded-lg border border-neutral-300 px-4 py-2 dark:border-neutral-600 dark:bg-neutral-800'
             placeholder='https://example.com/image.jpg'
           />
         </div>

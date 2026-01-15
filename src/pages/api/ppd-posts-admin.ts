@@ -30,9 +30,13 @@ export default async function handler(
         });
         return res.json(posts);
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error fetching PPD posts:', error);
-      return res.status(500).json({ error: 'Failed to fetch PPD posts' });
+      return res.status(500).json({
+        error: 'Failed to fetch PPD posts',
+        details:
+          process.env.NODE_ENV === 'development' ? error.message : undefined,
+      });
     }
   }
 
@@ -53,43 +57,96 @@ export default async function handler(
         published_at,
       } = req.body;
 
-      if (!title || !slug || !content) {
-        return res
-          .status(400)
-          .json({ error: 'Title, slug, and content are required' });
+      // Validate required fields
+      if (!title || !title.trim()) {
+        return res.status(400).json({ error: 'Title is required' });
+      }
+      if (!slug || !slug.trim()) {
+        return res.status(400).json({ error: 'Slug is required' });
+      }
+      if (!content || !content.trim()) {
+        return res.status(400).json({ error: 'Content is required' });
+      }
+
+      // Validate slug format (no spaces, lowercase)
+      const slugRegex = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+      if (!slugRegex.test(slug.trim())) {
+        return res.status(400).json({
+          error:
+            'Slug must be lowercase and contain only letters, numbers, and hyphens',
+        });
       }
 
       // Check if slug already exists
       const existingPost = await prisma.ppd_posts.findUnique({
-        where: { slug },
+        where: { slug: slug.trim() },
       });
 
       if (existingPost) {
         return res.status(400).json({ error: 'Slug already exists' });
       }
 
+      // Prepare data
+      const postData: any = {
+        title: title.trim(),
+        slug: slug.trim(),
+        content: content.trim(),
+        excerpt: excerpt && excerpt.trim() ? excerpt.trim() : null,
+        thumbnail_url:
+          thumbnail_url && thumbnail_url.trim() ? thumbnail_url.trim() : null,
+        featured_image_url:
+          featured_image_url && featured_image_url.trim()
+            ? featured_image_url.trim()
+            : null,
+        images:
+          images && Array.isArray(images) && images.length > 0
+            ? JSON.stringify(images)
+            : null,
+        youtube_video_url:
+          youtube_video_url && youtube_video_url.trim()
+            ? youtube_video_url.trim()
+            : null,
+        status: status === 'publish' ? 'publish' : 'draft',
+        is_featured: Boolean(is_featured),
+        tags:
+          tags && Array.isArray(tags) && tags.length > 0
+            ? JSON.stringify(tags)
+            : null,
+        published_at:
+          status === 'publish' && published_at
+            ? new Date(published_at)
+            : status === 'publish'
+              ? new Date()
+              : null,
+        author_id: 1,
+      };
+
       const post = await prisma.ppd_posts.create({
-        data: {
-          title,
-          slug,
-          content,
-          excerpt: excerpt || null,
-          thumbnail_url: thumbnail_url || null,
-          featured_image_url: featured_image_url || null,
-          images: images && images.length > 0 ? JSON.stringify(images) : null,
-          youtube_video_url: youtube_video_url || null,
-          status,
-          is_featured,
-          tags: tags ? JSON.stringify(tags) : null,
-          published_at: published_at ? new Date(published_at) : null,
-          author_id: 1,
-        },
+        data: postData,
       });
 
       return res.status(201).json(post);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error creating PPD post:', error);
-      return res.status(500).json({ error: 'Failed to create PPD post' });
+
+      // Provide more specific error messages
+      if (error.code === 'P2002') {
+        return res.status(400).json({
+          error: 'A post with this slug already exists',
+        });
+      }
+
+      if (error.code === 'P2003') {
+        return res.status(400).json({
+          error: 'Invalid author ID',
+        });
+      }
+
+      return res.status(500).json({
+        error: error.message || 'Failed to create PPD post',
+        details:
+          process.env.NODE_ENV === 'development' ? error.stack : undefined,
+      });
     }
   }
 
@@ -165,9 +222,20 @@ export default async function handler(
       });
 
       return res.json(updatedPost);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error updating PPD post:', error);
-      return res.status(500).json({ error: 'Failed to update PPD post' });
+
+      if (error.code === 'P2002') {
+        return res.status(400).json({
+          error: 'A post with this slug already exists',
+        });
+      }
+
+      return res.status(500).json({
+        error: error.message || 'Failed to update PPD post',
+        details:
+          process.env.NODE_ENV === 'development' ? error.stack : undefined,
+      });
     }
   }
 
@@ -190,9 +258,13 @@ export default async function handler(
       });
 
       return res.status(200).json({ message: 'Post deleted successfully' });
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error deleting PPD post:', error);
-      return res.status(500).json({ error: 'Failed to delete PPD post' });
+      return res.status(500).json({
+        error: error.message || 'Failed to delete PPD post',
+        details:
+          process.env.NODE_ENV === 'development' ? error.stack : undefined,
+      });
     }
   }
 

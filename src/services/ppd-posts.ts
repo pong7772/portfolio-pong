@@ -53,18 +53,30 @@ export const getPPDPost = async (id: number): Promise<PPDPost> => {
 export const createPPDPost = async (
   data: PPDPostFormData,
 ): Promise<PPDPost> => {
-  const response = await fetch(API_URL, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(data),
-  });
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.error || 'Failed to create PPD post');
+  try {
+    const response = await fetch(API_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+      const errorData = await response
+        .json()
+        .catch(() => ({ error: 'Unknown error' }));
+      const errorMessage =
+        errorData.error || `HTTP ${response.status}: Failed to create PPD post`;
+      console.error('PPD Post creation error:', errorMessage, errorData);
+      throw new Error(errorMessage);
+    }
+
+    return response.json();
+  } catch (error: any) {
+    console.error('PPD Post creation failed:', error);
+    throw error;
   }
-  return response.json();
 };
 
 export const updatePPDPost = async (
