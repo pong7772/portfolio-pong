@@ -77,11 +77,13 @@ const PPDCard = ({
           </h3>
 
           {/* Excerpt */}
-          {isExcerpt && excerpt?.rendered && (
-            <p className='mb-4 line-clamp-2 text-sm leading-relaxed text-neutral-600 dark:text-neutral-400'>
-              {formatExcerpt(excerpt.rendered)}
-            </p>
-          )}
+          <div className='mb-4 min-h-[2.5rem]'>
+            {isExcerpt && excerpt?.rendered && (
+              <p className='line-clamp-2 text-sm leading-relaxed text-neutral-600 dark:text-neutral-400'>
+                {formatExcerpt(excerpt.rendered)}
+              </p>
+            )}
+          </div>
 
           {/* Metadata */}
           <div className='mt-auto flex items-center justify-between border-t border-neutral-200 pt-4 dark:border-neutral-800'>

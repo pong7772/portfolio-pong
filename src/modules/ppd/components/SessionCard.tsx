@@ -48,7 +48,7 @@ const SessionCard = ({
           </p>
 
           {/* Author and Subtitle */}
-          <div className='mb-4 space-y-1'>
+          <div className='mb-4 min-h-[3rem] space-y-1'>
             <p className='text-xs font-semibold text-indigo-600 dark:text-indigo-400'>
               {author}
             </p>

@@ -72,6 +72,7 @@ const PersonalProfessionalDevelopment = () => {
       component: (
         <motion.div
           key={post.id}
+          className='h-full'
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.3, delay: 0.1 }}
@@ -115,11 +116,11 @@ const PersonalProfessionalDevelopment = () => {
             </div>
           )}
 
-          <div className='grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3'>
+          <div className='grid grid-cols-1 items-stretch gap-5 sm:grid-cols-2 xl:grid-cols-3'>
             {!isValidating ? (
               <>
                 {allCards.map((item, index) => (
-                  <div key={index} className='h-full'>
+                  <div key={index} className='flex h-full'>
                     {item.component}
                   </div>
                 ))}
