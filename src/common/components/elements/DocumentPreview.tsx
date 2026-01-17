@@ -13,7 +13,14 @@ interface DocumentPreviewProps {
 }
 
 const DocumentPreview = ({ documents }: DocumentPreviewProps) => {
-  const [previewingDoc, setPreviewingDoc] = useState<number | null>(null);
+  // Auto-preview Google Drive documents by default
+  const [previewingDoc, setPreviewingDoc] = useState<number | null>(() => {
+    // Find first Google Drive document index to auto-preview
+    const firstGoogleDriveIndex = documents.findIndex((doc) =>
+      doc.url.includes('drive.google.com'),
+    );
+    return firstGoogleDriveIndex >= 0 ? firstGoogleDriveIndex : null;
+  });
 
   if (!documents || documents.length === 0) {
     return null;
