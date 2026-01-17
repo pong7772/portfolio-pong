@@ -19,7 +19,7 @@ const DocumentManager = ({
   documents,
   onChange,
   maxDocuments = 10,
-  maxSizeMB = 10,
+  maxSizeMB = 5,
   label = 'Documents',
 }: DocumentManagerProps) => {
   const [showUrlInput, setShowUrlInput] = useState(false);
@@ -31,7 +31,15 @@ const DocumentManager = ({
   const isValidUrl = (url: string): boolean => {
     try {
       const urlObj = new URL(url);
-      return urlObj.protocol === 'http:' || urlObj.protocol === 'https:';
+      // Allow standard HTTP/HTTPS URLs
+      if (urlObj.protocol === 'http:' || urlObj.protocol === 'https:') {
+        return true;
+      }
+      // Also allow Google Drive links (special case)
+      if (url.includes('drive.google.com')) {
+        return true;
+      }
+      return false;
     } catch {
       return false;
     }
@@ -222,6 +230,10 @@ const DocumentManager = ({
             Max size: {maxSizeMB}MB | Supported: PDF, DOC, DOCX, XLS, XLSX, PPT,
             PPTX, TXT, ZIP, RAR
           </div>
+          <div className='mt-1 text-xs text-amber-600 dark:text-amber-400'>
+            ⚠️ For large files, consider using a document URL (including Google
+            Drive) instead of file upload
+          </div>
         </label>
       </div>
 
@@ -258,7 +270,7 @@ const DocumentManager = ({
             type='text'
             value={urlInput}
             onChange={(e) => setUrlInput(e.target.value)}
-            placeholder='https://example.com/document.pdf'
+            placeholder='https://example.com/document.pdf or https://drive.google.com/file/d/...'
             className='w-full rounded-lg border border-neutral-300 px-3 py-2 text-sm dark:border-neutral-600 dark:bg-neutral-800'
           />
           <input

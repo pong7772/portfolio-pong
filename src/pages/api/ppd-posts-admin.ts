@@ -2,6 +2,15 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 
 import prisma from '@/common/libs/prisma';
 
+// Increase body size limit to handle base64 documents (15MB)
+export const config = {
+  api: {
+    bodyParser: {
+      sizeLimit: '15mb',
+    },
+  },
+};
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse,

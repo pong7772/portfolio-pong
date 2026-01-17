@@ -246,8 +246,8 @@ const PPDPostForm = ({ post, onSuccess, onCancel }: PPDPostFormProps) => {
           <DocumentManager
             documents={formData.documents || []}
             onChange={(documents) => setFormData({ ...formData, documents })}
-            maxDocuments={10}
-            maxSizeMB={10}
+            maxDocuments={5}
+            maxSizeMB={5}
             label='Documents'
           />
         </div>
