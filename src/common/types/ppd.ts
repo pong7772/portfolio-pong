@@ -44,6 +44,7 @@ export type PPDPostItemProps = {
   thumbnail_url: string | null;
   featured_image_url: string | null;
   images?: string[];
+  documents?: Array<{ name: string; url: string }>;
   youtube_video_url: string | null;
   total_views_count: number;
 };

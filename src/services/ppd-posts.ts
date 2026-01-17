@@ -1,3 +1,8 @@
+export interface DocumentItem {
+  name: string;
+  url: string;
+}
+
 export interface PPDPostFormData {
   title: string;
   slug: string;
@@ -6,6 +11,7 @@ export interface PPDPostFormData {
   thumbnail_url?: string;
   featured_image_url?: string;
   images?: string[];
+  documents?: DocumentItem[];
   youtube_video_url?: string;
   status?: 'draft' | 'publish';
   is_featured?: boolean;
@@ -22,6 +28,7 @@ export interface PPDPost {
   thumbnail_url?: string;
   featured_image_url?: string;
   images?: string;
+  documents?: string;
   youtube_video_url?: string;
   status: string;
   is_featured: boolean;

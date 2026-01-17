@@ -117,6 +117,7 @@ model ppd_posts {
   thumbnail_url      String? // Banner/thumbnail for card display
   featured_image_url String? // Main featured image
   images             String? // JSON array of additional images
+  documents          String? // JSON array of documents (with name and url)
   youtube_video_url  String? // YouTube video URL
   status             String    @default("draft") // draft, publish
   is_featured        Boolean   @default(false)

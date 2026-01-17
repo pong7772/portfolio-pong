@@ -3,6 +3,7 @@ import { BiImage, BiX } from 'react-icons/bi';
 import { toast } from 'sonner';
 
 import Card from '@/common/components/elements/Card';
+import DocumentManager from '@/common/components/elements/DocumentManager';
 import ImageManager from '@/common/components/elements/ImageManager';
 import ImageUploadField from '@/common/components/elements/ImageUploadField';
 import RichTextEditor from '@/common/components/elements/RichTextEditor';
@@ -28,6 +29,7 @@ const PPDPostForm = ({ post, onSuccess, onCancel }: PPDPostFormProps) => {
     thumbnail_url: post?.thumbnail_url || '',
     featured_image_url: post?.featured_image_url || '',
     images: post?.images ? JSON.parse(post.images) : [],
+    documents: post?.documents ? JSON.parse(post.documents) : [],
     youtube_video_url: post?.youtube_video_url || '',
     status: (post?.status as 'draft' | 'publish') || 'draft',
     is_featured: post?.is_featured || false,
@@ -107,6 +109,13 @@ const PPDPostForm = ({ post, onSuccess, onCancel }: PPDPostFormProps) => {
         formData.images.length > 0
       ) {
         submitData.images = formData.images;
+      }
+      if (
+        formData.documents &&
+        Array.isArray(formData.documents) &&
+        formData.documents.length > 0
+      ) {
+        submitData.documents = formData.documents;
       }
       if (
         formData.tags &&
@@ -230,6 +239,16 @@ const PPDPostForm = ({ post, onSuccess, onCancel }: PPDPostFormProps) => {
             onChange={(images) => setFormData({ ...formData, images })}
             maxImages={20}
             label='Additional Images'
+          />
+        </div>
+
+        <div>
+          <DocumentManager
+            documents={formData.documents || []}
+            onChange={(documents) => setFormData({ ...formData, documents })}
+            maxDocuments={10}
+            maxSizeMB={10}
+            label='Documents'
           />
         </div>
 

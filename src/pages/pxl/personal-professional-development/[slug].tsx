@@ -118,6 +118,7 @@ const transformPPDPostToWordPressFormat = (
 ): PPDPostDetailProps => {
   const tags = post.tags ? JSON.parse(post.tags) : [];
   const images = post.images ? JSON.parse(post.images) : [];
+  const documents = post.documents ? JSON.parse(post.documents) : [];
 
   return {
     id: post.id,
@@ -168,6 +169,7 @@ const transformPPDPostToWordPressFormat = (
     thumbnail_url: post.thumbnail_url || null,
     featured_image_url: post.featured_image_url || null,
     images: images,
+    documents: documents.length > 0 ? documents : undefined,
     youtube_video_url: post.youtube_video_url || null,
     total_views_count: views,
     guid: {

@@ -1,6 +1,7 @@
 import useSWR from 'swr';
 
 import Breakline from '@/common/components/elements/Breakline';
+import DocumentPreview from '@/common/components/elements/DocumentPreview';
 import HtmlContent from '@/common/components/elements/HtmlContent';
 import ImageGallery from '@/common/components/elements/ImageGallery';
 import MDXComponent from '@/common/components/elements/MDXComponent';
@@ -21,6 +22,7 @@ const PPDDetail = ({
   featured_image_url,
   thumbnail_url,
   images,
+  documents,
   youtube_video_url,
 }: PPDPostDetailProps) => {
   const { data: viewsData } = useSWR(
@@ -64,6 +66,13 @@ const PPDDetail = ({
       {/* YouTube Video */}
       {youtube_video_url && (
         <YouTubeEmbed url={youtube_video_url} title={title?.rendered} />
+      )}
+
+      {/* Documents */}
+      {documents && documents.length > 0 && (
+        <div className='mt-6'>
+          <DocumentPreview documents={documents} />
+        </div>
       )}
 
       {/* Content */}

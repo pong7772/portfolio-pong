@@ -50,6 +50,7 @@ export default async function handler(
         thumbnail_url,
         featured_image_url,
         images,
+        documents,
         youtube_video_url,
         status = 'draft',
         is_featured = false,
@@ -101,6 +102,10 @@ export default async function handler(
         images:
           images && Array.isArray(images) && images.length > 0
             ? JSON.stringify(images)
+            : null,
+        documents:
+          documents && Array.isArray(documents) && documents.length > 0
+            ? JSON.stringify(documents)
             : null,
         youtube_video_url:
           youtube_video_url && youtube_video_url.trim()
@@ -164,6 +169,7 @@ export default async function handler(
         thumbnail_url,
         featured_image_url,
         images,
+        documents,
         youtube_video_url,
         status,
         is_featured,
@@ -205,6 +211,12 @@ export default async function handler(
           }),
           ...(images !== undefined && {
             images: images && images.length > 0 ? JSON.stringify(images) : null,
+          }),
+          ...(documents !== undefined && {
+            documents:
+              documents && documents.length > 0
+                ? JSON.stringify(documents)
+                : null,
           }),
           ...(youtube_video_url !== undefined && {
             youtube_video_url: youtube_video_url || null,
